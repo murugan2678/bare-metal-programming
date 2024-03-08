@@ -3,6 +3,8 @@
                                                   program for timer11 steps
 
 
+Author : Murugan M
+
 First write all peripheral base address and address offset value
 
   Base address  End address  Peripheral   Select register     Addressoffset            Address offset
