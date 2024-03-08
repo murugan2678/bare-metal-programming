@@ -3,6 +3,8 @@
 						   program for systick timer
 
 
+Author : Murugan M
+
 systick timer (STK)
 
   * The processor has a 24-bit system timer, SysTick, that counts down from the reload value to
