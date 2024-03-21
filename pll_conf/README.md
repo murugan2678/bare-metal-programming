@@ -4,6 +4,9 @@
 
 
 
+Author : Murugan M
+
+
 what is pll config
  
   * PLL (Phase-Locked Loop) provides a finely configurable 
