@@ -1,0 +1,387 @@
+Archive member included to satisfy reference by file (symbol)
+
+/home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+                              /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o (exit)
+/home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+                              /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o) (_global_impure_ptr)
+/home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+                              /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o (__libc_init_array)
+/home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+                              /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o (memset)
+/home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+                              /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o) (_exit)
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+ .data          0x0000000000000000        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .rodata        0x0000000000000000       0x24 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .text          0x0000000000000000       0x7c /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .ARM.extab     0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .ARM.exidx     0x0000000000000000       0x10 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .ARM.attributes
+                0x0000000000000000       0x1c /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .text.exit     0x0000000000000000       0x28 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .debug_frame   0x0000000000000000       0x28 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x0000000000000000        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .data.impure_data
+                0x0000000000000000       0x60 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x0000000000000000        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .text.memset   0x0000000000000000       0x10 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000000000       0x20 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .text          0x0000000000000000       0x14 /tmp/cc0oInVk.o
+ .data          0x0000000000000000        0x0 /tmp/cc0oInVk.o
+ .bss           0x0000000000000000        0x0 /tmp/cc0oInVk.o
+ .bss           0x0000000000000000        0x0 /tmp/ccMyL6jz.o
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .text._exit    0x0000000000000000        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .debug_frame   0x0000000000000000       0x20 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .rodata        0x0000000000000000       0x24 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .eh_frame      0x0000000000000000        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .ARM.attributes
+                0x0000000000000000       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+ .text          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .data          0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .bss           0x0000000000000000        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x0000000020000000 0x0000000000010000 xrw
+FLASH            0x0000000008000000 0x0000000000040000 xr
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+START GROUP
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a
+END GROUP
+LOAD /tmp/cc0oInVk.o
+LOAD /tmp/ccMyL6jz.o
+START GROUP
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libg_nano.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
+END GROUP
+START GROUP
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a
+END GROUP
+START GROUP
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a
+END GROUP
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x0000000020010000                _estack = (ORIGIN (RAM) + LENGTH (RAM))
+                0x0000000000000200                _Min_Heap_Size = 0x200
+                0x0000000000000400                _Min_Stack_Size = 0x400
+
+.isr_vector     0x0000000008000000      0x194
+                0x0000000008000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x0000000008000000      0x194 /tmp/cc0oInVk.o
+                0x0000000008000000                g_pfnVectors
+                0x0000000008000194                . = ALIGN (0x4)
+
+.text           0x0000000008000194      0x254
+                0x0000000008000194                . = ALIGN (0x4)
+ *(.text)
+ .text          0x0000000008000194       0x40 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .text          0x00000000080001d4      0x164 /tmp/ccMyL6jz.o
+                0x00000000080001d4                rcc_config
+                0x0000000008000268                gpio_moder
+                0x00000000080002b4                pir_config
+                0x00000000080002f8                delay
+                0x0000000008000324                main
+ *(.text*)
+ .text.__libc_init_array
+                0x0000000008000338       0x48 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+                0x0000000008000338                __libc_init_array
+ .text.Reset_Handler
+                0x0000000008000380       0x4c /tmp/cc0oInVk.o
+                0x0000000008000380                Reset_Handler
+ .text.Default_Handler
+                0x00000000080003cc        0x2 /tmp/cc0oInVk.o
+                0x00000000080003cc                RTC_Alarm_IRQHandler
+                0x00000000080003cc                EXTI2_IRQHandler
+                0x00000000080003cc                DebugMon_Handler
+                0x00000000080003cc                SPI4_IRQHandler
+                0x00000000080003cc                TIM1_CC_IRQHandler
+                0x00000000080003cc                DMA2_Stream5_IRQHandler
+                0x00000000080003cc                HardFault_Handler
+                0x00000000080003cc                DMA1_Stream5_IRQHandler
+                0x00000000080003cc                SysTick_Handler
+                0x00000000080003cc                PVD_IRQHandler
+                0x00000000080003cc                SDIO_IRQHandler
+                0x00000000080003cc                TAMP_STAMP_IRQHandler
+                0x00000000080003cc                PendSV_Handler
+                0x00000000080003cc                NMI_Handler
+                0x00000000080003cc                EXTI3_IRQHandler
+                0x00000000080003cc                TIM1_UP_TIM10_IRQHandler
+                0x00000000080003cc                I2C3_ER_IRQHandler
+                0x00000000080003cc                EXTI0_IRQHandler
+                0x00000000080003cc                I2C2_EV_IRQHandler
+                0x00000000080003cc                DMA1_Stream2_IRQHandler
+                0x00000000080003cc                FPU_IRQHandler
+                0x00000000080003cc                UsageFault_Handler
+                0x00000000080003cc                DMA2_Stream2_IRQHandler
+                0x00000000080003cc                SPI1_IRQHandler
+                0x00000000080003cc                TIM1_BRK_TIM9_IRQHandler
+                0x00000000080003cc                DMA2_Stream3_IRQHandler
+                0x00000000080003cc                USART6_IRQHandler
+                0x00000000080003cc                DMA2_Stream0_IRQHandler
+                0x00000000080003cc                TIM4_IRQHandler
+                0x00000000080003cc                I2C1_EV_IRQHandler
+                0x00000000080003cc                DMA1_Stream6_IRQHandler
+                0x00000000080003cc                DMA1_Stream1_IRQHandler
+                0x00000000080003cc                TIM3_IRQHandler
+                0x00000000080003cc                RCC_IRQHandler
+                0x00000000080003cc                Default_Handler
+                0x00000000080003cc                EXTI15_10_IRQHandler
+                0x00000000080003cc                ADC_IRQHandler
+                0x00000000080003cc                DMA1_Stream7_IRQHandler
+                0x00000000080003cc                TIM5_IRQHandler
+                0x00000000080003cc                DMA2_Stream7_IRQHandler
+                0x00000000080003cc                I2C3_EV_IRQHandler
+                0x00000000080003cc                EXTI9_5_IRQHandler
+                0x00000000080003cc                RTC_WKUP_IRQHandler
+                0x00000000080003cc                SPI2_IRQHandler
+                0x00000000080003cc                MemManage_Handler
+                0x00000000080003cc                DMA1_Stream0_IRQHandler
+                0x00000000080003cc                SVC_Handler
+                0x00000000080003cc                EXTI4_IRQHandler
+                0x00000000080003cc                WWDG_IRQHandler
+                0x00000000080003cc                TIM2_IRQHandler
+                0x00000000080003cc                OTG_FS_WKUP_IRQHandler
+                0x00000000080003cc                TIM1_TRG_COM_TIM11_IRQHandler
+                0x00000000080003cc                EXTI1_IRQHandler
+                0x00000000080003cc                USART2_IRQHandler
+                0x00000000080003cc                I2C2_ER_IRQHandler
+                0x00000000080003cc                DMA2_Stream1_IRQHandler
+                0x00000000080003cc                FLASH_IRQHandler
+                0x00000000080003cc                DMA2_Stream4_IRQHandler
+                0x00000000080003cc                BusFault_Handler
+                0x00000000080003cc                USART1_IRQHandler
+                0x00000000080003cc                OTG_FS_IRQHandler
+                0x00000000080003cc                SPI3_IRQHandler
+                0x00000000080003cc                DMA1_Stream4_IRQHandler
+                0x00000000080003cc                I2C1_ER_IRQHandler
+                0x00000000080003cc                DMA2_Stream6_IRQHandler
+                0x00000000080003cc                DMA1_Stream3_IRQHandler
+ *(.glue_7)
+ .glue_7        0x00000000080003ce        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x00000000080003ce        0x0 linker stubs
+ *(.eh_frame)
+ *fill*         0x00000000080003ce        0x2 
+ .eh_frame      0x00000000080003d0        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ *(.init)
+ .init          0x00000000080003d0        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x00000000080003d0                _init
+ .init          0x00000000080003d4        0x8 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+ *(.fini)
+ .fini          0x00000000080003dc        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x00000000080003dc                _fini
+ .fini          0x00000000080003e0        0x8 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x00000000080003e8                . = ALIGN (0x4)
+                0x00000000080003e8                _etext = .
+
+.vfp11_veneer   0x00000000080003e8        0x0
+ .vfp11_veneer  0x00000000080003e8        0x0 linker stubs
+
+.v4_bx          0x00000000080003e8        0x0
+ .v4_bx         0x00000000080003e8        0x0 linker stubs
+
+.iplt           0x00000000080003e8        0x0
+ .iplt          0x00000000080003e8        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+
+.rel.dyn        0x00000000080003e8        0x0
+ .rel.iplt      0x00000000080003e8        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+
+.rodata         0x00000000080003e8        0x0
+                0x00000000080003e8                . = ALIGN (0x4)
+ *(.rodata)
+ *(.rodata*)
+                0x00000000080003e8                . = ALIGN (0x4)
+
+.ARM.extab      0x00000000080003e8        0x0
+                0x00000000080003e8                . = ALIGN (0x4)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00000000080003e8                . = ALIGN (0x4)
+
+.ARM            0x00000000080003e8        0x0
+                0x00000000080003e8                . = ALIGN (0x4)
+                0x00000000080003e8                __exidx_start = .
+ *(.ARM.exidx*)
+                0x00000000080003e8                __exidx_end = .
+                0x00000000080003e8                . = ALIGN (0x4)
+
+.preinit_array  0x00000000080003e8        0x0
+                0x00000000080003e8                . = ALIGN (0x4)
+                0x00000000080003e8                PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                0x00000000080003e8                PROVIDE (__preinit_array_end = .)
+                0x00000000080003e8                . = ALIGN (0x4)
+
+.init_array     0x00000000080003e8        0x4
+                0x00000000080003e8                . = ALIGN (0x4)
+                0x00000000080003e8                PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array*)
+ .init_array    0x00000000080003e8        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x00000000080003ec                PROVIDE (__init_array_end = .)
+                0x00000000080003ec                . = ALIGN (0x4)
+
+.fini_array     0x00000000080003ec        0x4
+                0x00000000080003ec                . = ALIGN (0x4)
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+ .fini_array    0x00000000080003ec        0x4 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                [!provide]                        PROVIDE (__fini_array_end = .)
+                0x00000000080003f0                . = ALIGN (0x4)
+                0x00000000080003f0                _sidata = LOADADDR (.data)
+
+.data           0x0000000020000000       0x24 load address 0x00000000080003f0
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sdata = .
+ *(.data)
+ .data          0x0000000020000000       0x24 /tmp/ccMyL6jz.o
+                0x0000000020000000                RCC_CR
+                0x0000000020000004                RCC_CFGR
+                0x0000000020000008                RCC_AHB1ENR
+                0x000000002000000c                GPIOA_MODER
+                0x0000000020000010                GPIOA_PUPDR
+                0x0000000020000014                GPIOA_ODR
+                0x0000000020000018                GPIOA_IDR
+                0x000000002000001c                GPIOB_MODER
+                0x0000000020000020                GPIOB_ODR
+ *(.data*)
+ *(.RamFunc)
+ *(.RamFunc*)
+                0x0000000020000024                . = ALIGN (0x4)
+                0x0000000020000024                _edata = .
+
+.igot.plt       0x0000000020000024        0x0 load address 0x0000000008000414
+ .igot.plt      0x0000000020000024        0x0 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x0000000020000024                . = ALIGN (0x4)
+
+.bss            0x0000000020000024       0x1c load address 0x0000000008000414
+                0x0000000020000024                _sbss = .
+                0x0000000020000024                __bss_start__ = _sbss
+ *(.bss)
+ .bss           0x0000000020000024       0x1c /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ *(.bss*)
+ *(COMMON)
+                0x0000000020000040                . = ALIGN (0x4)
+                0x0000000020000040                _ebss = .
+                0x0000000020000040                __bss_end__ = _ebss
+
+._user_heap_stack
+                0x0000000020000040      0x600 load address 0x0000000008000414
+                0x0000000020000040                . = ALIGN (0x8)
+                [!provide]                        PROVIDE (end = .)
+                [!provide]                        PROVIDE (_end = .)
+                0x0000000020000240                . = (. + _Min_Heap_Size)
+ *fill*         0x0000000020000040      0x200 
+                0x0000000020000640                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000020000240      0x400 
+                0x0000000020000640                . = ALIGN (0x8)
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.ARM.attributes
+                0x0000000000000000       0x30
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x0000000000000000       0x1e /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+ .ARM.attributes
+                0x000000000000001e       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .ARM.attributes
+                0x0000000000000052       0x34 /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x0000000000000086       0x21 /tmp/cc0oInVk.o
+ .ARM.attributes
+                0x00000000000000a7       0x34 /tmp/ccMyL6jz.o
+ .ARM.attributes
+                0x00000000000000db       0x1e /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+OUTPUT(stm32f401ccux.elf elf32-littlearm)
+LOAD linker stubs
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a
+LOAD /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
+
+.debug_frame    0x0000000000000000       0xdc
+ .debug_frame   0x0000000000000000       0x2c /home/murugan/Documents/STM/arm_compiler/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x000000000000002c       0xb0 /tmp/ccMyL6jz.o
+
+.debug_line     0x0000000000000000      0x196
+ .debug_line    0x0000000000000000       0x77 /tmp/cc0oInVk.o
+ .debug_line    0x0000000000000077      0x11f /tmp/ccMyL6jz.o
+
+.debug_info     0x0000000000000000      0x173
+ .debug_info    0x0000000000000000       0x22 /tmp/cc0oInVk.o
+ .debug_info    0x0000000000000022      0x151 /tmp/ccMyL6jz.o
+
+.debug_abbrev   0x0000000000000000       0xda
+ .debug_abbrev  0x0000000000000000       0x12 /tmp/cc0oInVk.o
+ .debug_abbrev  0x0000000000000012       0xc8 /tmp/ccMyL6jz.o
+
+.debug_aranges  0x0000000000000000       0x48
+ .debug_aranges
+                0x0000000000000000       0x28 /tmp/cc0oInVk.o
+ .debug_aranges
+                0x0000000000000028       0x20 /tmp/ccMyL6jz.o
+
+.debug_str      0x0000000000000000      0x16c
+ .debug_str     0x0000000000000000       0x5b /tmp/cc0oInVk.o
+ .debug_str     0x000000000000005b      0x111 /tmp/ccMyL6jz.o
+                                        0x146 (size before relaxing)
+
+.debug_ranges   0x0000000000000000       0x20
+ .debug_ranges  0x0000000000000000       0x20 /tmp/cc0oInVk.o
+
+.comment        0x0000000000000000       0x49
+ .comment       0x0000000000000000       0x49 /tmp/ccMyL6jz.o
+                                         0x4a (size before relaxing)
