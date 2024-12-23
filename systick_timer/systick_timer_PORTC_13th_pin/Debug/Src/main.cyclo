@@ -1,6 +1,0 @@
-../Src/main.c:24:5:main	1
-../Src/main.c:37:6:rcc_config	2
-../Src/main.c:65:6:peripheral_bus_config	1
-../Src/main.c:74:6:gpioc_moder_config	1
-../Src/main.c:84:6:systick_timer_delay	2
-../Src/main.c:109:6:led_blinking	1
