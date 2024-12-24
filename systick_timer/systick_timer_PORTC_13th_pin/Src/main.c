@@ -90,14 +90,14 @@ void systick_timer_delay(int val)
   /* SysTick timer (STK). 24-bit system timer */
 
   /* 24-bit set and clear load register */
-
   *STK_LOAD &= (~0x00FFFFFF);
 
   /* step 1 ---> reload value. (STK_LOAD) SysTick reload value register */
-
   *STK_LOAD |= val;
 
-  /* step 2 ---> counter enable 0th bit set 1. (STK_CTRL) SysTick control and status register */
+  /* (STK_CTRL) SysTick control and status register */
+  /* step 2 ---> counter enable 0th bit set 1. CLKSOURCE : Clock source selection 2nd bit set 1 : Processor clock (AHB).
+     binary value 0101 ---> decimal value 5. */
   *STK_CTRL |=  (5 << 0);
 
   /* step 3 ---> program control and register value. STK_(CTRL) */
