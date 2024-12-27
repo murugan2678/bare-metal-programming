@@ -12,10 +12,6 @@
  ***********************************************************************************************/
 
 /* rcc register */
-
-/* 32-bit address for each address store for 1 byte = 8 bit */
-/* offset is boundary for starting address and ending address */
-
 volatile unsigned int *RCC_CR = (volatile unsigned int *)0x40023800;   /* Add with RCC register base address and CR register. Address offset value 0x00 */
 volatile unsigned int *RCC_CFGR = (volatile unsigned int *)0x40023808;  /* CFGR register. Address offset value 0x08 */
 volatile unsigned int *RCC_AHB1ENR = (volatile unsigned int *)0x40023830;  /* AHB1ENR register. Address offset value 0x30 */
