@@ -112,15 +112,16 @@ void led_blinking(void)
 
   /* step 1 : this condition Pull-down means Low 0. push button not press means condition False means 0 */
   /* step 2 : Push Button press means condition True means 1 */
-  if((*GPIOB_IDR & 1 << 0))
+  if((*GPIOB_IDR & 1 << 0) == 1)
   {
     /* General Purpose Input and Output (GPIOA_ODR) output data register */
     /* select ODR0. PORTA 0th pin output select. */
     *GPIOA_ODR |= (1 << 0); /* led on */
     delay_ms(100);   /* 100ms milliseconds stop */
   }
-  else
-  {
-    *GPIOA_ODR &= (~1 << 0);  /* led off */
-  }
+  /* step 2 : Push Button press means condition False means 0 */
+	else if((*GPIOB_IDR & (~1 << 0)) == 0)
+	{
+		*GPIOA_ODR &= ~(1 << 0); /* led off */
+	}
 }
