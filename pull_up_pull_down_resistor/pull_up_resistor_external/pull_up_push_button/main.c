@@ -120,6 +120,6 @@ void led_blinking(void)
   }
   else
   {
-    *GPIOA_ODR &= (~1 << 0); /* led off */
+    *GPIOA_ODR &= (0 << 0); /* led off */
   }
 }
