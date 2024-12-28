@@ -109,7 +109,7 @@ void led_blinking(void)
   /* General Purpose Input and Output (GPIOA_IDR) input data register */
   /* select IDR. PORTB 0th pin select */
 
-  /* step 1 : this condition Pull-Up means HIGH 1. push button not press means condition True means 1 */
+  /* step 1 : this condition Pull-up means HIGH 1. push button not press means condition True means 1 */
   /* step 2 : Push Button press means condition False means 0 */
   if((*GPIOB_IDR & 1 << 0) == 1)
   {
@@ -118,8 +118,9 @@ void led_blinking(void)
     *GPIOA_ODR |= (1 << 0); /* led on */
     delay_ms(100);          /* 100ms milliseconds stop */
   }
-  else
-  {
-    *GPIOA_ODR &= (0 << 0); /* led off */
-  }
+  /* step 2 : Push Button press means condition False means 0 */
+	else if((*GPIOB_IDR & (1 << 0)) == 0)
+	{
+		*GPIOA_ODR &= ~(1 << 0);  /* led off */
+	}
 }
