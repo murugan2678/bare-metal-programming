@@ -2,12 +2,12 @@
  *                                                                                                *
  * Author      : Murugan M                                                                        *
  * Date        : 31-12-2024                                                                       *
- * File        : ir_sensor_interrupt_NVIC_EXTI                                                                        *
+ * File        : ir_sensor_interrupt_NVIC_EXTI                                                    *
  * Description : IR-Sensor select Hardware Internal Pull-up Resistor PUPDR                        *
  *               Input take for GPIOB0 PORT B 0th pin connect with IR-Sensor out pin              *
  *               Output take for GPIOA0 PORT A 0th pin.                                           *
  *               Output 1k resistor using connect to LED (+) VCC Positive and (-) GND Ground      *
- *               Using for one peripheral bus AHB1ENR.                                            *
+ *               Using for one peripheral bus 1 AHB1ENR and APB2ENR bus 2                         *
  *               power supply input voltage 3v to 5v.                                             *
  *************************************************************************************************/
 
