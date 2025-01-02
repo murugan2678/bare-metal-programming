@@ -10,7 +10,7 @@
  *               Output take for GPIOB1 PORT B 2nd pin. connect to first led                      *
  *               Input take for GPIOA1 PORT A 1st pin connect to second push button               *
  *               Output take for GPIOA0 PORT A 0th pin connect to second led.                     *
- *               		     								  *		  
+ *               		     							                                                         	  *		  
  *************************************************************************************************/
 
 /* RCC base address for STM32F401CCU6 data sheet register boundary addresses page number : 51 */
