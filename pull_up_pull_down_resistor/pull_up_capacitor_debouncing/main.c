@@ -1,18 +1,18 @@
 
-/*****************************************************************************************************************
- *                                                                                                               *
- * Author      : Murugan M                                                                                       *
- * Date        : 3-01-2025                                                                                       *
- * File        : pull_up_capcitor_debouncing                                                                     *
- * Description : Pull-up select Hardware Internal Resistor PUPDR                                                 *
- *               Input take for GPIOA0 PORT A 0th pin.                                                           *
- *               Output take for GPIOA2 PORT A 2nd pin.                                                          *
- *               Output 1k resistor using connect to LED (+) VCC Positive and (-) GND Ground                     *
- *               Using for one peripheral bus AHB1ENR                                                            *
- *               External using pull-up capacitor using Debouncing is removing unwanted input noise from buttons *
- *               smoothness giving                                                                               *
- *														 *
- *****************************************************************************************************************/
+/*********************************************************************************************************************
+ *                                                                                                                   *
+ * Author      : Murugan M                                                                                           *
+ * Date        : 3-01-2025                                                                                           *
+ * File        : pull_up_capcitor_debouncing                                                                         *
+ * Description : Pull-up select Hardware Internal Resistor PUPDR                                                     *
+ *               Input take for GPIOA0 PORT A 0th pin.                                                               *
+ *               Output take for GPIOA2 PORT A 2nd pin.                                                              *
+ *               Output 1k resistor using connect to LED (+) VCC Positive and (-) GND Ground                         *
+ *               Using for one peripheral bus AHB1ENR                                                                *
+ *               External using ceramic capacitor 104 using Debouncing is removing unwanted input noise from buttons *
+ *               smoothness giving                                                                                   *
+ *														     *
+ ********************************************************************************************************************/
 
 /* RCC register */
 volatile unsigned int *RCC_CR = (volatile unsigned int *)0x40023800;   /* Add with RCC register base address and CR register. Address offset value 0x00 */
