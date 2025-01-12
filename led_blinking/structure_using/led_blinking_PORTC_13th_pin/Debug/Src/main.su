@@ -1,0 +1,6 @@
+../Src/main.c:15:5:main	8	static
+../Src/main.c:28:6:rcc_config	4	static
+../Src/main.c:48:6:peripheral_bus_config	4	static
+../Src/main.c:54:6:gpioc_moder	4	static
+../Src/main.c:62:6:delay_ms	24	static,ignoring_inline_asm
+../Src/main.c:71:6:led_blinking	8	static
