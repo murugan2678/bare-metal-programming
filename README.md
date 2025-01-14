@@ -1,2 +1,2 @@
 # bare-metal-programming
-stm32f401ccu6
+STM32F401CCU6
