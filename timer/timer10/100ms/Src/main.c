@@ -5,8 +5,8 @@
  *  File        : timer10                                                     *
  *  Description : Led blink for PORTA 0th pin.                                *
  *                using for two pheripheral bus AHB1ENR and APB2ENR           *
- *		  i give 100ms	milli seconds				      *
- *                							      *
+ *		            i give 100ms	milli seconds				                          *
+ *                							                                              *
  *****************************************************************************/
 
 
@@ -31,8 +31,9 @@ int main(void)
 
 void rcc_config(void)
 {
+  /* 6.3 RCC registers page number : 103 starting page */
   /* Reset clock control (RCC_CR) clock control register */
-
+ 
   /* set and clear 16th bit */
   RCC->CR &= (~0x00010000);
 
@@ -56,6 +57,7 @@ void rcc_config(void)
 
 void peripheral_bus_config(void)
 {
+  /* AHB1ENR Register page number : 118 to 119. APB2ENR Register page number : 122 to 123 */
   /* AHB1ENR Advanced High Bus 1 (RCC_AHB1ENR) peripheral enable register	*/
 
   RCC->AHB1ENR |= (1 << 0);   // GPIOAEN : IO port A clock enable. 0th bit set 1
@@ -65,6 +67,7 @@ void peripheral_bus_config(void)
 
 void gpioc_moder_config(void)
 {
+  /* 8.4 GPIO registers. GPIO_MODER register page number : 158. */
   /* (GPIO) General Purpose Input and Output (GPIOA_MODER) port mode register */
   /* PORT A MODER0 0th pin select. 0th bit set 1. */
   GPIOA->MODER |= (1 << 0); // 01 : General purpose output mode
@@ -72,7 +75,7 @@ void gpioc_moder_config(void)
 
 void led_blinking(void)
 {
-  /* (GPIO_ODR) output data register */
+  /*  GPIO_MODER register page number : 160. (GPIO_ODR) output data register */
   GPIOA->ODR |= (1 << 0);  // PORT A 0th pin select. 0th set 1. led on
 
   timer10_delay(2500);  // 100ms milliseconds led 0n
@@ -82,8 +85,11 @@ void led_blinking(void)
   timer10_delay(2500);  // 100ms milliseconds led off
 }
 
-/* timer 10 */
-
+/* timer 10 Datasheet for Reference manual
+   first read this page 14.3 TIM9 to TIM11 functional description page number : 379 
+   second read this page General-purpose timers (TIM9 to TIM11) 14.3.2 Counter modes page number : 381 
+   this two first and seconds timer config steps there read this first 
+   14.5 TIM10/11 registers page number : 412 to 419. this register correctly see 14.5.12 TIM10/11 register map */
 void timer10_config(void)
 {
   /* (TIM10_CR1) control register 1 */
