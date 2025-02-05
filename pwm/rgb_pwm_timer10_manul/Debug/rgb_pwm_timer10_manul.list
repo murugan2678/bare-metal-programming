@@ -1,0 +1,1501 @@
+
+rgb_pwm_timer10_manul.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   00000194  08000000  08000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         00000944  08000194  08000194  00001194  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000000  08000ad8  08000ad8  0000200c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .ARM.extab    00000000  08000ad8  08000ad8  0000200c  2**0
+                  CONTENTS
+  4 .ARM          00000000  08000ad8  08000ad8  0000200c  2**0
+                  CONTENTS
+  5 .preinit_array 00000000  08000ad8  08000ad8  0000200c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  08000ad8  08000ad8  00001ad8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .fini_array   00000004  08000adc  08000adc  00001adc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .data         0000000c  20000000  08000ae0  00002000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          0000001c  2000000c  08000aec  0000200c  2**2
+                  ALLOC
+ 10 ._user_heap_stack 00000600  20000028  08000aec  00002028  2**0
+                  ALLOC
+ 11 .ARM.attributes 00000030  00000000  00000000  0000200c  2**0
+                  CONTENTS, READONLY
+ 12 .debug_info   0000061f  00000000  00000000  0000203c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_abbrev 0000019b  00000000  00000000  0000265b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_aranges 000000a8  00000000  00000000  000027f8  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_rnglists 0000007b  00000000  00000000  000028a0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_macro  00000ad5  00000000  00000000  0000291b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_line   000008e9  00000000  00000000  000033f0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_str    00003052  00000000  00000000  00003cd9  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .comment      00000043  00000000  00000000  00006d2b  2**0
+                  CONTENTS, READONLY
+ 20 .debug_frame  000001fc  00000000  00000000  00006d70  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_line_str 00000070  00000000  00000000  00006f6c  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+08000194 <__do_global_dtors_aux>:
+ 8000194:	b510      	push	{r4, lr}
+ 8000196:	4c05      	ldr	r4, [pc, #20]	@ (80001ac <__do_global_dtors_aux+0x18>)
+ 8000198:	7823      	ldrb	r3, [r4, #0]
+ 800019a:	b933      	cbnz	r3, 80001aa <__do_global_dtors_aux+0x16>
+ 800019c:	4b04      	ldr	r3, [pc, #16]	@ (80001b0 <__do_global_dtors_aux+0x1c>)
+ 800019e:	b113      	cbz	r3, 80001a6 <__do_global_dtors_aux+0x12>
+ 80001a0:	4804      	ldr	r0, [pc, #16]	@ (80001b4 <__do_global_dtors_aux+0x20>)
+ 80001a2:	f3af 8000 	nop.w
+ 80001a6:	2301      	movs	r3, #1
+ 80001a8:	7023      	strb	r3, [r4, #0]
+ 80001aa:	bd10      	pop	{r4, pc}
+ 80001ac:	2000000c 	.word	0x2000000c
+ 80001b0:	00000000 	.word	0x00000000
+ 80001b4:	08000ac0 	.word	0x08000ac0
+
+080001b8 <frame_dummy>:
+ 80001b8:	b508      	push	{r3, lr}
+ 80001ba:	4b03      	ldr	r3, [pc, #12]	@ (80001c8 <frame_dummy+0x10>)
+ 80001bc:	b11b      	cbz	r3, 80001c6 <frame_dummy+0xe>
+ 80001be:	4903      	ldr	r1, [pc, #12]	@ (80001cc <frame_dummy+0x14>)
+ 80001c0:	4803      	ldr	r0, [pc, #12]	@ (80001d0 <frame_dummy+0x18>)
+ 80001c2:	f3af 8000 	nop.w
+ 80001c6:	bd08      	pop	{r3, pc}
+ 80001c8:	00000000 	.word	0x00000000
+ 80001cc:	20000010 	.word	0x20000010
+ 80001d0:	08000ac0 	.word	0x08000ac0
+
+080001d4 <main>:
+
+#include "arm.h"    /* this header file for all register inside there. using for structure is user-defined data type */
+
+/* main function */
+int main(void)
+{
+ 80001d4:	b580      	push	{r7, lr}
+ 80001d6:	af00      	add	r7, sp, #0
+	/* function call */
+	rcc_config();
+ 80001d8:	f000 f814 	bl	8000204 <rcc_config>
+	peripheral_bus_config();
+ 80001dc:	f000 f84c 	bl	8000278 <peripheral_bus_config>
+	gpioa_moder_config();
+ 80001e0:	f000 f864 	bl	80002ac <gpioa_moder_config>
+	while(1)
+	{
+		purple_color_led();
+ 80001e4:	f000 f8a2 	bl	800032c <purple_color_led>
+		green_color_led();
+ 80001e8:	f000 fb24 	bl	8000834 <green_color_led>
+		white_color_led();
+ 80001ec:	f000 fa1a 	bl	8000624 <white_color_led>
+		navy_color_led();
+ 80001f0:	f000 f920 	bl	8000434 <navy_color_led>
+		yellow_color_led();
+ 80001f4:	f000 f992 	bl	800051c <yellow_color_led>
+		red_color_led();
+ 80001f8:	f000 faa8 	bl	800074c <red_color_led>
+		cyan_color_led();
+ 80001fc:	f000 fb8e 	bl	800091c <cyan_color_led>
+		purple_color_led();
+ 8000200:	bf00      	nop
+ 8000202:	e7ef      	b.n	80001e4 <main+0x10>
+
+08000204 <rcc_config>:
+	}
+}
+
+/* function definition */
+void rcc_config(void)
+{
+ 8000204:	b480      	push	{r7}
+ 8000206:	af00      	add	r7, sp, #0
+	/* Reset clock control (RCC_CR) clock control register */
+
+	/* set and clear 16th bit */
+	RCC->CR &= (~0x00010000);
+ 8000208:	4b1a      	ldr	r3, [pc, #104]	@ (8000274 <rcc_config+0x70>)
+ 800020a:	681b      	ldr	r3, [r3, #0]
+ 800020c:	681a      	ldr	r2, [r3, #0]
+ 800020e:	4b19      	ldr	r3, [pc, #100]	@ (8000274 <rcc_config+0x70>)
+ 8000210:	681b      	ldr	r3, [r3, #0]
+ 8000212:	f422 3280 	bic.w	r2, r2, #65536	@ 0x10000
+ 8000216:	601a      	str	r2, [r3, #0]
+
+	/* select 16th bit HSEON : HSE clock enable. 1 : HSE oscillator ON */
+	RCC->CR |= (1 << 16);
+ 8000218:	4b16      	ldr	r3, [pc, #88]	@ (8000274 <rcc_config+0x70>)
+ 800021a:	681b      	ldr	r3, [r3, #0]
+ 800021c:	681a      	ldr	r2, [r3, #0]
+ 800021e:	4b15      	ldr	r3, [pc, #84]	@ (8000274 <rcc_config+0x70>)
+ 8000220:	681b      	ldr	r3, [r3, #0]
+ 8000222:	f442 3280 	orr.w	r2, r2, #65536	@ 0x10000
+ 8000226:	601a      	str	r2, [r3, #0]
+
+	/* select 17th bit HSERDY : HSE clock ready flag. 1 : HSE oscillator ready. HSE external oscillator ready or not checking */
+	while(!(RCC->CR & (1 << 17)));
+ 8000228:	bf00      	nop
+ 800022a:	4b12      	ldr	r3, [pc, #72]	@ (8000274 <rcc_config+0x70>)
+ 800022c:	681b      	ldr	r3, [r3, #0]
+ 800022e:	681b      	ldr	r3, [r3, #0]
+ 8000230:	f403 3300 	and.w	r3, r3, #131072	@ 0x20000
+ 8000234:	2b00      	cmp	r3, #0
+ 8000236:	d0f8      	beq.n	800022a <rcc_config+0x26>
+
+	/* Reset clock control (RCC_CFGR) clock configuration register */
+
+	/* set and clear 0th bit and 1st bit. 11 : not allowed */
+	RCC->CFGR &= (~0x00000003);
+ 8000238:	4b0e      	ldr	r3, [pc, #56]	@ (8000274 <rcc_config+0x70>)
+ 800023a:	681b      	ldr	r3, [r3, #0]
+ 800023c:	689a      	ldr	r2, [r3, #8]
+ 800023e:	4b0d      	ldr	r3, [pc, #52]	@ (8000274 <rcc_config+0x70>)
+ 8000240:	681b      	ldr	r3, [r3, #0]
+ 8000242:	f022 0203 	bic.w	r2, r2, #3
+ 8000246:	609a      	str	r2, [r3, #8]
+
+	/* select 0th bit SW  : System clock switch. 01 : HSE oscillator selected as system clock */
+	RCC->CFGR |= (1 << 0);
+ 8000248:	4b0a      	ldr	r3, [pc, #40]	@ (8000274 <rcc_config+0x70>)
+ 800024a:	681b      	ldr	r3, [r3, #0]
+ 800024c:	689a      	ldr	r2, [r3, #8]
+ 800024e:	4b09      	ldr	r3, [pc, #36]	@ (8000274 <rcc_config+0x70>)
+ 8000250:	681b      	ldr	r3, [r3, #0]
+ 8000252:	f042 0201 	orr.w	r2, r2, #1
+ 8000256:	609a      	str	r2, [r3, #8]
+
+	/* select 2nd bit SWS : System clock switch status. 01 : HSE oscillator used as the system clock */
+	while(!(RCC->CFGR & (0x00000004)));
+ 8000258:	bf00      	nop
+ 800025a:	4b06      	ldr	r3, [pc, #24]	@ (8000274 <rcc_config+0x70>)
+ 800025c:	681b      	ldr	r3, [r3, #0]
+ 800025e:	689b      	ldr	r3, [r3, #8]
+ 8000260:	f003 0304 	and.w	r3, r3, #4
+ 8000264:	2b00      	cmp	r3, #0
+ 8000266:	d0f8      	beq.n	800025a <rcc_config+0x56>
+}
+ 8000268:	bf00      	nop
+ 800026a:	bf00      	nop
+ 800026c:	46bd      	mov	sp, r7
+ 800026e:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000272:	4770      	bx	lr
+ 8000274:	20000000 	.word	0x20000000
+
+08000278 <peripheral_bus_config>:
+
+void peripheral_bus_config(void)
+{
+ 8000278:	b480      	push	{r7}
+ 800027a:	af00      	add	r7, sp, #0
+	/* AHB1ENR Advanced High Bus 1 (RCC_AHB1ENR) peripheral enable register	*/
+	RCC->AHB1ENR |= (1 << 0);  // GPIOAEN : IO port A clock enable. 0th bit set 1
+ 800027c:	4b0a      	ldr	r3, [pc, #40]	@ (80002a8 <peripheral_bus_config+0x30>)
+ 800027e:	681b      	ldr	r3, [r3, #0]
+ 8000280:	6b1a      	ldr	r2, [r3, #48]	@ 0x30
+ 8000282:	4b09      	ldr	r3, [pc, #36]	@ (80002a8 <peripheral_bus_config+0x30>)
+ 8000284:	681b      	ldr	r3, [r3, #0]
+ 8000286:	f042 0201 	orr.w	r2, r2, #1
+ 800028a:	631a      	str	r2, [r3, #48]	@ 0x30
+
+	RCC->APB2ENR |= (1 << 17);  // TIMER10EN : TIM10 clock enable. 17th bit set 1
+ 800028c:	4b06      	ldr	r3, [pc, #24]	@ (80002a8 <peripheral_bus_config+0x30>)
+ 800028e:	681b      	ldr	r3, [r3, #0]
+ 8000290:	6c5a      	ldr	r2, [r3, #68]	@ 0x44
+ 8000292:	4b05      	ldr	r3, [pc, #20]	@ (80002a8 <peripheral_bus_config+0x30>)
+ 8000294:	681b      	ldr	r3, [r3, #0]
+ 8000296:	f442 3200 	orr.w	r2, r2, #131072	@ 0x20000
+ 800029a:	645a      	str	r2, [r3, #68]	@ 0x44
+}
+ 800029c:	bf00      	nop
+ 800029e:	46bd      	mov	sp, r7
+ 80002a0:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80002a4:	4770      	bx	lr
+ 80002a6:	bf00      	nop
+ 80002a8:	20000000 	.word	0x20000000
+
+080002ac <gpioa_moder_config>:
+
+void gpioa_moder_config(void)
+{
+ 80002ac:	b480      	push	{r7}
+ 80002ae:	af00      	add	r7, sp, #0
+	/* (GPIO) General Purpose Input and Output (GPIOA_MODER) port mode register */
+	/* PORT A MODER0 0th pin select. 0th bit set 1. */
+	GPIOA->MODER |= (0x00000015);   // 01 : General purpose output mode
+ 80002b0:	4b06      	ldr	r3, [pc, #24]	@ (80002cc <gpioa_moder_config+0x20>)
+ 80002b2:	681b      	ldr	r3, [r3, #0]
+ 80002b4:	681a      	ldr	r2, [r3, #0]
+ 80002b6:	4b05      	ldr	r3, [pc, #20]	@ (80002cc <gpioa_moder_config+0x20>)
+ 80002b8:	681b      	ldr	r3, [r3, #0]
+ 80002ba:	f042 0215 	orr.w	r2, r2, #21
+ 80002be:	601a      	str	r2, [r3, #0]
+}
+ 80002c0:	bf00      	nop
+ 80002c2:	46bd      	mov	sp, r7
+ 80002c4:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80002c8:	4770      	bx	lr
+ 80002ca:	bf00      	nop
+ 80002cc:	20000004 	.word	0x20000004
+
+080002d0 <timer10_delay>:
+
+	TIM10->CNT = 0;             // counter value 0
+}
+
+void timer10_delay(int val)
+{
+ 80002d0:	b480      	push	{r7}
+ 80002d2:	b083      	sub	sp, #12
+ 80002d4:	af00      	add	r7, sp, #0
+ 80002d6:	6078      	str	r0, [r7, #4]
+	TIM10->PSC = 999;          // prescaler division by 1 from 4
+ 80002d8:	4b13      	ldr	r3, [pc, #76]	@ (8000328 <timer10_delay+0x58>)
+ 80002da:	681b      	ldr	r3, [r3, #0]
+ 80002dc:	f240 32e7 	movw	r2, #999	@ 0x3e7
+ 80002e0:	629a      	str	r2, [r3, #40]	@ 0x28
+
+	TIM10->ARR = val;          // 1ms milliseconds Auto reload value on, 19ms milliseconds off
+ 80002e2:	4b11      	ldr	r3, [pc, #68]	@ (8000328 <timer10_delay+0x58>)
+ 80002e4:	681b      	ldr	r3, [r3, #0]
+ 80002e6:	687a      	ldr	r2, [r7, #4]
+ 80002e8:	62da      	str	r2, [r3, #44]	@ 0x2c
+
+	TIM10->CR1 |= (1 << 0);    // CEN : Counter enable. 1: Counter enable
+ 80002ea:	4b0f      	ldr	r3, [pc, #60]	@ (8000328 <timer10_delay+0x58>)
+ 80002ec:	681b      	ldr	r3, [r3, #0]
+ 80002ee:	681a      	ldr	r2, [r3, #0]
+ 80002f0:	4b0d      	ldr	r3, [pc, #52]	@ (8000328 <timer10_delay+0x58>)
+ 80002f2:	681b      	ldr	r3, [r3, #0]
+ 80002f4:	f042 0201 	orr.w	r2, r2, #1
+ 80002f8:	601a      	str	r2, [r3, #0]
+
+	while(!(TIM10->SR & (1 << 0)));   // Update interrupt flag.  1 : Update interrupt pending.
+ 80002fa:	bf00      	nop
+ 80002fc:	4b0a      	ldr	r3, [pc, #40]	@ (8000328 <timer10_delay+0x58>)
+ 80002fe:	681b      	ldr	r3, [r3, #0]
+ 8000300:	691b      	ldr	r3, [r3, #16]
+ 8000302:	f003 0301 	and.w	r3, r3, #1
+ 8000306:	2b00      	cmp	r3, #0
+ 8000308:	d0f8      	beq.n	80002fc <timer10_delay+0x2c>
+
+	TIM10->SR &= ~(1 << 0);   // clear by software
+ 800030a:	4b07      	ldr	r3, [pc, #28]	@ (8000328 <timer10_delay+0x58>)
+ 800030c:	681b      	ldr	r3, [r3, #0]
+ 800030e:	691a      	ldr	r2, [r3, #16]
+ 8000310:	4b05      	ldr	r3, [pc, #20]	@ (8000328 <timer10_delay+0x58>)
+ 8000312:	681b      	ldr	r3, [r3, #0]
+ 8000314:	f022 0201 	bic.w	r2, r2, #1
+ 8000318:	611a      	str	r2, [r3, #16]
+}
+ 800031a:	bf00      	nop
+ 800031c:	370c      	adds	r7, #12
+ 800031e:	46bd      	mov	sp, r7
+ 8000320:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000324:	4770      	bx	lr
+ 8000326:	bf00      	nop
+ 8000328:	20000008 	.word	0x20000008
+
+0800032c <purple_color_led>:
+
+void purple_color_led(void)
+{
+ 800032c:	b580      	push	{r7, lr}
+ 800032e:	b084      	sub	sp, #16
+ 8000330:	af00      	add	r7, sp, #0
+	/* purple color value : R = 128, G = 0, B = 128 */
+
+	int j = 10, m = 255;
+ 8000332:	230a      	movs	r3, #10
+ 8000334:	60fb      	str	r3, [r7, #12]
+ 8000336:	23ff      	movs	r3, #255	@ 0xff
+ 8000338:	60bb      	str	r3, [r7, #8]
+	for (j = 10; j <= 255; j = j + 5)
+ 800033a:	230a      	movs	r3, #10
+ 800033c:	60fb      	str	r3, [r7, #12]
+ 800033e:	e033      	b.n	80003a8 <purple_color_led+0x7c>
+	{
+		GPIOA->ODR |= (1 << 0);    // red
+ 8000340:	4b3b      	ldr	r3, [pc, #236]	@ (8000430 <purple_color_led+0x104>)
+ 8000342:	681b      	ldr	r3, [r3, #0]
+ 8000344:	695a      	ldr	r2, [r3, #20]
+ 8000346:	4b3a      	ldr	r3, [pc, #232]	@ (8000430 <purple_color_led+0x104>)
+ 8000348:	681b      	ldr	r3, [r3, #0]
+ 800034a:	f042 0201 	orr.w	r2, r2, #1
+ 800034e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 2);    // blue
+ 8000350:	4b37      	ldr	r3, [pc, #220]	@ (8000430 <purple_color_led+0x104>)
+ 8000352:	681b      	ldr	r3, [r3, #0]
+ 8000354:	695a      	ldr	r2, [r3, #20]
+ 8000356:	4b36      	ldr	r3, [pc, #216]	@ (8000430 <purple_color_led+0x104>)
+ 8000358:	681b      	ldr	r3, [r3, #0]
+ 800035a:	f042 0204 	orr.w	r2, r2, #4
+ 800035e:	615a      	str	r2, [r3, #20]
+	    timer10_delay(j);        // value 255 means fully ON
+ 8000360:	68f8      	ldr	r0, [r7, #12]
+ 8000362:	f7ff ffb5 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 8000366:	4b32      	ldr	r3, [pc, #200]	@ (8000430 <purple_color_led+0x104>)
+ 8000368:	681b      	ldr	r3, [r3, #0]
+ 800036a:	695a      	ldr	r2, [r3, #20]
+ 800036c:	4b30      	ldr	r3, [pc, #192]	@ (8000430 <purple_color_led+0x104>)
+ 800036e:	681b      	ldr	r3, [r3, #0]
+ 8000370:	f022 0201 	bic.w	r2, r2, #1
+ 8000374:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000376:	4b2e      	ldr	r3, [pc, #184]	@ (8000430 <purple_color_led+0x104>)
+ 8000378:	681b      	ldr	r3, [r3, #0]
+ 800037a:	695a      	ldr	r2, [r3, #20]
+ 800037c:	4b2c      	ldr	r3, [pc, #176]	@ (8000430 <purple_color_led+0x104>)
+ 800037e:	681b      	ldr	r3, [r3, #0]
+ 8000380:	f022 0204 	bic.w	r2, r2, #4
+ 8000384:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000386:	4b2a      	ldr	r3, [pc, #168]	@ (8000430 <purple_color_led+0x104>)
+ 8000388:	681b      	ldr	r3, [r3, #0]
+ 800038a:	695a      	ldr	r2, [r3, #20]
+ 800038c:	4b28      	ldr	r3, [pc, #160]	@ (8000430 <purple_color_led+0x104>)
+ 800038e:	681b      	ldr	r3, [r3, #0]
+ 8000390:	f022 0202 	bic.w	r2, r2, #2
+ 8000394:	615a      	str	r2, [r3, #20]
+		timer10_delay(m);          // value 255 means fully OFF
+ 8000396:	68b8      	ldr	r0, [r7, #8]
+ 8000398:	f7ff ff9a 	bl	80002d0 <timer10_delay>
+		m = m - 5;
+ 800039c:	68bb      	ldr	r3, [r7, #8]
+ 800039e:	3b05      	subs	r3, #5
+ 80003a0:	60bb      	str	r3, [r7, #8]
+	for (j = 10; j <= 255; j = j + 5)
+ 80003a2:	68fb      	ldr	r3, [r7, #12]
+ 80003a4:	3305      	adds	r3, #5
+ 80003a6:	60fb      	str	r3, [r7, #12]
+ 80003a8:	68fb      	ldr	r3, [r7, #12]
+ 80003aa:	2bff      	cmp	r3, #255	@ 0xff
+ 80003ac:	ddc8      	ble.n	8000340 <purple_color_led+0x14>
+	}
+
+	j = 255;
+ 80003ae:	23ff      	movs	r3, #255	@ 0xff
+ 80003b0:	60fb      	str	r3, [r7, #12]
+	for (int i = 10; i <= 255; i = i + 5)
+ 80003b2:	230a      	movs	r3, #10
+ 80003b4:	607b      	str	r3, [r7, #4]
+ 80003b6:	e033      	b.n	8000420 <purple_color_led+0xf4>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 80003b8:	4b1d      	ldr	r3, [pc, #116]	@ (8000430 <purple_color_led+0x104>)
+ 80003ba:	681b      	ldr	r3, [r3, #0]
+ 80003bc:	695a      	ldr	r2, [r3, #20]
+ 80003be:	4b1c      	ldr	r3, [pc, #112]	@ (8000430 <purple_color_led+0x104>)
+ 80003c0:	681b      	ldr	r3, [r3, #0]
+ 80003c2:	f042 0201 	orr.w	r2, r2, #1
+ 80003c6:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 80003c8:	4b19      	ldr	r3, [pc, #100]	@ (8000430 <purple_color_led+0x104>)
+ 80003ca:	681b      	ldr	r3, [r3, #0]
+ 80003cc:	695a      	ldr	r2, [r3, #20]
+ 80003ce:	4b18      	ldr	r3, [pc, #96]	@ (8000430 <purple_color_led+0x104>)
+ 80003d0:	681b      	ldr	r3, [r3, #0]
+ 80003d2:	f042 0204 	orr.w	r2, r2, #4
+ 80003d6:	615a      	str	r2, [r3, #20]
+		timer10_delay(j);
+ 80003d8:	68f8      	ldr	r0, [r7, #12]
+ 80003da:	f7ff ff79 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80003de:	4b14      	ldr	r3, [pc, #80]	@ (8000430 <purple_color_led+0x104>)
+ 80003e0:	681b      	ldr	r3, [r3, #0]
+ 80003e2:	695a      	ldr	r2, [r3, #20]
+ 80003e4:	4b12      	ldr	r3, [pc, #72]	@ (8000430 <purple_color_led+0x104>)
+ 80003e6:	681b      	ldr	r3, [r3, #0]
+ 80003e8:	f022 0201 	bic.w	r2, r2, #1
+ 80003ec:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80003ee:	4b10      	ldr	r3, [pc, #64]	@ (8000430 <purple_color_led+0x104>)
+ 80003f0:	681b      	ldr	r3, [r3, #0]
+ 80003f2:	695a      	ldr	r2, [r3, #20]
+ 80003f4:	4b0e      	ldr	r3, [pc, #56]	@ (8000430 <purple_color_led+0x104>)
+ 80003f6:	681b      	ldr	r3, [r3, #0]
+ 80003f8:	f022 0204 	bic.w	r2, r2, #4
+ 80003fc:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80003fe:	4b0c      	ldr	r3, [pc, #48]	@ (8000430 <purple_color_led+0x104>)
+ 8000400:	681b      	ldr	r3, [r3, #0]
+ 8000402:	695a      	ldr	r2, [r3, #20]
+ 8000404:	4b0a      	ldr	r3, [pc, #40]	@ (8000430 <purple_color_led+0x104>)
+ 8000406:	681b      	ldr	r3, [r3, #0]
+ 8000408:	f022 0202 	bic.w	r2, r2, #2
+ 800040c:	615a      	str	r2, [r3, #20]
+		timer10_delay(i);
+ 800040e:	6878      	ldr	r0, [r7, #4]
+ 8000410:	f7ff ff5e 	bl	80002d0 <timer10_delay>
+		j = j - 5;
+ 8000414:	68fb      	ldr	r3, [r7, #12]
+ 8000416:	3b05      	subs	r3, #5
+ 8000418:	60fb      	str	r3, [r7, #12]
+	for (int i = 10; i <= 255; i = i + 5)
+ 800041a:	687b      	ldr	r3, [r7, #4]
+ 800041c:	3305      	adds	r3, #5
+ 800041e:	607b      	str	r3, [r7, #4]
+ 8000420:	687b      	ldr	r3, [r7, #4]
+ 8000422:	2bff      	cmp	r3, #255	@ 0xff
+ 8000424:	ddc8      	ble.n	80003b8 <purple_color_led+0x8c>
+	}
+
+}
+ 8000426:	bf00      	nop
+ 8000428:	bf00      	nop
+ 800042a:	3710      	adds	r7, #16
+ 800042c:	46bd      	mov	sp, r7
+ 800042e:	bd80      	pop	{r7, pc}
+ 8000430:	20000004 	.word	0x20000004
+
+08000434 <navy_color_led>:
+
+
+void navy_color_led(void)
+{
+ 8000434:	b580      	push	{r7, lr}
+ 8000436:	b084      	sub	sp, #16
+ 8000438:	af00      	add	r7, sp, #0
+	/* navy color value : R = 0, G = 0, B = 128 */
+
+	int p = 10, q = 255;
+ 800043a:	230a      	movs	r3, #10
+ 800043c:	60fb      	str	r3, [r7, #12]
+ 800043e:	23ff      	movs	r3, #255	@ 0xff
+ 8000440:	60bb      	str	r3, [r7, #8]
+	for (p = 10 ; p <= 255; p = p + 5)
+ 8000442:	230a      	movs	r3, #10
+ 8000444:	60fb      	str	r3, [r7, #12]
+ 8000446:	e02b      	b.n	80004a0 <navy_color_led+0x6c>
+	{
+		GPIOA->ODR |= (1 << 2);    // red
+ 8000448:	4b33      	ldr	r3, [pc, #204]	@ (8000518 <navy_color_led+0xe4>)
+ 800044a:	681b      	ldr	r3, [r3, #0]
+ 800044c:	695a      	ldr	r2, [r3, #20]
+ 800044e:	4b32      	ldr	r3, [pc, #200]	@ (8000518 <navy_color_led+0xe4>)
+ 8000450:	681b      	ldr	r3, [r3, #0]
+ 8000452:	f042 0204 	orr.w	r2, r2, #4
+ 8000456:	615a      	str	r2, [r3, #20]
+	    timer10_delay(p);        // value 255 means fully ON
+ 8000458:	68f8      	ldr	r0, [r7, #12]
+ 800045a:	f7ff ff39 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 800045e:	4b2e      	ldr	r3, [pc, #184]	@ (8000518 <navy_color_led+0xe4>)
+ 8000460:	681b      	ldr	r3, [r3, #0]
+ 8000462:	695a      	ldr	r2, [r3, #20]
+ 8000464:	4b2c      	ldr	r3, [pc, #176]	@ (8000518 <navy_color_led+0xe4>)
+ 8000466:	681b      	ldr	r3, [r3, #0]
+ 8000468:	f022 0201 	bic.w	r2, r2, #1
+ 800046c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 800046e:	4b2a      	ldr	r3, [pc, #168]	@ (8000518 <navy_color_led+0xe4>)
+ 8000470:	681b      	ldr	r3, [r3, #0]
+ 8000472:	695a      	ldr	r2, [r3, #20]
+ 8000474:	4b28      	ldr	r3, [pc, #160]	@ (8000518 <navy_color_led+0xe4>)
+ 8000476:	681b      	ldr	r3, [r3, #0]
+ 8000478:	f022 0204 	bic.w	r2, r2, #4
+ 800047c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 800047e:	4b26      	ldr	r3, [pc, #152]	@ (8000518 <navy_color_led+0xe4>)
+ 8000480:	681b      	ldr	r3, [r3, #0]
+ 8000482:	695a      	ldr	r2, [r3, #20]
+ 8000484:	4b24      	ldr	r3, [pc, #144]	@ (8000518 <navy_color_led+0xe4>)
+ 8000486:	681b      	ldr	r3, [r3, #0]
+ 8000488:	f022 0202 	bic.w	r2, r2, #2
+ 800048c:	615a      	str	r2, [r3, #20]
+	    timer10_delay(q);          // value 255 means fully OFF
+ 800048e:	68b8      	ldr	r0, [r7, #8]
+ 8000490:	f7ff ff1e 	bl	80002d0 <timer10_delay>
+	    q = q - 5;
+ 8000494:	68bb      	ldr	r3, [r7, #8]
+ 8000496:	3b05      	subs	r3, #5
+ 8000498:	60bb      	str	r3, [r7, #8]
+	for (p = 10 ; p <= 255; p = p + 5)
+ 800049a:	68fb      	ldr	r3, [r7, #12]
+ 800049c:	3305      	adds	r3, #5
+ 800049e:	60fb      	str	r3, [r7, #12]
+ 80004a0:	68fb      	ldr	r3, [r7, #12]
+ 80004a2:	2bff      	cmp	r3, #255	@ 0xff
+ 80004a4:	ddd0      	ble.n	8000448 <navy_color_led+0x14>
+	}
+	p = 255;
+ 80004a6:	23ff      	movs	r3, #255	@ 0xff
+ 80004a8:	60fb      	str	r3, [r7, #12]
+	for (int s = 10; s <= 255; s = s + 5)
+ 80004aa:	230a      	movs	r3, #10
+ 80004ac:	607b      	str	r3, [r7, #4]
+ 80004ae:	e02b      	b.n	8000508 <navy_color_led+0xd4>
+	{
+		GPIOA->ODR |= (1 << 2);
+ 80004b0:	4b19      	ldr	r3, [pc, #100]	@ (8000518 <navy_color_led+0xe4>)
+ 80004b2:	681b      	ldr	r3, [r3, #0]
+ 80004b4:	695a      	ldr	r2, [r3, #20]
+ 80004b6:	4b18      	ldr	r3, [pc, #96]	@ (8000518 <navy_color_led+0xe4>)
+ 80004b8:	681b      	ldr	r3, [r3, #0]
+ 80004ba:	f042 0204 	orr.w	r2, r2, #4
+ 80004be:	615a      	str	r2, [r3, #20]
+		timer10_delay(p);
+ 80004c0:	68f8      	ldr	r0, [r7, #12]
+ 80004c2:	f7ff ff05 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80004c6:	4b14      	ldr	r3, [pc, #80]	@ (8000518 <navy_color_led+0xe4>)
+ 80004c8:	681b      	ldr	r3, [r3, #0]
+ 80004ca:	695a      	ldr	r2, [r3, #20]
+ 80004cc:	4b12      	ldr	r3, [pc, #72]	@ (8000518 <navy_color_led+0xe4>)
+ 80004ce:	681b      	ldr	r3, [r3, #0]
+ 80004d0:	f022 0201 	bic.w	r2, r2, #1
+ 80004d4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80004d6:	4b10      	ldr	r3, [pc, #64]	@ (8000518 <navy_color_led+0xe4>)
+ 80004d8:	681b      	ldr	r3, [r3, #0]
+ 80004da:	695a      	ldr	r2, [r3, #20]
+ 80004dc:	4b0e      	ldr	r3, [pc, #56]	@ (8000518 <navy_color_led+0xe4>)
+ 80004de:	681b      	ldr	r3, [r3, #0]
+ 80004e0:	f022 0204 	bic.w	r2, r2, #4
+ 80004e4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80004e6:	4b0c      	ldr	r3, [pc, #48]	@ (8000518 <navy_color_led+0xe4>)
+ 80004e8:	681b      	ldr	r3, [r3, #0]
+ 80004ea:	695a      	ldr	r2, [r3, #20]
+ 80004ec:	4b0a      	ldr	r3, [pc, #40]	@ (8000518 <navy_color_led+0xe4>)
+ 80004ee:	681b      	ldr	r3, [r3, #0]
+ 80004f0:	f022 0202 	bic.w	r2, r2, #2
+ 80004f4:	615a      	str	r2, [r3, #20]
+		timer10_delay(s);
+ 80004f6:	6878      	ldr	r0, [r7, #4]
+ 80004f8:	f7ff feea 	bl	80002d0 <timer10_delay>
+		p = p - 5;
+ 80004fc:	68fb      	ldr	r3, [r7, #12]
+ 80004fe:	3b05      	subs	r3, #5
+ 8000500:	60fb      	str	r3, [r7, #12]
+	for (int s = 10; s <= 255; s = s + 5)
+ 8000502:	687b      	ldr	r3, [r7, #4]
+ 8000504:	3305      	adds	r3, #5
+ 8000506:	607b      	str	r3, [r7, #4]
+ 8000508:	687b      	ldr	r3, [r7, #4]
+ 800050a:	2bff      	cmp	r3, #255	@ 0xff
+ 800050c:	ddd0      	ble.n	80004b0 <navy_color_led+0x7c>
+	}
+}
+ 800050e:	bf00      	nop
+ 8000510:	bf00      	nop
+ 8000512:	3710      	adds	r7, #16
+ 8000514:	46bd      	mov	sp, r7
+ 8000516:	bd80      	pop	{r7, pc}
+ 8000518:	20000004 	.word	0x20000004
+
+0800051c <yellow_color_led>:
+
+
+void yellow_color_led(void)
+{
+ 800051c:	b580      	push	{r7, lr}
+ 800051e:	b084      	sub	sp, #16
+ 8000520:	af00      	add	r7, sp, #0
+    //	yellow color value : R = 255, G = 255, B = 0.
+	int b = 16, t = 255;
+ 8000522:	2310      	movs	r3, #16
+ 8000524:	60fb      	str	r3, [r7, #12]
+ 8000526:	23ff      	movs	r3, #255	@ 0xff
+ 8000528:	60bb      	str	r3, [r7, #8]
+	for (b = 16; b <= 255; b = b + 4)
+ 800052a:	2310      	movs	r3, #16
+ 800052c:	60fb      	str	r3, [r7, #12]
+ 800052e:	e033      	b.n	8000598 <yellow_color_led+0x7c>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 8000530:	4b3b      	ldr	r3, [pc, #236]	@ (8000620 <yellow_color_led+0x104>)
+ 8000532:	681b      	ldr	r3, [r3, #0]
+ 8000534:	695a      	ldr	r2, [r3, #20]
+ 8000536:	4b3a      	ldr	r3, [pc, #232]	@ (8000620 <yellow_color_led+0x104>)
+ 8000538:	681b      	ldr	r3, [r3, #0]
+ 800053a:	f042 0201 	orr.w	r2, r2, #1
+ 800053e:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 8000540:	4b37      	ldr	r3, [pc, #220]	@ (8000620 <yellow_color_led+0x104>)
+ 8000542:	681b      	ldr	r3, [r3, #0]
+ 8000544:	695a      	ldr	r2, [r3, #20]
+ 8000546:	4b36      	ldr	r3, [pc, #216]	@ (8000620 <yellow_color_led+0x104>)
+ 8000548:	681b      	ldr	r3, [r3, #0]
+ 800054a:	f042 0202 	orr.w	r2, r2, #2
+ 800054e:	615a      	str	r2, [r3, #20]
+		timer10_delay(b);
+ 8000550:	68f8      	ldr	r0, [r7, #12]
+ 8000552:	f7ff febd 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 8000556:	4b32      	ldr	r3, [pc, #200]	@ (8000620 <yellow_color_led+0x104>)
+ 8000558:	681b      	ldr	r3, [r3, #0]
+ 800055a:	695a      	ldr	r2, [r3, #20]
+ 800055c:	4b30      	ldr	r3, [pc, #192]	@ (8000620 <yellow_color_led+0x104>)
+ 800055e:	681b      	ldr	r3, [r3, #0]
+ 8000560:	f022 0201 	bic.w	r2, r2, #1
+ 8000564:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000566:	4b2e      	ldr	r3, [pc, #184]	@ (8000620 <yellow_color_led+0x104>)
+ 8000568:	681b      	ldr	r3, [r3, #0]
+ 800056a:	695a      	ldr	r2, [r3, #20]
+ 800056c:	4b2c      	ldr	r3, [pc, #176]	@ (8000620 <yellow_color_led+0x104>)
+ 800056e:	681b      	ldr	r3, [r3, #0]
+ 8000570:	f022 0202 	bic.w	r2, r2, #2
+ 8000574:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000576:	4b2a      	ldr	r3, [pc, #168]	@ (8000620 <yellow_color_led+0x104>)
+ 8000578:	681b      	ldr	r3, [r3, #0]
+ 800057a:	695a      	ldr	r2, [r3, #20]
+ 800057c:	4b28      	ldr	r3, [pc, #160]	@ (8000620 <yellow_color_led+0x104>)
+ 800057e:	681b      	ldr	r3, [r3, #0]
+ 8000580:	f022 0204 	bic.w	r2, r2, #4
+ 8000584:	615a      	str	r2, [r3, #20]
+		timer10_delay(t);
+ 8000586:	68b8      	ldr	r0, [r7, #8]
+ 8000588:	f7ff fea2 	bl	80002d0 <timer10_delay>
+		t = t - 4;
+ 800058c:	68bb      	ldr	r3, [r7, #8]
+ 800058e:	3b04      	subs	r3, #4
+ 8000590:	60bb      	str	r3, [r7, #8]
+	for (b = 16; b <= 255; b = b + 4)
+ 8000592:	68fb      	ldr	r3, [r7, #12]
+ 8000594:	3304      	adds	r3, #4
+ 8000596:	60fb      	str	r3, [r7, #12]
+ 8000598:	68fb      	ldr	r3, [r7, #12]
+ 800059a:	2bff      	cmp	r3, #255	@ 0xff
+ 800059c:	ddc8      	ble.n	8000530 <yellow_color_led+0x14>
+	}
+	b = 255;
+ 800059e:	23ff      	movs	r3, #255	@ 0xff
+ 80005a0:	60fb      	str	r3, [r7, #12]
+	for (int y = 16; y <= 255; y = y + 4)
+ 80005a2:	2310      	movs	r3, #16
+ 80005a4:	607b      	str	r3, [r7, #4]
+ 80005a6:	e033      	b.n	8000610 <yellow_color_led+0xf4>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 80005a8:	4b1d      	ldr	r3, [pc, #116]	@ (8000620 <yellow_color_led+0x104>)
+ 80005aa:	681b      	ldr	r3, [r3, #0]
+ 80005ac:	695a      	ldr	r2, [r3, #20]
+ 80005ae:	4b1c      	ldr	r3, [pc, #112]	@ (8000620 <yellow_color_led+0x104>)
+ 80005b0:	681b      	ldr	r3, [r3, #0]
+ 80005b2:	f042 0201 	orr.w	r2, r2, #1
+ 80005b6:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 80005b8:	4b19      	ldr	r3, [pc, #100]	@ (8000620 <yellow_color_led+0x104>)
+ 80005ba:	681b      	ldr	r3, [r3, #0]
+ 80005bc:	695a      	ldr	r2, [r3, #20]
+ 80005be:	4b18      	ldr	r3, [pc, #96]	@ (8000620 <yellow_color_led+0x104>)
+ 80005c0:	681b      	ldr	r3, [r3, #0]
+ 80005c2:	f042 0202 	orr.w	r2, r2, #2
+ 80005c6:	615a      	str	r2, [r3, #20]
+		timer10_delay(b);
+ 80005c8:	68f8      	ldr	r0, [r7, #12]
+ 80005ca:	f7ff fe81 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80005ce:	4b14      	ldr	r3, [pc, #80]	@ (8000620 <yellow_color_led+0x104>)
+ 80005d0:	681b      	ldr	r3, [r3, #0]
+ 80005d2:	695a      	ldr	r2, [r3, #20]
+ 80005d4:	4b12      	ldr	r3, [pc, #72]	@ (8000620 <yellow_color_led+0x104>)
+ 80005d6:	681b      	ldr	r3, [r3, #0]
+ 80005d8:	f022 0201 	bic.w	r2, r2, #1
+ 80005dc:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80005de:	4b10      	ldr	r3, [pc, #64]	@ (8000620 <yellow_color_led+0x104>)
+ 80005e0:	681b      	ldr	r3, [r3, #0]
+ 80005e2:	695a      	ldr	r2, [r3, #20]
+ 80005e4:	4b0e      	ldr	r3, [pc, #56]	@ (8000620 <yellow_color_led+0x104>)
+ 80005e6:	681b      	ldr	r3, [r3, #0]
+ 80005e8:	f022 0202 	bic.w	r2, r2, #2
+ 80005ec:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80005ee:	4b0c      	ldr	r3, [pc, #48]	@ (8000620 <yellow_color_led+0x104>)
+ 80005f0:	681b      	ldr	r3, [r3, #0]
+ 80005f2:	695a      	ldr	r2, [r3, #20]
+ 80005f4:	4b0a      	ldr	r3, [pc, #40]	@ (8000620 <yellow_color_led+0x104>)
+ 80005f6:	681b      	ldr	r3, [r3, #0]
+ 80005f8:	f022 0204 	bic.w	r2, r2, #4
+ 80005fc:	615a      	str	r2, [r3, #20]
+		timer10_delay(y);
+ 80005fe:	6878      	ldr	r0, [r7, #4]
+ 8000600:	f7ff fe66 	bl	80002d0 <timer10_delay>
+		b = b - 4;
+ 8000604:	68fb      	ldr	r3, [r7, #12]
+ 8000606:	3b04      	subs	r3, #4
+ 8000608:	60fb      	str	r3, [r7, #12]
+	for (int y = 16; y <= 255; y = y + 4)
+ 800060a:	687b      	ldr	r3, [r7, #4]
+ 800060c:	3304      	adds	r3, #4
+ 800060e:	607b      	str	r3, [r7, #4]
+ 8000610:	687b      	ldr	r3, [r7, #4]
+ 8000612:	2bff      	cmp	r3, #255	@ 0xff
+ 8000614:	ddc8      	ble.n	80005a8 <yellow_color_led+0x8c>
+	}
+}
+ 8000616:	bf00      	nop
+ 8000618:	bf00      	nop
+ 800061a:	3710      	adds	r7, #16
+ 800061c:	46bd      	mov	sp, r7
+ 800061e:	bd80      	pop	{r7, pc}
+ 8000620:	20000004 	.word	0x20000004
+
+08000624 <white_color_led>:
+
+void white_color_led()
+{
+ 8000624:	b580      	push	{r7, lr}
+ 8000626:	b084      	sub	sp, #16
+ 8000628:	af00      	add	r7, sp, #0
+	// white color value : R = 255, G, B = 255
+	int h = 16, r = 255;
+ 800062a:	2310      	movs	r3, #16
+ 800062c:	60fb      	str	r3, [r7, #12]
+ 800062e:	23ff      	movs	r3, #255	@ 0xff
+ 8000630:	60bb      	str	r3, [r7, #8]
+	for (h = 16; h <= 255; h = h + 4)
+ 8000632:	2310      	movs	r3, #16
+ 8000634:	60fb      	str	r3, [r7, #12]
+ 8000636:	e03b      	b.n	80006b0 <white_color_led+0x8c>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 8000638:	4b43      	ldr	r3, [pc, #268]	@ (8000748 <white_color_led+0x124>)
+ 800063a:	681b      	ldr	r3, [r3, #0]
+ 800063c:	695a      	ldr	r2, [r3, #20]
+ 800063e:	4b42      	ldr	r3, [pc, #264]	@ (8000748 <white_color_led+0x124>)
+ 8000640:	681b      	ldr	r3, [r3, #0]
+ 8000642:	f042 0201 	orr.w	r2, r2, #1
+ 8000646:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 8000648:	4b3f      	ldr	r3, [pc, #252]	@ (8000748 <white_color_led+0x124>)
+ 800064a:	681b      	ldr	r3, [r3, #0]
+ 800064c:	695a      	ldr	r2, [r3, #20]
+ 800064e:	4b3e      	ldr	r3, [pc, #248]	@ (8000748 <white_color_led+0x124>)
+ 8000650:	681b      	ldr	r3, [r3, #0]
+ 8000652:	f042 0202 	orr.w	r2, r2, #2
+ 8000656:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 8000658:	4b3b      	ldr	r3, [pc, #236]	@ (8000748 <white_color_led+0x124>)
+ 800065a:	681b      	ldr	r3, [r3, #0]
+ 800065c:	695a      	ldr	r2, [r3, #20]
+ 800065e:	4b3a      	ldr	r3, [pc, #232]	@ (8000748 <white_color_led+0x124>)
+ 8000660:	681b      	ldr	r3, [r3, #0]
+ 8000662:	f042 0204 	orr.w	r2, r2, #4
+ 8000666:	615a      	str	r2, [r3, #20]
+		timer10_delay(h);
+ 8000668:	68f8      	ldr	r0, [r7, #12]
+ 800066a:	f7ff fe31 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 800066e:	4b36      	ldr	r3, [pc, #216]	@ (8000748 <white_color_led+0x124>)
+ 8000670:	681b      	ldr	r3, [r3, #0]
+ 8000672:	695a      	ldr	r2, [r3, #20]
+ 8000674:	4b34      	ldr	r3, [pc, #208]	@ (8000748 <white_color_led+0x124>)
+ 8000676:	681b      	ldr	r3, [r3, #0]
+ 8000678:	f022 0201 	bic.w	r2, r2, #1
+ 800067c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 800067e:	4b32      	ldr	r3, [pc, #200]	@ (8000748 <white_color_led+0x124>)
+ 8000680:	681b      	ldr	r3, [r3, #0]
+ 8000682:	695a      	ldr	r2, [r3, #20]
+ 8000684:	4b30      	ldr	r3, [pc, #192]	@ (8000748 <white_color_led+0x124>)
+ 8000686:	681b      	ldr	r3, [r3, #0]
+ 8000688:	f022 0202 	bic.w	r2, r2, #2
+ 800068c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 800068e:	4b2e      	ldr	r3, [pc, #184]	@ (8000748 <white_color_led+0x124>)
+ 8000690:	681b      	ldr	r3, [r3, #0]
+ 8000692:	695a      	ldr	r2, [r3, #20]
+ 8000694:	4b2c      	ldr	r3, [pc, #176]	@ (8000748 <white_color_led+0x124>)
+ 8000696:	681b      	ldr	r3, [r3, #0]
+ 8000698:	f022 0204 	bic.w	r2, r2, #4
+ 800069c:	615a      	str	r2, [r3, #20]
+		timer10_delay(r);
+ 800069e:	68b8      	ldr	r0, [r7, #8]
+ 80006a0:	f7ff fe16 	bl	80002d0 <timer10_delay>
+		r = r - 4;
+ 80006a4:	68bb      	ldr	r3, [r7, #8]
+ 80006a6:	3b04      	subs	r3, #4
+ 80006a8:	60bb      	str	r3, [r7, #8]
+	for (h = 16; h <= 255; h = h + 4)
+ 80006aa:	68fb      	ldr	r3, [r7, #12]
+ 80006ac:	3304      	adds	r3, #4
+ 80006ae:	60fb      	str	r3, [r7, #12]
+ 80006b0:	68fb      	ldr	r3, [r7, #12]
+ 80006b2:	2bff      	cmp	r3, #255	@ 0xff
+ 80006b4:	ddc0      	ble.n	8000638 <white_color_led+0x14>
+	}
+	h = 255;
+ 80006b6:	23ff      	movs	r3, #255	@ 0xff
+ 80006b8:	60fb      	str	r3, [r7, #12]
+	for (int w = 16; w <= 255; w = w + 4)
+ 80006ba:	2310      	movs	r3, #16
+ 80006bc:	607b      	str	r3, [r7, #4]
+ 80006be:	e03b      	b.n	8000738 <white_color_led+0x114>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 80006c0:	4b21      	ldr	r3, [pc, #132]	@ (8000748 <white_color_led+0x124>)
+ 80006c2:	681b      	ldr	r3, [r3, #0]
+ 80006c4:	695a      	ldr	r2, [r3, #20]
+ 80006c6:	4b20      	ldr	r3, [pc, #128]	@ (8000748 <white_color_led+0x124>)
+ 80006c8:	681b      	ldr	r3, [r3, #0]
+ 80006ca:	f042 0201 	orr.w	r2, r2, #1
+ 80006ce:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 80006d0:	4b1d      	ldr	r3, [pc, #116]	@ (8000748 <white_color_led+0x124>)
+ 80006d2:	681b      	ldr	r3, [r3, #0]
+ 80006d4:	695a      	ldr	r2, [r3, #20]
+ 80006d6:	4b1c      	ldr	r3, [pc, #112]	@ (8000748 <white_color_led+0x124>)
+ 80006d8:	681b      	ldr	r3, [r3, #0]
+ 80006da:	f042 0202 	orr.w	r2, r2, #2
+ 80006de:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 80006e0:	4b19      	ldr	r3, [pc, #100]	@ (8000748 <white_color_led+0x124>)
+ 80006e2:	681b      	ldr	r3, [r3, #0]
+ 80006e4:	695a      	ldr	r2, [r3, #20]
+ 80006e6:	4b18      	ldr	r3, [pc, #96]	@ (8000748 <white_color_led+0x124>)
+ 80006e8:	681b      	ldr	r3, [r3, #0]
+ 80006ea:	f042 0204 	orr.w	r2, r2, #4
+ 80006ee:	615a      	str	r2, [r3, #20]
+		timer10_delay(h);
+ 80006f0:	68f8      	ldr	r0, [r7, #12]
+ 80006f2:	f7ff fded 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80006f6:	4b14      	ldr	r3, [pc, #80]	@ (8000748 <white_color_led+0x124>)
+ 80006f8:	681b      	ldr	r3, [r3, #0]
+ 80006fa:	695a      	ldr	r2, [r3, #20]
+ 80006fc:	4b12      	ldr	r3, [pc, #72]	@ (8000748 <white_color_led+0x124>)
+ 80006fe:	681b      	ldr	r3, [r3, #0]
+ 8000700:	f022 0201 	bic.w	r2, r2, #1
+ 8000704:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000706:	4b10      	ldr	r3, [pc, #64]	@ (8000748 <white_color_led+0x124>)
+ 8000708:	681b      	ldr	r3, [r3, #0]
+ 800070a:	695a      	ldr	r2, [r3, #20]
+ 800070c:	4b0e      	ldr	r3, [pc, #56]	@ (8000748 <white_color_led+0x124>)
+ 800070e:	681b      	ldr	r3, [r3, #0]
+ 8000710:	f022 0202 	bic.w	r2, r2, #2
+ 8000714:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000716:	4b0c      	ldr	r3, [pc, #48]	@ (8000748 <white_color_led+0x124>)
+ 8000718:	681b      	ldr	r3, [r3, #0]
+ 800071a:	695a      	ldr	r2, [r3, #20]
+ 800071c:	4b0a      	ldr	r3, [pc, #40]	@ (8000748 <white_color_led+0x124>)
+ 800071e:	681b      	ldr	r3, [r3, #0]
+ 8000720:	f022 0204 	bic.w	r2, r2, #4
+ 8000724:	615a      	str	r2, [r3, #20]
+		timer10_delay(w);
+ 8000726:	6878      	ldr	r0, [r7, #4]
+ 8000728:	f7ff fdd2 	bl	80002d0 <timer10_delay>
+		h = h - 4;
+ 800072c:	68fb      	ldr	r3, [r7, #12]
+ 800072e:	3b04      	subs	r3, #4
+ 8000730:	60fb      	str	r3, [r7, #12]
+	for (int w = 16; w <= 255; w = w + 4)
+ 8000732:	687b      	ldr	r3, [r7, #4]
+ 8000734:	3304      	adds	r3, #4
+ 8000736:	607b      	str	r3, [r7, #4]
+ 8000738:	687b      	ldr	r3, [r7, #4]
+ 800073a:	2bff      	cmp	r3, #255	@ 0xff
+ 800073c:	ddc0      	ble.n	80006c0 <white_color_led+0x9c>
+	}
+}
+ 800073e:	bf00      	nop
+ 8000740:	bf00      	nop
+ 8000742:	3710      	adds	r7, #16
+ 8000744:	46bd      	mov	sp, r7
+ 8000746:	bd80      	pop	{r7, pc}
+ 8000748:	20000004 	.word	0x20000004
+
+0800074c <red_color_led>:
+
+void red_color_led(void)
+{
+ 800074c:	b580      	push	{r7, lr}
+ 800074e:	b084      	sub	sp, #16
+ 8000750:	af00      	add	r7, sp, #0
+	// red color value : R = 255, G = 0, B = 0
+	int d = 16, e = 255;
+ 8000752:	2310      	movs	r3, #16
+ 8000754:	60fb      	str	r3, [r7, #12]
+ 8000756:	23ff      	movs	r3, #255	@ 0xff
+ 8000758:	60bb      	str	r3, [r7, #8]
+	for (d = 16; d <= 255; d = d + 4)
+ 800075a:	2310      	movs	r3, #16
+ 800075c:	60fb      	str	r3, [r7, #12]
+ 800075e:	e02b      	b.n	80007b8 <red_color_led+0x6c>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 8000760:	4b33      	ldr	r3, [pc, #204]	@ (8000830 <red_color_led+0xe4>)
+ 8000762:	681b      	ldr	r3, [r3, #0]
+ 8000764:	695a      	ldr	r2, [r3, #20]
+ 8000766:	4b32      	ldr	r3, [pc, #200]	@ (8000830 <red_color_led+0xe4>)
+ 8000768:	681b      	ldr	r3, [r3, #0]
+ 800076a:	f042 0201 	orr.w	r2, r2, #1
+ 800076e:	615a      	str	r2, [r3, #20]
+		timer10_delay(d);
+ 8000770:	68f8      	ldr	r0, [r7, #12]
+ 8000772:	f7ff fdad 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 8000776:	4b2e      	ldr	r3, [pc, #184]	@ (8000830 <red_color_led+0xe4>)
+ 8000778:	681b      	ldr	r3, [r3, #0]
+ 800077a:	695a      	ldr	r2, [r3, #20]
+ 800077c:	4b2c      	ldr	r3, [pc, #176]	@ (8000830 <red_color_led+0xe4>)
+ 800077e:	681b      	ldr	r3, [r3, #0]
+ 8000780:	f022 0201 	bic.w	r2, r2, #1
+ 8000784:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000786:	4b2a      	ldr	r3, [pc, #168]	@ (8000830 <red_color_led+0xe4>)
+ 8000788:	681b      	ldr	r3, [r3, #0]
+ 800078a:	695a      	ldr	r2, [r3, #20]
+ 800078c:	4b28      	ldr	r3, [pc, #160]	@ (8000830 <red_color_led+0xe4>)
+ 800078e:	681b      	ldr	r3, [r3, #0]
+ 8000790:	f022 0202 	bic.w	r2, r2, #2
+ 8000794:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000796:	4b26      	ldr	r3, [pc, #152]	@ (8000830 <red_color_led+0xe4>)
+ 8000798:	681b      	ldr	r3, [r3, #0]
+ 800079a:	695a      	ldr	r2, [r3, #20]
+ 800079c:	4b24      	ldr	r3, [pc, #144]	@ (8000830 <red_color_led+0xe4>)
+ 800079e:	681b      	ldr	r3, [r3, #0]
+ 80007a0:	f022 0204 	bic.w	r2, r2, #4
+ 80007a4:	615a      	str	r2, [r3, #20]
+		timer10_delay(e);
+ 80007a6:	68b8      	ldr	r0, [r7, #8]
+ 80007a8:	f7ff fd92 	bl	80002d0 <timer10_delay>
+		e = e - 4;
+ 80007ac:	68bb      	ldr	r3, [r7, #8]
+ 80007ae:	3b04      	subs	r3, #4
+ 80007b0:	60bb      	str	r3, [r7, #8]
+	for (d = 16; d <= 255; d = d + 4)
+ 80007b2:	68fb      	ldr	r3, [r7, #12]
+ 80007b4:	3304      	adds	r3, #4
+ 80007b6:	60fb      	str	r3, [r7, #12]
+ 80007b8:	68fb      	ldr	r3, [r7, #12]
+ 80007ba:	2bff      	cmp	r3, #255	@ 0xff
+ 80007bc:	ddd0      	ble.n	8000760 <red_color_led+0x14>
+	}
+	d = 255;
+ 80007be:	23ff      	movs	r3, #255	@ 0xff
+ 80007c0:	60fb      	str	r3, [r7, #12]
+	for (int rd = 16; rd <= 255; rd = rd + 4)
+ 80007c2:	2310      	movs	r3, #16
+ 80007c4:	607b      	str	r3, [r7, #4]
+ 80007c6:	e02b      	b.n	8000820 <red_color_led+0xd4>
+	{
+		GPIOA->ODR |= (1 << 0);
+ 80007c8:	4b19      	ldr	r3, [pc, #100]	@ (8000830 <red_color_led+0xe4>)
+ 80007ca:	681b      	ldr	r3, [r3, #0]
+ 80007cc:	695a      	ldr	r2, [r3, #20]
+ 80007ce:	4b18      	ldr	r3, [pc, #96]	@ (8000830 <red_color_led+0xe4>)
+ 80007d0:	681b      	ldr	r3, [r3, #0]
+ 80007d2:	f042 0201 	orr.w	r2, r2, #1
+ 80007d6:	615a      	str	r2, [r3, #20]
+		timer10_delay(d);
+ 80007d8:	68f8      	ldr	r0, [r7, #12]
+ 80007da:	f7ff fd79 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80007de:	4b14      	ldr	r3, [pc, #80]	@ (8000830 <red_color_led+0xe4>)
+ 80007e0:	681b      	ldr	r3, [r3, #0]
+ 80007e2:	695a      	ldr	r2, [r3, #20]
+ 80007e4:	4b12      	ldr	r3, [pc, #72]	@ (8000830 <red_color_led+0xe4>)
+ 80007e6:	681b      	ldr	r3, [r3, #0]
+ 80007e8:	f022 0201 	bic.w	r2, r2, #1
+ 80007ec:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80007ee:	4b10      	ldr	r3, [pc, #64]	@ (8000830 <red_color_led+0xe4>)
+ 80007f0:	681b      	ldr	r3, [r3, #0]
+ 80007f2:	695a      	ldr	r2, [r3, #20]
+ 80007f4:	4b0e      	ldr	r3, [pc, #56]	@ (8000830 <red_color_led+0xe4>)
+ 80007f6:	681b      	ldr	r3, [r3, #0]
+ 80007f8:	f022 0202 	bic.w	r2, r2, #2
+ 80007fc:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80007fe:	4b0c      	ldr	r3, [pc, #48]	@ (8000830 <red_color_led+0xe4>)
+ 8000800:	681b      	ldr	r3, [r3, #0]
+ 8000802:	695a      	ldr	r2, [r3, #20]
+ 8000804:	4b0a      	ldr	r3, [pc, #40]	@ (8000830 <red_color_led+0xe4>)
+ 8000806:	681b      	ldr	r3, [r3, #0]
+ 8000808:	f022 0204 	bic.w	r2, r2, #4
+ 800080c:	615a      	str	r2, [r3, #20]
+		timer10_delay(rd);
+ 800080e:	6878      	ldr	r0, [r7, #4]
+ 8000810:	f7ff fd5e 	bl	80002d0 <timer10_delay>
+		d = d - 4;
+ 8000814:	68fb      	ldr	r3, [r7, #12]
+ 8000816:	3b04      	subs	r3, #4
+ 8000818:	60fb      	str	r3, [r7, #12]
+	for (int rd = 16; rd <= 255; rd = rd + 4)
+ 800081a:	687b      	ldr	r3, [r7, #4]
+ 800081c:	3304      	adds	r3, #4
+ 800081e:	607b      	str	r3, [r7, #4]
+ 8000820:	687b      	ldr	r3, [r7, #4]
+ 8000822:	2bff      	cmp	r3, #255	@ 0xff
+ 8000824:	ddd0      	ble.n	80007c8 <red_color_led+0x7c>
+	}
+}
+ 8000826:	bf00      	nop
+ 8000828:	bf00      	nop
+ 800082a:	3710      	adds	r7, #16
+ 800082c:	46bd      	mov	sp, r7
+ 800082e:	bd80      	pop	{r7, pc}
+ 8000830:	20000004 	.word	0x20000004
+
+08000834 <green_color_led>:
+
+void green_color_led(void)
+{
+ 8000834:	b580      	push	{r7, lr}
+ 8000836:	b084      	sub	sp, #16
+ 8000838:	af00      	add	r7, sp, #0
+	// green color value : R = 0, G = 255, B = 0
+	int gr = 16, en = 255;
+ 800083a:	2310      	movs	r3, #16
+ 800083c:	60fb      	str	r3, [r7, #12]
+ 800083e:	23ff      	movs	r3, #255	@ 0xff
+ 8000840:	60bb      	str	r3, [r7, #8]
+	for (gr = 16; gr <= 255; gr = gr + 4)
+ 8000842:	2310      	movs	r3, #16
+ 8000844:	60fb      	str	r3, [r7, #12]
+ 8000846:	e02b      	b.n	80008a0 <green_color_led+0x6c>
+	{
+		GPIOA->ODR |= (1 << 1);
+ 8000848:	4b33      	ldr	r3, [pc, #204]	@ (8000918 <green_color_led+0xe4>)
+ 800084a:	681b      	ldr	r3, [r3, #0]
+ 800084c:	695a      	ldr	r2, [r3, #20]
+ 800084e:	4b32      	ldr	r3, [pc, #200]	@ (8000918 <green_color_led+0xe4>)
+ 8000850:	681b      	ldr	r3, [r3, #0]
+ 8000852:	f042 0202 	orr.w	r2, r2, #2
+ 8000856:	615a      	str	r2, [r3, #20]
+		timer10_delay(gr);
+ 8000858:	68f8      	ldr	r0, [r7, #12]
+ 800085a:	f7ff fd39 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 800085e:	4b2e      	ldr	r3, [pc, #184]	@ (8000918 <green_color_led+0xe4>)
+ 8000860:	681b      	ldr	r3, [r3, #0]
+ 8000862:	695a      	ldr	r2, [r3, #20]
+ 8000864:	4b2c      	ldr	r3, [pc, #176]	@ (8000918 <green_color_led+0xe4>)
+ 8000866:	681b      	ldr	r3, [r3, #0]
+ 8000868:	f022 0201 	bic.w	r2, r2, #1
+ 800086c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 800086e:	4b2a      	ldr	r3, [pc, #168]	@ (8000918 <green_color_led+0xe4>)
+ 8000870:	681b      	ldr	r3, [r3, #0]
+ 8000872:	695a      	ldr	r2, [r3, #20]
+ 8000874:	4b28      	ldr	r3, [pc, #160]	@ (8000918 <green_color_led+0xe4>)
+ 8000876:	681b      	ldr	r3, [r3, #0]
+ 8000878:	f022 0202 	bic.w	r2, r2, #2
+ 800087c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 800087e:	4b26      	ldr	r3, [pc, #152]	@ (8000918 <green_color_led+0xe4>)
+ 8000880:	681b      	ldr	r3, [r3, #0]
+ 8000882:	695a      	ldr	r2, [r3, #20]
+ 8000884:	4b24      	ldr	r3, [pc, #144]	@ (8000918 <green_color_led+0xe4>)
+ 8000886:	681b      	ldr	r3, [r3, #0]
+ 8000888:	f022 0204 	bic.w	r2, r2, #4
+ 800088c:	615a      	str	r2, [r3, #20]
+		timer10_delay(en);
+ 800088e:	68b8      	ldr	r0, [r7, #8]
+ 8000890:	f7ff fd1e 	bl	80002d0 <timer10_delay>
+		en = en - 4;
+ 8000894:	68bb      	ldr	r3, [r7, #8]
+ 8000896:	3b04      	subs	r3, #4
+ 8000898:	60bb      	str	r3, [r7, #8]
+	for (gr = 16; gr <= 255; gr = gr + 4)
+ 800089a:	68fb      	ldr	r3, [r7, #12]
+ 800089c:	3304      	adds	r3, #4
+ 800089e:	60fb      	str	r3, [r7, #12]
+ 80008a0:	68fb      	ldr	r3, [r7, #12]
+ 80008a2:	2bff      	cmp	r3, #255	@ 0xff
+ 80008a4:	ddd0      	ble.n	8000848 <green_color_led+0x14>
+	}
+	gr = 255;
+ 80008a6:	23ff      	movs	r3, #255	@ 0xff
+ 80008a8:	60fb      	str	r3, [r7, #12]
+	for (int gn = 16; gn <= 255; gn = gn + 4)
+ 80008aa:	2310      	movs	r3, #16
+ 80008ac:	607b      	str	r3, [r7, #4]
+ 80008ae:	e02b      	b.n	8000908 <green_color_led+0xd4>
+	{
+		GPIOA->ODR |= (1 << 1);
+ 80008b0:	4b19      	ldr	r3, [pc, #100]	@ (8000918 <green_color_led+0xe4>)
+ 80008b2:	681b      	ldr	r3, [r3, #0]
+ 80008b4:	695a      	ldr	r2, [r3, #20]
+ 80008b6:	4b18      	ldr	r3, [pc, #96]	@ (8000918 <green_color_led+0xe4>)
+ 80008b8:	681b      	ldr	r3, [r3, #0]
+ 80008ba:	f042 0202 	orr.w	r2, r2, #2
+ 80008be:	615a      	str	r2, [r3, #20]
+		timer10_delay(gr);
+ 80008c0:	68f8      	ldr	r0, [r7, #12]
+ 80008c2:	f7ff fd05 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80008c6:	4b14      	ldr	r3, [pc, #80]	@ (8000918 <green_color_led+0xe4>)
+ 80008c8:	681b      	ldr	r3, [r3, #0]
+ 80008ca:	695a      	ldr	r2, [r3, #20]
+ 80008cc:	4b12      	ldr	r3, [pc, #72]	@ (8000918 <green_color_led+0xe4>)
+ 80008ce:	681b      	ldr	r3, [r3, #0]
+ 80008d0:	f022 0201 	bic.w	r2, r2, #1
+ 80008d4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80008d6:	4b10      	ldr	r3, [pc, #64]	@ (8000918 <green_color_led+0xe4>)
+ 80008d8:	681b      	ldr	r3, [r3, #0]
+ 80008da:	695a      	ldr	r2, [r3, #20]
+ 80008dc:	4b0e      	ldr	r3, [pc, #56]	@ (8000918 <green_color_led+0xe4>)
+ 80008de:	681b      	ldr	r3, [r3, #0]
+ 80008e0:	f022 0202 	bic.w	r2, r2, #2
+ 80008e4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80008e6:	4b0c      	ldr	r3, [pc, #48]	@ (8000918 <green_color_led+0xe4>)
+ 80008e8:	681b      	ldr	r3, [r3, #0]
+ 80008ea:	695a      	ldr	r2, [r3, #20]
+ 80008ec:	4b0a      	ldr	r3, [pc, #40]	@ (8000918 <green_color_led+0xe4>)
+ 80008ee:	681b      	ldr	r3, [r3, #0]
+ 80008f0:	f022 0204 	bic.w	r2, r2, #4
+ 80008f4:	615a      	str	r2, [r3, #20]
+		timer10_delay(gn);
+ 80008f6:	6878      	ldr	r0, [r7, #4]
+ 80008f8:	f7ff fcea 	bl	80002d0 <timer10_delay>
+		gr = gr - 4;
+ 80008fc:	68fb      	ldr	r3, [r7, #12]
+ 80008fe:	3b04      	subs	r3, #4
+ 8000900:	60fb      	str	r3, [r7, #12]
+	for (int gn = 16; gn <= 255; gn = gn + 4)
+ 8000902:	687b      	ldr	r3, [r7, #4]
+ 8000904:	3304      	adds	r3, #4
+ 8000906:	607b      	str	r3, [r7, #4]
+ 8000908:	687b      	ldr	r3, [r7, #4]
+ 800090a:	2bff      	cmp	r3, #255	@ 0xff
+ 800090c:	ddd0      	ble.n	80008b0 <green_color_led+0x7c>
+	}
+}
+ 800090e:	bf00      	nop
+ 8000910:	bf00      	nop
+ 8000912:	3710      	adds	r7, #16
+ 8000914:	46bd      	mov	sp, r7
+ 8000916:	bd80      	pop	{r7, pc}
+ 8000918:	20000004 	.word	0x20000004
+
+0800091c <cyan_color_led>:
+
+void cyan_color_led(void)
+{
+ 800091c:	b580      	push	{r7, lr}
+ 800091e:	b084      	sub	sp, #16
+ 8000920:	af00      	add	r7, sp, #0
+	// cyan color value : R = 0, G = 255, B = 255
+	int cy = 16, an = 255;
+ 8000922:	2310      	movs	r3, #16
+ 8000924:	60fb      	str	r3, [r7, #12]
+ 8000926:	23ff      	movs	r3, #255	@ 0xff
+ 8000928:	60bb      	str	r3, [r7, #8]
+	for (cy = 16; cy <= 255; cy = cy + 4)
+ 800092a:	2310      	movs	r3, #16
+ 800092c:	60fb      	str	r3, [r7, #12]
+ 800092e:	e033      	b.n	8000998 <cyan_color_led+0x7c>
+	{
+		GPIOA->ODR |= (1 << 1);
+ 8000930:	4b3b      	ldr	r3, [pc, #236]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000932:	681b      	ldr	r3, [r3, #0]
+ 8000934:	695a      	ldr	r2, [r3, #20]
+ 8000936:	4b3a      	ldr	r3, [pc, #232]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000938:	681b      	ldr	r3, [r3, #0]
+ 800093a:	f042 0202 	orr.w	r2, r2, #2
+ 800093e:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 8000940:	4b37      	ldr	r3, [pc, #220]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000942:	681b      	ldr	r3, [r3, #0]
+ 8000944:	695a      	ldr	r2, [r3, #20]
+ 8000946:	4b36      	ldr	r3, [pc, #216]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000948:	681b      	ldr	r3, [r3, #0]
+ 800094a:	f042 0204 	orr.w	r2, r2, #4
+ 800094e:	615a      	str	r2, [r3, #20]
+		timer10_delay(cy);
+ 8000950:	68f8      	ldr	r0, [r7, #12]
+ 8000952:	f7ff fcbd 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 8000956:	4b32      	ldr	r3, [pc, #200]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000958:	681b      	ldr	r3, [r3, #0]
+ 800095a:	695a      	ldr	r2, [r3, #20]
+ 800095c:	4b30      	ldr	r3, [pc, #192]	@ (8000a20 <cyan_color_led+0x104>)
+ 800095e:	681b      	ldr	r3, [r3, #0]
+ 8000960:	f022 0201 	bic.w	r2, r2, #1
+ 8000964:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000966:	4b2e      	ldr	r3, [pc, #184]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000968:	681b      	ldr	r3, [r3, #0]
+ 800096a:	695a      	ldr	r2, [r3, #20]
+ 800096c:	4b2c      	ldr	r3, [pc, #176]	@ (8000a20 <cyan_color_led+0x104>)
+ 800096e:	681b      	ldr	r3, [r3, #0]
+ 8000970:	f022 0202 	bic.w	r2, r2, #2
+ 8000974:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000976:	4b2a      	ldr	r3, [pc, #168]	@ (8000a20 <cyan_color_led+0x104>)
+ 8000978:	681b      	ldr	r3, [r3, #0]
+ 800097a:	695a      	ldr	r2, [r3, #20]
+ 800097c:	4b28      	ldr	r3, [pc, #160]	@ (8000a20 <cyan_color_led+0x104>)
+ 800097e:	681b      	ldr	r3, [r3, #0]
+ 8000980:	f022 0204 	bic.w	r2, r2, #4
+ 8000984:	615a      	str	r2, [r3, #20]
+		timer10_delay(an);
+ 8000986:	68b8      	ldr	r0, [r7, #8]
+ 8000988:	f7ff fca2 	bl	80002d0 <timer10_delay>
+		an = an - 4;
+ 800098c:	68bb      	ldr	r3, [r7, #8]
+ 800098e:	3b04      	subs	r3, #4
+ 8000990:	60bb      	str	r3, [r7, #8]
+	for (cy = 16; cy <= 255; cy = cy + 4)
+ 8000992:	68fb      	ldr	r3, [r7, #12]
+ 8000994:	3304      	adds	r3, #4
+ 8000996:	60fb      	str	r3, [r7, #12]
+ 8000998:	68fb      	ldr	r3, [r7, #12]
+ 800099a:	2bff      	cmp	r3, #255	@ 0xff
+ 800099c:	ddc8      	ble.n	8000930 <cyan_color_led+0x14>
+	}
+	cy = 255;
+ 800099e:	23ff      	movs	r3, #255	@ 0xff
+ 80009a0:	60fb      	str	r3, [r7, #12]
+	for (int nc = 16; nc <= 255; nc = nc + 4)
+ 80009a2:	2310      	movs	r3, #16
+ 80009a4:	607b      	str	r3, [r7, #4]
+ 80009a6:	e033      	b.n	8000a10 <cyan_color_led+0xf4>
+	{
+		GPIOA->ODR |= (1 << 1);
+ 80009a8:	4b1d      	ldr	r3, [pc, #116]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009aa:	681b      	ldr	r3, [r3, #0]
+ 80009ac:	695a      	ldr	r2, [r3, #20]
+ 80009ae:	4b1c      	ldr	r3, [pc, #112]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009b0:	681b      	ldr	r3, [r3, #0]
+ 80009b2:	f042 0202 	orr.w	r2, r2, #2
+ 80009b6:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 80009b8:	4b19      	ldr	r3, [pc, #100]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009ba:	681b      	ldr	r3, [r3, #0]
+ 80009bc:	695a      	ldr	r2, [r3, #20]
+ 80009be:	4b18      	ldr	r3, [pc, #96]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009c0:	681b      	ldr	r3, [r3, #0]
+ 80009c2:	f042 0204 	orr.w	r2, r2, #4
+ 80009c6:	615a      	str	r2, [r3, #20]
+		timer10_delay(cy);
+ 80009c8:	68f8      	ldr	r0, [r7, #12]
+ 80009ca:	f7ff fc81 	bl	80002d0 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);
+ 80009ce:	4b14      	ldr	r3, [pc, #80]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009d0:	681b      	ldr	r3, [r3, #0]
+ 80009d2:	695a      	ldr	r2, [r3, #20]
+ 80009d4:	4b12      	ldr	r3, [pc, #72]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009d6:	681b      	ldr	r3, [r3, #0]
+ 80009d8:	f022 0201 	bic.w	r2, r2, #1
+ 80009dc:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80009de:	4b10      	ldr	r3, [pc, #64]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009e0:	681b      	ldr	r3, [r3, #0]
+ 80009e2:	695a      	ldr	r2, [r3, #20]
+ 80009e4:	4b0e      	ldr	r3, [pc, #56]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009e6:	681b      	ldr	r3, [r3, #0]
+ 80009e8:	f022 0202 	bic.w	r2, r2, #2
+ 80009ec:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80009ee:	4b0c      	ldr	r3, [pc, #48]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009f0:	681b      	ldr	r3, [r3, #0]
+ 80009f2:	695a      	ldr	r2, [r3, #20]
+ 80009f4:	4b0a      	ldr	r3, [pc, #40]	@ (8000a20 <cyan_color_led+0x104>)
+ 80009f6:	681b      	ldr	r3, [r3, #0]
+ 80009f8:	f022 0204 	bic.w	r2, r2, #4
+ 80009fc:	615a      	str	r2, [r3, #20]
+		timer10_delay(nc);
+ 80009fe:	6878      	ldr	r0, [r7, #4]
+ 8000a00:	f7ff fc66 	bl	80002d0 <timer10_delay>
+		cy = cy - 4;
+ 8000a04:	68fb      	ldr	r3, [r7, #12]
+ 8000a06:	3b04      	subs	r3, #4
+ 8000a08:	60fb      	str	r3, [r7, #12]
+	for (int nc = 16; nc <= 255; nc = nc + 4)
+ 8000a0a:	687b      	ldr	r3, [r7, #4]
+ 8000a0c:	3304      	adds	r3, #4
+ 8000a0e:	607b      	str	r3, [r7, #4]
+ 8000a10:	687b      	ldr	r3, [r7, #4]
+ 8000a12:	2bff      	cmp	r3, #255	@ 0xff
+ 8000a14:	ddc8      	ble.n	80009a8 <cyan_color_led+0x8c>
+	}
+}
+ 8000a16:	bf00      	nop
+ 8000a18:	bf00      	nop
+ 8000a1a:	3710      	adds	r7, #16
+ 8000a1c:	46bd      	mov	sp, r7
+ 8000a1e:	bd80      	pop	{r7, pc}
+ 8000a20:	20000004 	.word	0x20000004
+
+08000a24 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 8000a24:	480d      	ldr	r0, [pc, #52]	@ (8000a5c <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 8000a26:	4685      	mov	sp, r0
+/* Call the clock system initialization function.*/
+  bl  SystemInit
+ 8000a28:	f3af 8000 	nop.w
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 8000a2c:	480c      	ldr	r0, [pc, #48]	@ (8000a60 <LoopForever+0x6>)
+  ldr r1, =_edata
+ 8000a2e:	490d      	ldr	r1, [pc, #52]	@ (8000a64 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 8000a30:	4a0d      	ldr	r2, [pc, #52]	@ (8000a68 <LoopForever+0xe>)
+  movs r3, #0
+ 8000a32:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 8000a34:	e002      	b.n	8000a3c <LoopCopyDataInit>
+
+08000a36 <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 8000a36:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 8000a38:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 8000a3a:	3304      	adds	r3, #4
+
+08000a3c <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 8000a3c:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 8000a3e:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 8000a40:	d3f9      	bcc.n	8000a36 <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 8000a42:	4a0a      	ldr	r2, [pc, #40]	@ (8000a6c <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 8000a44:	4c0a      	ldr	r4, [pc, #40]	@ (8000a70 <LoopForever+0x16>)
+  movs r3, #0
+ 8000a46:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 8000a48:	e001      	b.n	8000a4e <LoopFillZerobss>
+
+08000a4a <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 8000a4a:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 8000a4c:	3204      	adds	r2, #4
+
+08000a4e <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 8000a4e:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 8000a50:	d3fb      	bcc.n	8000a4a <FillZerobss>
+
+/* Call static constructors */
+  bl __libc_init_array
+ 8000a52:	f000 f811 	bl	8000a78 <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 8000a56:	f7ff fbbd 	bl	80001d4 <main>
+
+08000a5a <LoopForever>:
+
+LoopForever:
+  b LoopForever
+ 8000a5a:	e7fe      	b.n	8000a5a <LoopForever>
+  ldr   r0, =_estack
+ 8000a5c:	20010000 	.word	0x20010000
+  ldr r0, =_sdata
+ 8000a60:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 8000a64:	2000000c 	.word	0x2000000c
+  ldr r2, =_sidata
+ 8000a68:	08000ae0 	.word	0x08000ae0
+  ldr r2, =_sbss
+ 8000a6c:	2000000c 	.word	0x2000000c
+  ldr r4, =_ebss
+ 8000a70:	20000028 	.word	0x20000028
+
+08000a74 <ADC_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 8000a74:	e7fe      	b.n	8000a74 <ADC_IRQHandler>
+	...
+
+08000a78 <__libc_init_array>:
+ 8000a78:	b570      	push	{r4, r5, r6, lr}
+ 8000a7a:	4d0d      	ldr	r5, [pc, #52]	@ (8000ab0 <__libc_init_array+0x38>)
+ 8000a7c:	4c0d      	ldr	r4, [pc, #52]	@ (8000ab4 <__libc_init_array+0x3c>)
+ 8000a7e:	1b64      	subs	r4, r4, r5
+ 8000a80:	10a4      	asrs	r4, r4, #2
+ 8000a82:	2600      	movs	r6, #0
+ 8000a84:	42a6      	cmp	r6, r4
+ 8000a86:	d109      	bne.n	8000a9c <__libc_init_array+0x24>
+ 8000a88:	4d0b      	ldr	r5, [pc, #44]	@ (8000ab8 <__libc_init_array+0x40>)
+ 8000a8a:	4c0c      	ldr	r4, [pc, #48]	@ (8000abc <__libc_init_array+0x44>)
+ 8000a8c:	f000 f818 	bl	8000ac0 <_init>
+ 8000a90:	1b64      	subs	r4, r4, r5
+ 8000a92:	10a4      	asrs	r4, r4, #2
+ 8000a94:	2600      	movs	r6, #0
+ 8000a96:	42a6      	cmp	r6, r4
+ 8000a98:	d105      	bne.n	8000aa6 <__libc_init_array+0x2e>
+ 8000a9a:	bd70      	pop	{r4, r5, r6, pc}
+ 8000a9c:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000aa0:	4798      	blx	r3
+ 8000aa2:	3601      	adds	r6, #1
+ 8000aa4:	e7ee      	b.n	8000a84 <__libc_init_array+0xc>
+ 8000aa6:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8000aaa:	4798      	blx	r3
+ 8000aac:	3601      	adds	r6, #1
+ 8000aae:	e7f2      	b.n	8000a96 <__libc_init_array+0x1e>
+ 8000ab0:	08000ad8 	.word	0x08000ad8
+ 8000ab4:	08000ad8 	.word	0x08000ad8
+ 8000ab8:	08000ad8 	.word	0x08000ad8
+ 8000abc:	08000adc 	.word	0x08000adc
+
+08000ac0 <_init>:
+ 8000ac0:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000ac2:	bf00      	nop
+ 8000ac4:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000ac6:	bc08      	pop	{r3}
+ 8000ac8:	469e      	mov	lr, r3
+ 8000aca:	4770      	bx	lr
+
+08000acc <_fini>:
+ 8000acc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8000ace:	bf00      	nop
+ 8000ad0:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8000ad2:	bc08      	pop	{r3}
+ 8000ad4:	469e      	mov	lr, r3
+ 8000ad6:	4770      	bx	lr
