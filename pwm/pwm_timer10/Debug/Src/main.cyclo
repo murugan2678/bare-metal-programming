@@ -1,0 +1,6 @@
+../Src/main.c:14:5:main	1
+../Src/main.c:26:6:rcc_config	3
+../Src/main.c:50:6:peripheral_bus_config	1
+../Src/main.c:62:6:gpiob_moder_config	1
+../Src/main.c:79:6:timer10_pwm_config	1
+../Src/main.c:157:6:led_blinking	5
