@@ -1,11 +1,11 @@
 /**********************************************************************************
  *                                                                                *
  *  Author      : Murugan M                                                       *
- *  Date        : 07-02-2025                                                      *
+ *  Date        : 08-02-2025                                                      *
  *  File        : servo_motor_pwm_timer10                                         *
  *  Description : Led blink for PORTB 8th pin.                                    *
  *                using for two pheripheral bus AHB1ENR and APB2ENR in TIMER 10   *
- *		  i give 180 degree                                               *
+ *		            i give 180 degree                                               *
  *                using for HSI : internal clock for 16 MHz                       *
  *********************************************************************************/
 
