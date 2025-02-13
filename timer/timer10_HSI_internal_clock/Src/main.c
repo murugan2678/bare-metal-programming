@@ -5,8 +5,8 @@
  *  File        : timer10_HSI_internal_clock                                  *
  *  Description : Led blink for PORTB 8th pin.                                *
  *                using for two pheripheral bus AHB1ENR and APB2ENR           *
- *		  i give 100ms	milli seconds				      *
- *                using for HSI : internal clock for 16 MHz   		      *
+ *		            i give 100ms	milli seconds                    				      *
+ *                using for HSI : internal clock for 16 MHz   		            *
  *****************************************************************************/
 
 
