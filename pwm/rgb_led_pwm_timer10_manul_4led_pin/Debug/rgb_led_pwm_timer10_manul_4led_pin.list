@@ -1,0 +1,2553 @@
+
+rgb_led_pwm_timer10_manul_4led_pin.elf:     file format elf32-littlearm
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .isr_vector   00000194  08000000  08000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .text         000011a8  08000194  08000194  00001194  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .rodata       00000000  0800133c  0800133c  00003010  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .ARM.extab    00000000  0800133c  0800133c  00003010  2**0
+                  CONTENTS
+  4 .ARM          00000000  0800133c  0800133c  00003010  2**0
+                  CONTENTS
+  5 .preinit_array 00000000  0800133c  0800133c  00003010  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  6 .init_array   00000004  0800133c  0800133c  0000233c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .fini_array   00000004  08001340  08001340  00002340  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .data         00000010  20000000  08001344  00003000  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+  9 .bss          0000001c  20000010  08001354  00003010  2**2
+                  ALLOC
+ 10 ._user_heap_stack 00000604  2000002c  08001354  0000302c  2**0
+                  ALLOC
+ 11 .ARM.attributes 00000030  00000000  00000000  00003010  2**0
+                  CONTENTS, READONLY
+ 12 .debug_info   00000638  00000000  00000000  00003040  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_abbrev 0000019b  00000000  00000000  00003678  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_aranges 000000a8  00000000  00000000  00003818  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 15 .debug_rnglists 0000007b  00000000  00000000  000038c0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 16 .debug_macro  00000ad5  00000000  00000000  0000393b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 17 .debug_line   00000fd9  00000000  00000000  00004410  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 18 .debug_str    00003065  00000000  00000000  000053e9  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 19 .comment      00000043  00000000  00000000  0000844e  2**0
+                  CONTENTS, READONLY
+ 20 .debug_frame  0000020c  00000000  00000000  00008494  2**2
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 21 .debug_line_str 0000007d  00000000  00000000  000086a0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+
+Disassembly of section .text:
+
+08000194 <__do_global_dtors_aux>:
+ 8000194:	b510      	push	{r4, lr}
+ 8000196:	4c05      	ldr	r4, [pc, #20]	@ (80001ac <__do_global_dtors_aux+0x18>)
+ 8000198:	7823      	ldrb	r3, [r4, #0]
+ 800019a:	b933      	cbnz	r3, 80001aa <__do_global_dtors_aux+0x16>
+ 800019c:	4b04      	ldr	r3, [pc, #16]	@ (80001b0 <__do_global_dtors_aux+0x1c>)
+ 800019e:	b113      	cbz	r3, 80001a6 <__do_global_dtors_aux+0x12>
+ 80001a0:	4804      	ldr	r0, [pc, #16]	@ (80001b4 <__do_global_dtors_aux+0x20>)
+ 80001a2:	f3af 8000 	nop.w
+ 80001a6:	2301      	movs	r3, #1
+ 80001a8:	7023      	strb	r3, [r4, #0]
+ 80001aa:	bd10      	pop	{r4, pc}
+ 80001ac:	20000010 	.word	0x20000010
+ 80001b0:	00000000 	.word	0x00000000
+ 80001b4:	08001324 	.word	0x08001324
+
+080001b8 <frame_dummy>:
+ 80001b8:	b508      	push	{r3, lr}
+ 80001ba:	4b03      	ldr	r3, [pc, #12]	@ (80001c8 <frame_dummy+0x10>)
+ 80001bc:	b11b      	cbz	r3, 80001c6 <frame_dummy+0xe>
+ 80001be:	4903      	ldr	r1, [pc, #12]	@ (80001cc <frame_dummy+0x14>)
+ 80001c0:	4803      	ldr	r0, [pc, #12]	@ (80001d0 <frame_dummy+0x18>)
+ 80001c2:	f3af 8000 	nop.w
+ 80001c6:	bd08      	pop	{r3, pc}
+ 80001c8:	00000000 	.word	0x00000000
+ 80001cc:	20000014 	.word	0x20000014
+ 80001d0:	08001324 	.word	0x08001324
+
+080001d4 <main>:
+
+#include "arm.h"    /* this header file for all register inside there. using for structure is user-defined data type */
+
+/* main function */
+int main(void)
+{
+ 80001d4:	b580      	push	{r7, lr}
+ 80001d6:	af00      	add	r7, sp, #0
+	/* function call */
+	rcc_config();
+ 80001d8:	f000 f814 	bl	8000204 <rcc_config>
+	peripheral_bus_config();
+ 80001dc:	f000 f84c 	bl	8000278 <peripheral_bus_config>
+	gpioa_moder_config();
+ 80001e0:	f000 f86c 	bl	80002bc <gpioa_moder_config>
+	while(1)
+	{
+		purple_color_led();
+ 80001e4:	f000 f8b6 	bl	8000354 <purple_color_led>
+		green_color_led();
+ 80001e8:	f000 fe5a 	bl	8000ea0 <green_color_led>
+		white_color_led();
+ 80001ec:	f000 fbe4 	bl	80009b8 <white_color_led>
+		navy_color_led();
+ 80001f0:	f000 f9ee 	bl	80005d0 <navy_color_led>
+		yellow_color_led();
+ 80001f4:	f000 faa2 	bl	800073c <yellow_color_led>
+		red_color_led();
+ 80001f8:	f000 fd9c 	bl	8000d34 <red_color_led>
+		cyan_color_led();
+ 80001fc:	f000 ff06 	bl	800100c <cyan_color_led>
+		purple_color_led();
+ 8000200:	bf00      	nop
+ 8000202:	e7ef      	b.n	80001e4 <main+0x10>
+
+08000204 <rcc_config>:
+	}
+}
+
+/* function definition */
+void rcc_config(void)
+{
+ 8000204:	b480      	push	{r7}
+ 8000206:	af00      	add	r7, sp, #0
+	/* Reset clock control (RCC_CR) clock control register */
+
+	/* set and clear 16th bit */
+	RCC->CR &= (~0x00010000);
+ 8000208:	4b1a      	ldr	r3, [pc, #104]	@ (8000274 <rcc_config+0x70>)
+ 800020a:	681b      	ldr	r3, [r3, #0]
+ 800020c:	681a      	ldr	r2, [r3, #0]
+ 800020e:	4b19      	ldr	r3, [pc, #100]	@ (8000274 <rcc_config+0x70>)
+ 8000210:	681b      	ldr	r3, [r3, #0]
+ 8000212:	f422 3280 	bic.w	r2, r2, #65536	@ 0x10000
+ 8000216:	601a      	str	r2, [r3, #0]
+
+	/* select 16th bit HSEON : HSE clock enable. 1 : HSE oscillator ON */
+	RCC->CR |= (1 << 16);
+ 8000218:	4b16      	ldr	r3, [pc, #88]	@ (8000274 <rcc_config+0x70>)
+ 800021a:	681b      	ldr	r3, [r3, #0]
+ 800021c:	681a      	ldr	r2, [r3, #0]
+ 800021e:	4b15      	ldr	r3, [pc, #84]	@ (8000274 <rcc_config+0x70>)
+ 8000220:	681b      	ldr	r3, [r3, #0]
+ 8000222:	f442 3280 	orr.w	r2, r2, #65536	@ 0x10000
+ 8000226:	601a      	str	r2, [r3, #0]
+
+	/* select 17th bit HSERDY : HSE clock ready flag. 1 : HSE oscillator ready. HSE external oscillator ready or not checking */
+	while(!(RCC->CR & (1 << 17)));
+ 8000228:	bf00      	nop
+ 800022a:	4b12      	ldr	r3, [pc, #72]	@ (8000274 <rcc_config+0x70>)
+ 800022c:	681b      	ldr	r3, [r3, #0]
+ 800022e:	681b      	ldr	r3, [r3, #0]
+ 8000230:	f403 3300 	and.w	r3, r3, #131072	@ 0x20000
+ 8000234:	2b00      	cmp	r3, #0
+ 8000236:	d0f8      	beq.n	800022a <rcc_config+0x26>
+
+	/* Reset clock control (RCC_CFGR) clock configuration register */
+
+	/* set and clear 0th bit and 1st bit. 11 : not allowed */
+	RCC->CFGR &= (~0x00000003);
+ 8000238:	4b0e      	ldr	r3, [pc, #56]	@ (8000274 <rcc_config+0x70>)
+ 800023a:	681b      	ldr	r3, [r3, #0]
+ 800023c:	689a      	ldr	r2, [r3, #8]
+ 800023e:	4b0d      	ldr	r3, [pc, #52]	@ (8000274 <rcc_config+0x70>)
+ 8000240:	681b      	ldr	r3, [r3, #0]
+ 8000242:	f022 0203 	bic.w	r2, r2, #3
+ 8000246:	609a      	str	r2, [r3, #8]
+
+	/* select 0th bit SW  : System clock switch. 01 : HSE oscillator selected as system clock */
+	RCC->CFGR |= (1 << 0);
+ 8000248:	4b0a      	ldr	r3, [pc, #40]	@ (8000274 <rcc_config+0x70>)
+ 800024a:	681b      	ldr	r3, [r3, #0]
+ 800024c:	689a      	ldr	r2, [r3, #8]
+ 800024e:	4b09      	ldr	r3, [pc, #36]	@ (8000274 <rcc_config+0x70>)
+ 8000250:	681b      	ldr	r3, [r3, #0]
+ 8000252:	f042 0201 	orr.w	r2, r2, #1
+ 8000256:	609a      	str	r2, [r3, #8]
+
+	/* select 2nd bit SWS : System clock switch status. 01 : HSE oscillator used as the system clock */
+	while(!(RCC->CFGR & (0x00000004)));
+ 8000258:	bf00      	nop
+ 800025a:	4b06      	ldr	r3, [pc, #24]	@ (8000274 <rcc_config+0x70>)
+ 800025c:	681b      	ldr	r3, [r3, #0]
+ 800025e:	689b      	ldr	r3, [r3, #8]
+ 8000260:	f003 0304 	and.w	r3, r3, #4
+ 8000264:	2b00      	cmp	r3, #0
+ 8000266:	d0f8      	beq.n	800025a <rcc_config+0x56>
+}
+ 8000268:	bf00      	nop
+ 800026a:	bf00      	nop
+ 800026c:	46bd      	mov	sp, r7
+ 800026e:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 8000272:	4770      	bx	lr
+ 8000274:	20000000 	.word	0x20000000
+
+08000278 <peripheral_bus_config>:
+
+void peripheral_bus_config(void)
+{
+ 8000278:	b480      	push	{r7}
+ 800027a:	af00      	add	r7, sp, #0
+	/* AHB1ENR Advanced High Bus 1 (RCC_AHB1ENR) peripheral enable register	*/
+	RCC->AHB1ENR |= (1 << 0);  // GPIOAEN : IO port A clock enable. 0th bit set 1
+ 800027c:	4b0e      	ldr	r3, [pc, #56]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 800027e:	681b      	ldr	r3, [r3, #0]
+ 8000280:	6b1a      	ldr	r2, [r3, #48]	@ 0x30
+ 8000282:	4b0d      	ldr	r3, [pc, #52]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 8000284:	681b      	ldr	r3, [r3, #0]
+ 8000286:	f042 0201 	orr.w	r2, r2, #1
+ 800028a:	631a      	str	r2, [r3, #48]	@ 0x30
+    RCC->AHB1ENR |= (1 << 1);  // GPIOBEN : IO port B clock enable. 1st bit set 1
+ 800028c:	4b0a      	ldr	r3, [pc, #40]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 800028e:	681b      	ldr	r3, [r3, #0]
+ 8000290:	6b1a      	ldr	r2, [r3, #48]	@ 0x30
+ 8000292:	4b09      	ldr	r3, [pc, #36]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 8000294:	681b      	ldr	r3, [r3, #0]
+ 8000296:	f042 0202 	orr.w	r2, r2, #2
+ 800029a:	631a      	str	r2, [r3, #48]	@ 0x30
+
+	RCC->APB2ENR |= (1 << 17);  // TIMER10EN : TIM10 clock enable. 17th bit set 1
+ 800029c:	4b06      	ldr	r3, [pc, #24]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 800029e:	681b      	ldr	r3, [r3, #0]
+ 80002a0:	6c5a      	ldr	r2, [r3, #68]	@ 0x44
+ 80002a2:	4b05      	ldr	r3, [pc, #20]	@ (80002b8 <peripheral_bus_config+0x40>)
+ 80002a4:	681b      	ldr	r3, [r3, #0]
+ 80002a6:	f442 3200 	orr.w	r2, r2, #131072	@ 0x20000
+ 80002aa:	645a      	str	r2, [r3, #68]	@ 0x44
+}
+ 80002ac:	bf00      	nop
+ 80002ae:	46bd      	mov	sp, r7
+ 80002b0:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80002b4:	4770      	bx	lr
+ 80002b6:	bf00      	nop
+ 80002b8:	20000000 	.word	0x20000000
+
+080002bc <gpioa_moder_config>:
+
+void gpioa_moder_config(void)
+{
+ 80002bc:	b480      	push	{r7}
+ 80002be:	af00      	add	r7, sp, #0
+	/* (GPIO) General Purpose Input and Output (GPIOA_MODER) port mode register */
+	/* PORT A MODER0 0th pin select. 0th bit set 1. */
+	GPIOA->MODER |= (0x00015555);   // 01 : General purpose output mode
+ 80002c0:	4b0a      	ldr	r3, [pc, #40]	@ (80002ec <gpioa_moder_config+0x30>)
+ 80002c2:	681b      	ldr	r3, [r3, #0]
+ 80002c4:	6819      	ldr	r1, [r3, #0]
+ 80002c6:	4b09      	ldr	r3, [pc, #36]	@ (80002ec <gpioa_moder_config+0x30>)
+ 80002c8:	681a      	ldr	r2, [r3, #0]
+ 80002ca:	4b09      	ldr	r3, [pc, #36]	@ (80002f0 <gpioa_moder_config+0x34>)
+ 80002cc:	430b      	orrs	r3, r1
+ 80002ce:	6013      	str	r3, [r2, #0]
+	GPIOB->MODER |= (0x00000015);
+ 80002d0:	4b08      	ldr	r3, [pc, #32]	@ (80002f4 <gpioa_moder_config+0x38>)
+ 80002d2:	681b      	ldr	r3, [r3, #0]
+ 80002d4:	681a      	ldr	r2, [r3, #0]
+ 80002d6:	4b07      	ldr	r3, [pc, #28]	@ (80002f4 <gpioa_moder_config+0x38>)
+ 80002d8:	681b      	ldr	r3, [r3, #0]
+ 80002da:	f042 0215 	orr.w	r2, r2, #21
+ 80002de:	601a      	str	r2, [r3, #0]
+}
+ 80002e0:	bf00      	nop
+ 80002e2:	46bd      	mov	sp, r7
+ 80002e4:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 80002e8:	4770      	bx	lr
+ 80002ea:	bf00      	nop
+ 80002ec:	20000004 	.word	0x20000004
+ 80002f0:	00015555 	.word	0x00015555
+ 80002f4:	20000008 	.word	0x20000008
+
+080002f8 <timer10_delay>:
+
+	TIM10->CNT = 0;             // counter value 0
+}
+
+void timer10_delay(int val)
+{
+ 80002f8:	b480      	push	{r7}
+ 80002fa:	b083      	sub	sp, #12
+ 80002fc:	af00      	add	r7, sp, #0
+ 80002fe:	6078      	str	r0, [r7, #4]
+	TIM10->PSC = 999;          // prescaler division by 1 from 4
+ 8000300:	4b13      	ldr	r3, [pc, #76]	@ (8000350 <timer10_delay+0x58>)
+ 8000302:	681b      	ldr	r3, [r3, #0]
+ 8000304:	f240 32e7 	movw	r2, #999	@ 0x3e7
+ 8000308:	629a      	str	r2, [r3, #40]	@ 0x28
+
+	TIM10->ARR = val;          // 1ms milliseconds Auto reload value on, 19ms milliseconds off
+ 800030a:	4b11      	ldr	r3, [pc, #68]	@ (8000350 <timer10_delay+0x58>)
+ 800030c:	681b      	ldr	r3, [r3, #0]
+ 800030e:	687a      	ldr	r2, [r7, #4]
+ 8000310:	62da      	str	r2, [r3, #44]	@ 0x2c
+
+	TIM10->CR1 |= (1 << 0);    // CEN : Counter enable. 1: Counter enable
+ 8000312:	4b0f      	ldr	r3, [pc, #60]	@ (8000350 <timer10_delay+0x58>)
+ 8000314:	681b      	ldr	r3, [r3, #0]
+ 8000316:	681a      	ldr	r2, [r3, #0]
+ 8000318:	4b0d      	ldr	r3, [pc, #52]	@ (8000350 <timer10_delay+0x58>)
+ 800031a:	681b      	ldr	r3, [r3, #0]
+ 800031c:	f042 0201 	orr.w	r2, r2, #1
+ 8000320:	601a      	str	r2, [r3, #0]
+
+	while(!(TIM10->SR & (1 << 0)));   // Update interrupt flag.  1 : Update interrupt pending.
+ 8000322:	bf00      	nop
+ 8000324:	4b0a      	ldr	r3, [pc, #40]	@ (8000350 <timer10_delay+0x58>)
+ 8000326:	681b      	ldr	r3, [r3, #0]
+ 8000328:	691b      	ldr	r3, [r3, #16]
+ 800032a:	f003 0301 	and.w	r3, r3, #1
+ 800032e:	2b00      	cmp	r3, #0
+ 8000330:	d0f8      	beq.n	8000324 <timer10_delay+0x2c>
+
+	TIM10->SR &= ~(1 << 0);   // clear by software
+ 8000332:	4b07      	ldr	r3, [pc, #28]	@ (8000350 <timer10_delay+0x58>)
+ 8000334:	681b      	ldr	r3, [r3, #0]
+ 8000336:	691a      	ldr	r2, [r3, #16]
+ 8000338:	4b05      	ldr	r3, [pc, #20]	@ (8000350 <timer10_delay+0x58>)
+ 800033a:	681b      	ldr	r3, [r3, #0]
+ 800033c:	f022 0201 	bic.w	r2, r2, #1
+ 8000340:	611a      	str	r2, [r3, #16]
+}
+ 8000342:	bf00      	nop
+ 8000344:	370c      	adds	r7, #12
+ 8000346:	46bd      	mov	sp, r7
+ 8000348:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800034c:	4770      	bx	lr
+ 800034e:	bf00      	nop
+ 8000350:	2000000c 	.word	0x2000000c
+
+08000354 <purple_color_led>:
+
+void purple_color_led(void)
+{
+ 8000354:	b580      	push	{r7, lr}
+ 8000356:	b084      	sub	sp, #16
+ 8000358:	af00      	add	r7, sp, #0
+	/* purple color value : R = 128, G = 0, B = 128 */
+
+	int j = 10, m = 255;
+ 800035a:	230a      	movs	r3, #10
+ 800035c:	60fb      	str	r3, [r7, #12]
+ 800035e:	23ff      	movs	r3, #255	@ 0xff
+ 8000360:	60bb      	str	r3, [r7, #8]
+	for (j = 10; j <= 255; j = j + 5)
+ 8000362:	230a      	movs	r3, #10
+ 8000364:	60fb      	str	r3, [r7, #12]
+ 8000366:	e08b      	b.n	8000480 <purple_color_led+0x12c>
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 8000368:	4b4a      	ldr	r3, [pc, #296]	@ (8000494 <purple_color_led+0x140>)
+ 800036a:	681b      	ldr	r3, [r3, #0]
+ 800036c:	695a      	ldr	r2, [r3, #20]
+ 800036e:	4b49      	ldr	r3, [pc, #292]	@ (8000494 <purple_color_led+0x140>)
+ 8000370:	681b      	ldr	r3, [r3, #0]
+ 8000372:	f042 0201 	orr.w	r2, r2, #1
+ 8000376:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 2);
+ 8000378:	4b46      	ldr	r3, [pc, #280]	@ (8000494 <purple_color_led+0x140>)
+ 800037a:	681b      	ldr	r3, [r3, #0]
+ 800037c:	695a      	ldr	r2, [r3, #20]
+ 800037e:	4b45      	ldr	r3, [pc, #276]	@ (8000494 <purple_color_led+0x140>)
+ 8000380:	681b      	ldr	r3, [r3, #0]
+ 8000382:	f042 0204 	orr.w	r2, r2, #4
+ 8000386:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 8000388:	4b42      	ldr	r3, [pc, #264]	@ (8000494 <purple_color_led+0x140>)
+ 800038a:	681b      	ldr	r3, [r3, #0]
+ 800038c:	695a      	ldr	r2, [r3, #20]
+ 800038e:	4b41      	ldr	r3, [pc, #260]	@ (8000494 <purple_color_led+0x140>)
+ 8000390:	681b      	ldr	r3, [r3, #0]
+ 8000392:	f042 0208 	orr.w	r2, r2, #8
+ 8000396:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 8000398:	4b3e      	ldr	r3, [pc, #248]	@ (8000494 <purple_color_led+0x140>)
+ 800039a:	681b      	ldr	r3, [r3, #0]
+ 800039c:	695a      	ldr	r2, [r3, #20]
+ 800039e:	4b3d      	ldr	r3, [pc, #244]	@ (8000494 <purple_color_led+0x140>)
+ 80003a0:	681b      	ldr	r3, [r3, #0]
+ 80003a2:	f042 0220 	orr.w	r2, r2, #32
+ 80003a6:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 80003a8:	4b3a      	ldr	r3, [pc, #232]	@ (8000494 <purple_color_led+0x140>)
+ 80003aa:	681b      	ldr	r3, [r3, #0]
+ 80003ac:	695a      	ldr	r2, [r3, #20]
+ 80003ae:	4b39      	ldr	r3, [pc, #228]	@ (8000494 <purple_color_led+0x140>)
+ 80003b0:	681b      	ldr	r3, [r3, #0]
+ 80003b2:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 80003b6:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 80003b8:	4b36      	ldr	r3, [pc, #216]	@ (8000494 <purple_color_led+0x140>)
+ 80003ba:	681b      	ldr	r3, [r3, #0]
+ 80003bc:	695a      	ldr	r2, [r3, #20]
+ 80003be:	4b35      	ldr	r3, [pc, #212]	@ (8000494 <purple_color_led+0x140>)
+ 80003c0:	681b      	ldr	r3, [r3, #0]
+ 80003c2:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 80003c6:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 80003c8:	4b33      	ldr	r3, [pc, #204]	@ (8000498 <purple_color_led+0x144>)
+ 80003ca:	681b      	ldr	r3, [r3, #0]
+ 80003cc:	695a      	ldr	r2, [r3, #20]
+ 80003ce:	4b32      	ldr	r3, [pc, #200]	@ (8000498 <purple_color_led+0x144>)
+ 80003d0:	681b      	ldr	r3, [r3, #0]
+ 80003d2:	f042 0201 	orr.w	r2, r2, #1
+ 80003d6:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 80003d8:	4b2f      	ldr	r3, [pc, #188]	@ (8000498 <purple_color_led+0x144>)
+ 80003da:	681b      	ldr	r3, [r3, #0]
+ 80003dc:	695a      	ldr	r2, [r3, #20]
+ 80003de:	4b2e      	ldr	r3, [pc, #184]	@ (8000498 <purple_color_led+0x144>)
+ 80003e0:	681b      	ldr	r3, [r3, #0]
+ 80003e2:	f042 0204 	orr.w	r2, r2, #4
+ 80003e6:	615a      	str	r2, [r3, #20]
+	    timer10_delay(j);
+ 80003e8:	68f8      	ldr	r0, [r7, #12]
+ 80003ea:	f7ff ff85 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);   // first RGB Led
+ 80003ee:	4b29      	ldr	r3, [pc, #164]	@ (8000494 <purple_color_led+0x140>)
+ 80003f0:	681b      	ldr	r3, [r3, #0]
+ 80003f2:	695a      	ldr	r2, [r3, #20]
+ 80003f4:	4b27      	ldr	r3, [pc, #156]	@ (8000494 <purple_color_led+0x140>)
+ 80003f6:	681b      	ldr	r3, [r3, #0]
+ 80003f8:	f022 0201 	bic.w	r2, r2, #1
+ 80003fc:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80003fe:	4b25      	ldr	r3, [pc, #148]	@ (8000494 <purple_color_led+0x140>)
+ 8000400:	681b      	ldr	r3, [r3, #0]
+ 8000402:	695a      	ldr	r2, [r3, #20]
+ 8000404:	4b23      	ldr	r3, [pc, #140]	@ (8000494 <purple_color_led+0x140>)
+ 8000406:	681b      	ldr	r3, [r3, #0]
+ 8000408:	f022 0204 	bic.w	r2, r2, #4
+ 800040c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 800040e:	4b21      	ldr	r3, [pc, #132]	@ (8000494 <purple_color_led+0x140>)
+ 8000410:	681b      	ldr	r3, [r3, #0]
+ 8000412:	695a      	ldr	r2, [r3, #20]
+ 8000414:	4b1f      	ldr	r3, [pc, #124]	@ (8000494 <purple_color_led+0x140>)
+ 8000416:	681b      	ldr	r3, [r3, #0]
+ 8000418:	f022 0208 	bic.w	r2, r2, #8
+ 800041c:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 5);
+ 800041e:	4b1d      	ldr	r3, [pc, #116]	@ (8000494 <purple_color_led+0x140>)
+ 8000420:	681b      	ldr	r3, [r3, #0]
+ 8000422:	695a      	ldr	r2, [r3, #20]
+ 8000424:	4b1b      	ldr	r3, [pc, #108]	@ (8000494 <purple_color_led+0x140>)
+ 8000426:	681b      	ldr	r3, [r3, #0]
+ 8000428:	f022 0220 	bic.w	r2, r2, #32
+ 800042c:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 800042e:	4b19      	ldr	r3, [pc, #100]	@ (8000494 <purple_color_led+0x140>)
+ 8000430:	681b      	ldr	r3, [r3, #0]
+ 8000432:	695a      	ldr	r2, [r3, #20]
+ 8000434:	4b17      	ldr	r3, [pc, #92]	@ (8000494 <purple_color_led+0x140>)
+ 8000436:	681b      	ldr	r3, [r3, #0]
+ 8000438:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 800043c:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 8);
+ 800043e:	4b15      	ldr	r3, [pc, #84]	@ (8000494 <purple_color_led+0x140>)
+ 8000440:	681b      	ldr	r3, [r3, #0]
+ 8000442:	695a      	ldr	r2, [r3, #20]
+ 8000444:	4b13      	ldr	r3, [pc, #76]	@ (8000494 <purple_color_led+0x140>)
+ 8000446:	681b      	ldr	r3, [r3, #0]
+ 8000448:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 800044c:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 800044e:	4b12      	ldr	r3, [pc, #72]	@ (8000498 <purple_color_led+0x144>)
+ 8000450:	681b      	ldr	r3, [r3, #0]
+ 8000452:	695a      	ldr	r2, [r3, #20]
+ 8000454:	4b10      	ldr	r3, [pc, #64]	@ (8000498 <purple_color_led+0x144>)
+ 8000456:	681b      	ldr	r3, [r3, #0]
+ 8000458:	f022 0201 	bic.w	r2, r2, #1
+ 800045c:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 2);
+ 800045e:	4b0e      	ldr	r3, [pc, #56]	@ (8000498 <purple_color_led+0x144>)
+ 8000460:	681b      	ldr	r3, [r3, #0]
+ 8000462:	695a      	ldr	r2, [r3, #20]
+ 8000464:	4b0c      	ldr	r3, [pc, #48]	@ (8000498 <purple_color_led+0x144>)
+ 8000466:	681b      	ldr	r3, [r3, #0]
+ 8000468:	f022 0204 	bic.w	r2, r2, #4
+ 800046c:	615a      	str	r2, [r3, #20]
+		timer10_delay(m);
+ 800046e:	68b8      	ldr	r0, [r7, #8]
+ 8000470:	f7ff ff42 	bl	80002f8 <timer10_delay>
+		m = m - 5;
+ 8000474:	68bb      	ldr	r3, [r7, #8]
+ 8000476:	3b05      	subs	r3, #5
+ 8000478:	60bb      	str	r3, [r7, #8]
+	for (j = 10; j <= 255; j = j + 5)
+ 800047a:	68fb      	ldr	r3, [r7, #12]
+ 800047c:	3305      	adds	r3, #5
+ 800047e:	60fb      	str	r3, [r7, #12]
+ 8000480:	68fb      	ldr	r3, [r7, #12]
+ 8000482:	2bff      	cmp	r3, #255	@ 0xff
+ 8000484:	f77f af70 	ble.w	8000368 <purple_color_led+0x14>
+	}
+
+	j = 255;
+ 8000488:	23ff      	movs	r3, #255	@ 0xff
+ 800048a:	60fb      	str	r3, [r7, #12]
+	for (int i = 10; i <= 255; i = i + 5)
+ 800048c:	230a      	movs	r3, #10
+ 800048e:	607b      	str	r3, [r7, #4]
+ 8000490:	e090      	b.n	80005b4 <purple_color_led+0x260>
+ 8000492:	bf00      	nop
+ 8000494:	20000004 	.word	0x20000004
+ 8000498:	20000008 	.word	0x20000008
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 800049c:	4b4a      	ldr	r3, [pc, #296]	@ (80005c8 <purple_color_led+0x274>)
+ 800049e:	681b      	ldr	r3, [r3, #0]
+ 80004a0:	695a      	ldr	r2, [r3, #20]
+ 80004a2:	4b49      	ldr	r3, [pc, #292]	@ (80005c8 <purple_color_led+0x274>)
+ 80004a4:	681b      	ldr	r3, [r3, #0]
+ 80004a6:	f042 0201 	orr.w	r2, r2, #1
+ 80004aa:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 2);
+ 80004ac:	4b46      	ldr	r3, [pc, #280]	@ (80005c8 <purple_color_led+0x274>)
+ 80004ae:	681b      	ldr	r3, [r3, #0]
+ 80004b0:	695a      	ldr	r2, [r3, #20]
+ 80004b2:	4b45      	ldr	r3, [pc, #276]	@ (80005c8 <purple_color_led+0x274>)
+ 80004b4:	681b      	ldr	r3, [r3, #0]
+ 80004b6:	f042 0204 	orr.w	r2, r2, #4
+ 80004ba:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 80004bc:	4b42      	ldr	r3, [pc, #264]	@ (80005c8 <purple_color_led+0x274>)
+ 80004be:	681b      	ldr	r3, [r3, #0]
+ 80004c0:	695a      	ldr	r2, [r3, #20]
+ 80004c2:	4b41      	ldr	r3, [pc, #260]	@ (80005c8 <purple_color_led+0x274>)
+ 80004c4:	681b      	ldr	r3, [r3, #0]
+ 80004c6:	f042 0208 	orr.w	r2, r2, #8
+ 80004ca:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 80004cc:	4b3e      	ldr	r3, [pc, #248]	@ (80005c8 <purple_color_led+0x274>)
+ 80004ce:	681b      	ldr	r3, [r3, #0]
+ 80004d0:	695a      	ldr	r2, [r3, #20]
+ 80004d2:	4b3d      	ldr	r3, [pc, #244]	@ (80005c8 <purple_color_led+0x274>)
+ 80004d4:	681b      	ldr	r3, [r3, #0]
+ 80004d6:	f042 0220 	orr.w	r2, r2, #32
+ 80004da:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 80004dc:	4b3a      	ldr	r3, [pc, #232]	@ (80005c8 <purple_color_led+0x274>)
+ 80004de:	681b      	ldr	r3, [r3, #0]
+ 80004e0:	695a      	ldr	r2, [r3, #20]
+ 80004e2:	4b39      	ldr	r3, [pc, #228]	@ (80005c8 <purple_color_led+0x274>)
+ 80004e4:	681b      	ldr	r3, [r3, #0]
+ 80004e6:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 80004ea:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 80004ec:	4b36      	ldr	r3, [pc, #216]	@ (80005c8 <purple_color_led+0x274>)
+ 80004ee:	681b      	ldr	r3, [r3, #0]
+ 80004f0:	695a      	ldr	r2, [r3, #20]
+ 80004f2:	4b35      	ldr	r3, [pc, #212]	@ (80005c8 <purple_color_led+0x274>)
+ 80004f4:	681b      	ldr	r3, [r3, #0]
+ 80004f6:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 80004fa:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 80004fc:	4b33      	ldr	r3, [pc, #204]	@ (80005cc <purple_color_led+0x278>)
+ 80004fe:	681b      	ldr	r3, [r3, #0]
+ 8000500:	695a      	ldr	r2, [r3, #20]
+ 8000502:	4b32      	ldr	r3, [pc, #200]	@ (80005cc <purple_color_led+0x278>)
+ 8000504:	681b      	ldr	r3, [r3, #0]
+ 8000506:	f042 0201 	orr.w	r2, r2, #1
+ 800050a:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 800050c:	4b2f      	ldr	r3, [pc, #188]	@ (80005cc <purple_color_led+0x278>)
+ 800050e:	681b      	ldr	r3, [r3, #0]
+ 8000510:	695a      	ldr	r2, [r3, #20]
+ 8000512:	4b2e      	ldr	r3, [pc, #184]	@ (80005cc <purple_color_led+0x278>)
+ 8000514:	681b      	ldr	r3, [r3, #0]
+ 8000516:	f042 0204 	orr.w	r2, r2, #4
+ 800051a:	615a      	str	r2, [r3, #20]
+		timer10_delay(j);
+ 800051c:	68f8      	ldr	r0, [r7, #12]
+ 800051e:	f7ff feeb 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);   // first RGB Led
+ 8000522:	4b29      	ldr	r3, [pc, #164]	@ (80005c8 <purple_color_led+0x274>)
+ 8000524:	681b      	ldr	r3, [r3, #0]
+ 8000526:	695a      	ldr	r2, [r3, #20]
+ 8000528:	4b27      	ldr	r3, [pc, #156]	@ (80005c8 <purple_color_led+0x274>)
+ 800052a:	681b      	ldr	r3, [r3, #0]
+ 800052c:	f022 0201 	bic.w	r2, r2, #1
+ 8000530:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000532:	4b25      	ldr	r3, [pc, #148]	@ (80005c8 <purple_color_led+0x274>)
+ 8000534:	681b      	ldr	r3, [r3, #0]
+ 8000536:	695a      	ldr	r2, [r3, #20]
+ 8000538:	4b23      	ldr	r3, [pc, #140]	@ (80005c8 <purple_color_led+0x274>)
+ 800053a:	681b      	ldr	r3, [r3, #0]
+ 800053c:	f022 0204 	bic.w	r2, r2, #4
+ 8000540:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 8000542:	4b21      	ldr	r3, [pc, #132]	@ (80005c8 <purple_color_led+0x274>)
+ 8000544:	681b      	ldr	r3, [r3, #0]
+ 8000546:	695a      	ldr	r2, [r3, #20]
+ 8000548:	4b1f      	ldr	r3, [pc, #124]	@ (80005c8 <purple_color_led+0x274>)
+ 800054a:	681b      	ldr	r3, [r3, #0]
+ 800054c:	f022 0208 	bic.w	r2, r2, #8
+ 8000550:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 5);
+ 8000552:	4b1d      	ldr	r3, [pc, #116]	@ (80005c8 <purple_color_led+0x274>)
+ 8000554:	681b      	ldr	r3, [r3, #0]
+ 8000556:	695a      	ldr	r2, [r3, #20]
+ 8000558:	4b1b      	ldr	r3, [pc, #108]	@ (80005c8 <purple_color_led+0x274>)
+ 800055a:	681b      	ldr	r3, [r3, #0]
+ 800055c:	f022 0220 	bic.w	r2, r2, #32
+ 8000560:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 8000562:	4b19      	ldr	r3, [pc, #100]	@ (80005c8 <purple_color_led+0x274>)
+ 8000564:	681b      	ldr	r3, [r3, #0]
+ 8000566:	695a      	ldr	r2, [r3, #20]
+ 8000568:	4b17      	ldr	r3, [pc, #92]	@ (80005c8 <purple_color_led+0x274>)
+ 800056a:	681b      	ldr	r3, [r3, #0]
+ 800056c:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000570:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 8);
+ 8000572:	4b15      	ldr	r3, [pc, #84]	@ (80005c8 <purple_color_led+0x274>)
+ 8000574:	681b      	ldr	r3, [r3, #0]
+ 8000576:	695a      	ldr	r2, [r3, #20]
+ 8000578:	4b13      	ldr	r3, [pc, #76]	@ (80005c8 <purple_color_led+0x274>)
+ 800057a:	681b      	ldr	r3, [r3, #0]
+ 800057c:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8000580:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 8000582:	4b12      	ldr	r3, [pc, #72]	@ (80005cc <purple_color_led+0x278>)
+ 8000584:	681b      	ldr	r3, [r3, #0]
+ 8000586:	695a      	ldr	r2, [r3, #20]
+ 8000588:	4b10      	ldr	r3, [pc, #64]	@ (80005cc <purple_color_led+0x278>)
+ 800058a:	681b      	ldr	r3, [r3, #0]
+ 800058c:	f022 0201 	bic.w	r2, r2, #1
+ 8000590:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 2);
+ 8000592:	4b0e      	ldr	r3, [pc, #56]	@ (80005cc <purple_color_led+0x278>)
+ 8000594:	681b      	ldr	r3, [r3, #0]
+ 8000596:	695a      	ldr	r2, [r3, #20]
+ 8000598:	4b0c      	ldr	r3, [pc, #48]	@ (80005cc <purple_color_led+0x278>)
+ 800059a:	681b      	ldr	r3, [r3, #0]
+ 800059c:	f022 0204 	bic.w	r2, r2, #4
+ 80005a0:	615a      	str	r2, [r3, #20]
+		timer10_delay(i);
+ 80005a2:	6878      	ldr	r0, [r7, #4]
+ 80005a4:	f7ff fea8 	bl	80002f8 <timer10_delay>
+		j = j - 5;
+ 80005a8:	68fb      	ldr	r3, [r7, #12]
+ 80005aa:	3b05      	subs	r3, #5
+ 80005ac:	60fb      	str	r3, [r7, #12]
+	for (int i = 10; i <= 255; i = i + 5)
+ 80005ae:	687b      	ldr	r3, [r7, #4]
+ 80005b0:	3305      	adds	r3, #5
+ 80005b2:	607b      	str	r3, [r7, #4]
+ 80005b4:	687b      	ldr	r3, [r7, #4]
+ 80005b6:	2bff      	cmp	r3, #255	@ 0xff
+ 80005b8:	f77f af70 	ble.w	800049c <purple_color_led+0x148>
+	}
+
+}
+ 80005bc:	bf00      	nop
+ 80005be:	bf00      	nop
+ 80005c0:	3710      	adds	r7, #16
+ 80005c2:	46bd      	mov	sp, r7
+ 80005c4:	bd80      	pop	{r7, pc}
+ 80005c6:	bf00      	nop
+ 80005c8:	20000004 	.word	0x20000004
+ 80005cc:	20000008 	.word	0x20000008
+
+080005d0 <navy_color_led>:
+
+
+void navy_color_led(void)
+{
+ 80005d0:	b580      	push	{r7, lr}
+ 80005d2:	b084      	sub	sp, #16
+ 80005d4:	af00      	add	r7, sp, #0
+	/* navy color value : R = 0, G = 0, B = 128 */
+
+	int p = 10, q = 255;
+ 80005d6:	230a      	movs	r3, #10
+ 80005d8:	60fb      	str	r3, [r7, #12]
+ 80005da:	23ff      	movs	r3, #255	@ 0xff
+ 80005dc:	60bb      	str	r3, [r7, #8]
+	for (p = 10 ; p <= 255; p = p + 5)
+ 80005de:	230a      	movs	r3, #10
+ 80005e0:	60fb      	str	r3, [r7, #12]
+ 80005e2:	e04b      	b.n	800067c <navy_color_led+0xac>
+	{
+		GPIOA->ODR |= (1 << 2);    // first RGB Led
+ 80005e4:	4b53      	ldr	r3, [pc, #332]	@ (8000734 <navy_color_led+0x164>)
+ 80005e6:	681b      	ldr	r3, [r3, #0]
+ 80005e8:	695a      	ldr	r2, [r3, #20]
+ 80005ea:	4b52      	ldr	r3, [pc, #328]	@ (8000734 <navy_color_led+0x164>)
+ 80005ec:	681b      	ldr	r3, [r3, #0]
+ 80005ee:	f042 0204 	orr.w	r2, r2, #4
+ 80005f2:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);    // Second RGB Led
+ 80005f4:	4b4f      	ldr	r3, [pc, #316]	@ (8000734 <navy_color_led+0x164>)
+ 80005f6:	681b      	ldr	r3, [r3, #0]
+ 80005f8:	695a      	ldr	r2, [r3, #20]
+ 80005fa:	4b4e      	ldr	r3, [pc, #312]	@ (8000734 <navy_color_led+0x164>)
+ 80005fc:	681b      	ldr	r3, [r3, #0]
+ 80005fe:	f042 0220 	orr.w	r2, r2, #32
+ 8000602:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);    // Third RGB Led
+ 8000604:	4b4b      	ldr	r3, [pc, #300]	@ (8000734 <navy_color_led+0x164>)
+ 8000606:	681b      	ldr	r3, [r3, #0]
+ 8000608:	695a      	ldr	r2, [r3, #20]
+ 800060a:	4b4a      	ldr	r3, [pc, #296]	@ (8000734 <navy_color_led+0x164>)
+ 800060c:	681b      	ldr	r3, [r3, #0]
+ 800060e:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 8000612:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);    // fourth RBG Led
+ 8000614:	4b48      	ldr	r3, [pc, #288]	@ (8000738 <navy_color_led+0x168>)
+ 8000616:	681b      	ldr	r3, [r3, #0]
+ 8000618:	695a      	ldr	r2, [r3, #20]
+ 800061a:	4b47      	ldr	r3, [pc, #284]	@ (8000738 <navy_color_led+0x168>)
+ 800061c:	681b      	ldr	r3, [r3, #0]
+ 800061e:	f042 0204 	orr.w	r2, r2, #4
+ 8000622:	615a      	str	r2, [r3, #20]
+	    timer10_delay(p);
+ 8000624:	68f8      	ldr	r0, [r7, #12]
+ 8000626:	f7ff fe67 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 2);   // first RGB Led
+ 800062a:	4b42      	ldr	r3, [pc, #264]	@ (8000734 <navy_color_led+0x164>)
+ 800062c:	681b      	ldr	r3, [r3, #0]
+ 800062e:	695a      	ldr	r2, [r3, #20]
+ 8000630:	4b40      	ldr	r3, [pc, #256]	@ (8000734 <navy_color_led+0x164>)
+ 8000632:	681b      	ldr	r3, [r3, #0]
+ 8000634:	f022 0204 	bic.w	r2, r2, #4
+ 8000638:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 5);   // Second RGB Led
+ 800063a:	4b3e      	ldr	r3, [pc, #248]	@ (8000734 <navy_color_led+0x164>)
+ 800063c:	681b      	ldr	r3, [r3, #0]
+ 800063e:	695a      	ldr	r2, [r3, #20]
+ 8000640:	4b3c      	ldr	r3, [pc, #240]	@ (8000734 <navy_color_led+0x164>)
+ 8000642:	681b      	ldr	r3, [r3, #0]
+ 8000644:	f022 0220 	bic.w	r2, r2, #32
+ 8000648:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 8);   // Third RGB Led
+ 800064a:	4b3a      	ldr	r3, [pc, #232]	@ (8000734 <navy_color_led+0x164>)
+ 800064c:	681b      	ldr	r3, [r3, #0]
+ 800064e:	695a      	ldr	r2, [r3, #20]
+ 8000650:	4b38      	ldr	r3, [pc, #224]	@ (8000734 <navy_color_led+0x164>)
+ 8000652:	681b      	ldr	r3, [r3, #0]
+ 8000654:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8000658:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 2);   // fourth RBG Led
+ 800065a:	4b37      	ldr	r3, [pc, #220]	@ (8000738 <navy_color_led+0x168>)
+ 800065c:	681b      	ldr	r3, [r3, #0]
+ 800065e:	695a      	ldr	r2, [r3, #20]
+ 8000660:	4b35      	ldr	r3, [pc, #212]	@ (8000738 <navy_color_led+0x168>)
+ 8000662:	681b      	ldr	r3, [r3, #0]
+ 8000664:	f022 0204 	bic.w	r2, r2, #4
+ 8000668:	615a      	str	r2, [r3, #20]
+	    timer10_delay(q);
+ 800066a:	68b8      	ldr	r0, [r7, #8]
+ 800066c:	f7ff fe44 	bl	80002f8 <timer10_delay>
+	    q = q - 5;
+ 8000670:	68bb      	ldr	r3, [r7, #8]
+ 8000672:	3b05      	subs	r3, #5
+ 8000674:	60bb      	str	r3, [r7, #8]
+	for (p = 10 ; p <= 255; p = p + 5)
+ 8000676:	68fb      	ldr	r3, [r7, #12]
+ 8000678:	3305      	adds	r3, #5
+ 800067a:	60fb      	str	r3, [r7, #12]
+ 800067c:	68fb      	ldr	r3, [r7, #12]
+ 800067e:	2bff      	cmp	r3, #255	@ 0xff
+ 8000680:	ddb0      	ble.n	80005e4 <navy_color_led+0x14>
+	}
+	p = 255;
+ 8000682:	23ff      	movs	r3, #255	@ 0xff
+ 8000684:	60fb      	str	r3, [r7, #12]
+	for (int s = 10; s <= 255; s = s + 5)
+ 8000686:	230a      	movs	r3, #10
+ 8000688:	607b      	str	r3, [r7, #4]
+ 800068a:	e04b      	b.n	8000724 <navy_color_led+0x154>
+	{
+		GPIOA->ODR |= (1 << 2);    // first RGB Led
+ 800068c:	4b29      	ldr	r3, [pc, #164]	@ (8000734 <navy_color_led+0x164>)
+ 800068e:	681b      	ldr	r3, [r3, #0]
+ 8000690:	695a      	ldr	r2, [r3, #20]
+ 8000692:	4b28      	ldr	r3, [pc, #160]	@ (8000734 <navy_color_led+0x164>)
+ 8000694:	681b      	ldr	r3, [r3, #0]
+ 8000696:	f042 0204 	orr.w	r2, r2, #4
+ 800069a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);    // Second RGB Led
+ 800069c:	4b25      	ldr	r3, [pc, #148]	@ (8000734 <navy_color_led+0x164>)
+ 800069e:	681b      	ldr	r3, [r3, #0]
+ 80006a0:	695a      	ldr	r2, [r3, #20]
+ 80006a2:	4b24      	ldr	r3, [pc, #144]	@ (8000734 <navy_color_led+0x164>)
+ 80006a4:	681b      	ldr	r3, [r3, #0]
+ 80006a6:	f042 0220 	orr.w	r2, r2, #32
+ 80006aa:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 8);    // Third RGB Led
+ 80006ac:	4b21      	ldr	r3, [pc, #132]	@ (8000734 <navy_color_led+0x164>)
+ 80006ae:	681b      	ldr	r3, [r3, #0]
+ 80006b0:	695a      	ldr	r2, [r3, #20]
+ 80006b2:	4b20      	ldr	r3, [pc, #128]	@ (8000734 <navy_color_led+0x164>)
+ 80006b4:	681b      	ldr	r3, [r3, #0]
+ 80006b6:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 80006ba:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR |= (1 << 2);    // fourth RBG Led
+ 80006bc:	4b1e      	ldr	r3, [pc, #120]	@ (8000738 <navy_color_led+0x168>)
+ 80006be:	681b      	ldr	r3, [r3, #0]
+ 80006c0:	695a      	ldr	r2, [r3, #20]
+ 80006c2:	4b1d      	ldr	r3, [pc, #116]	@ (8000738 <navy_color_led+0x168>)
+ 80006c4:	681b      	ldr	r3, [r3, #0]
+ 80006c6:	f042 0204 	orr.w	r2, r2, #4
+ 80006ca:	615a      	str	r2, [r3, #20]
+		timer10_delay(p);
+ 80006cc:	68f8      	ldr	r0, [r7, #12]
+ 80006ce:	f7ff fe13 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 2);   // first RGB Led
+ 80006d2:	4b18      	ldr	r3, [pc, #96]	@ (8000734 <navy_color_led+0x164>)
+ 80006d4:	681b      	ldr	r3, [r3, #0]
+ 80006d6:	695a      	ldr	r2, [r3, #20]
+ 80006d8:	4b16      	ldr	r3, [pc, #88]	@ (8000734 <navy_color_led+0x164>)
+ 80006da:	681b      	ldr	r3, [r3, #0]
+ 80006dc:	f022 0204 	bic.w	r2, r2, #4
+ 80006e0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 5);   // Second RGB Led
+ 80006e2:	4b14      	ldr	r3, [pc, #80]	@ (8000734 <navy_color_led+0x164>)
+ 80006e4:	681b      	ldr	r3, [r3, #0]
+ 80006e6:	695a      	ldr	r2, [r3, #20]
+ 80006e8:	4b12      	ldr	r3, [pc, #72]	@ (8000734 <navy_color_led+0x164>)
+ 80006ea:	681b      	ldr	r3, [r3, #0]
+ 80006ec:	f022 0220 	bic.w	r2, r2, #32
+ 80006f0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 8);   // Third RGB Led
+ 80006f2:	4b10      	ldr	r3, [pc, #64]	@ (8000734 <navy_color_led+0x164>)
+ 80006f4:	681b      	ldr	r3, [r3, #0]
+ 80006f6:	695a      	ldr	r2, [r3, #20]
+ 80006f8:	4b0e      	ldr	r3, [pc, #56]	@ (8000734 <navy_color_led+0x164>)
+ 80006fa:	681b      	ldr	r3, [r3, #0]
+ 80006fc:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8000700:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 2);   // fourth RBG Led
+ 8000702:	4b0d      	ldr	r3, [pc, #52]	@ (8000738 <navy_color_led+0x168>)
+ 8000704:	681b      	ldr	r3, [r3, #0]
+ 8000706:	695a      	ldr	r2, [r3, #20]
+ 8000708:	4b0b      	ldr	r3, [pc, #44]	@ (8000738 <navy_color_led+0x168>)
+ 800070a:	681b      	ldr	r3, [r3, #0]
+ 800070c:	f022 0204 	bic.w	r2, r2, #4
+ 8000710:	615a      	str	r2, [r3, #20]
+		timer10_delay(s);
+ 8000712:	6878      	ldr	r0, [r7, #4]
+ 8000714:	f7ff fdf0 	bl	80002f8 <timer10_delay>
+		p = p - 5;
+ 8000718:	68fb      	ldr	r3, [r7, #12]
+ 800071a:	3b05      	subs	r3, #5
+ 800071c:	60fb      	str	r3, [r7, #12]
+	for (int s = 10; s <= 255; s = s + 5)
+ 800071e:	687b      	ldr	r3, [r7, #4]
+ 8000720:	3305      	adds	r3, #5
+ 8000722:	607b      	str	r3, [r7, #4]
+ 8000724:	687b      	ldr	r3, [r7, #4]
+ 8000726:	2bff      	cmp	r3, #255	@ 0xff
+ 8000728:	ddb0      	ble.n	800068c <navy_color_led+0xbc>
+	}
+}
+ 800072a:	bf00      	nop
+ 800072c:	bf00      	nop
+ 800072e:	3710      	adds	r7, #16
+ 8000730:	46bd      	mov	sp, r7
+ 8000732:	bd80      	pop	{r7, pc}
+ 8000734:	20000004 	.word	0x20000004
+ 8000738:	20000008 	.word	0x20000008
+
+0800073c <yellow_color_led>:
+
+
+void yellow_color_led(void)
+{
+ 800073c:	b580      	push	{r7, lr}
+ 800073e:	b084      	sub	sp, #16
+ 8000740:	af00      	add	r7, sp, #0
+    //	yellow color value : R = 255, G = 255, B = 0.
+	int b = 16, t = 255;
+ 8000742:	2310      	movs	r3, #16
+ 8000744:	60fb      	str	r3, [r7, #12]
+ 8000746:	23ff      	movs	r3, #255	@ 0xff
+ 8000748:	60bb      	str	r3, [r7, #8]
+	for (b = 16; b <= 255; b = b + 4)
+ 800074a:	2310      	movs	r3, #16
+ 800074c:	60fb      	str	r3, [r7, #12]
+ 800074e:	e08b      	b.n	8000868 <yellow_color_led+0x12c>
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 8000750:	4b4a      	ldr	r3, [pc, #296]	@ (800087c <yellow_color_led+0x140>)
+ 8000752:	681b      	ldr	r3, [r3, #0]
+ 8000754:	695a      	ldr	r2, [r3, #20]
+ 8000756:	4b49      	ldr	r3, [pc, #292]	@ (800087c <yellow_color_led+0x140>)
+ 8000758:	681b      	ldr	r3, [r3, #0]
+ 800075a:	f042 0201 	orr.w	r2, r2, #1
+ 800075e:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 8000760:	4b46      	ldr	r3, [pc, #280]	@ (800087c <yellow_color_led+0x140>)
+ 8000762:	681b      	ldr	r3, [r3, #0]
+ 8000764:	695a      	ldr	r2, [r3, #20]
+ 8000766:	4b45      	ldr	r3, [pc, #276]	@ (800087c <yellow_color_led+0x140>)
+ 8000768:	681b      	ldr	r3, [r3, #0]
+ 800076a:	f042 0202 	orr.w	r2, r2, #2
+ 800076e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 8000770:	4b42      	ldr	r3, [pc, #264]	@ (800087c <yellow_color_led+0x140>)
+ 8000772:	681b      	ldr	r3, [r3, #0]
+ 8000774:	695a      	ldr	r2, [r3, #20]
+ 8000776:	4b41      	ldr	r3, [pc, #260]	@ (800087c <yellow_color_led+0x140>)
+ 8000778:	681b      	ldr	r3, [r3, #0]
+ 800077a:	f042 0208 	orr.w	r2, r2, #8
+ 800077e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);
+ 8000780:	4b3e      	ldr	r3, [pc, #248]	@ (800087c <yellow_color_led+0x140>)
+ 8000782:	681b      	ldr	r3, [r3, #0]
+ 8000784:	695a      	ldr	r2, [r3, #20]
+ 8000786:	4b3d      	ldr	r3, [pc, #244]	@ (800087c <yellow_color_led+0x140>)
+ 8000788:	681b      	ldr	r3, [r3, #0]
+ 800078a:	f042 0210 	orr.w	r2, r2, #16
+ 800078e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 8000790:	4b3a      	ldr	r3, [pc, #232]	@ (800087c <yellow_color_led+0x140>)
+ 8000792:	681b      	ldr	r3, [r3, #0]
+ 8000794:	695a      	ldr	r2, [r3, #20]
+ 8000796:	4b39      	ldr	r3, [pc, #228]	@ (800087c <yellow_color_led+0x140>)
+ 8000798:	681b      	ldr	r3, [r3, #0]
+ 800079a:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 800079e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);
+ 80007a0:	4b36      	ldr	r3, [pc, #216]	@ (800087c <yellow_color_led+0x140>)
+ 80007a2:	681b      	ldr	r3, [r3, #0]
+ 80007a4:	695a      	ldr	r2, [r3, #20]
+ 80007a6:	4b35      	ldr	r3, [pc, #212]	@ (800087c <yellow_color_led+0x140>)
+ 80007a8:	681b      	ldr	r3, [r3, #0]
+ 80007aa:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 80007ae:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 80007b0:	4b33      	ldr	r3, [pc, #204]	@ (8000880 <yellow_color_led+0x144>)
+ 80007b2:	681b      	ldr	r3, [r3, #0]
+ 80007b4:	695a      	ldr	r2, [r3, #20]
+ 80007b6:	4b32      	ldr	r3, [pc, #200]	@ (8000880 <yellow_color_led+0x144>)
+ 80007b8:	681b      	ldr	r3, [r3, #0]
+ 80007ba:	f042 0201 	orr.w	r2, r2, #1
+ 80007be:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);
+ 80007c0:	4b2f      	ldr	r3, [pc, #188]	@ (8000880 <yellow_color_led+0x144>)
+ 80007c2:	681b      	ldr	r3, [r3, #0]
+ 80007c4:	695a      	ldr	r2, [r3, #20]
+ 80007c6:	4b2e      	ldr	r3, [pc, #184]	@ (8000880 <yellow_color_led+0x144>)
+ 80007c8:	681b      	ldr	r3, [r3, #0]
+ 80007ca:	f042 0202 	orr.w	r2, r2, #2
+ 80007ce:	615a      	str	r2, [r3, #20]
+		timer10_delay(b);
+ 80007d0:	68f8      	ldr	r0, [r7, #12]
+ 80007d2:	f7ff fd91 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);    // First RGB Led
+ 80007d6:	4b29      	ldr	r3, [pc, #164]	@ (800087c <yellow_color_led+0x140>)
+ 80007d8:	681b      	ldr	r3, [r3, #0]
+ 80007da:	695a      	ldr	r2, [r3, #20]
+ 80007dc:	4b27      	ldr	r3, [pc, #156]	@ (800087c <yellow_color_led+0x140>)
+ 80007de:	681b      	ldr	r3, [r3, #0]
+ 80007e0:	f022 0201 	bic.w	r2, r2, #1
+ 80007e4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 80007e6:	4b25      	ldr	r3, [pc, #148]	@ (800087c <yellow_color_led+0x140>)
+ 80007e8:	681b      	ldr	r3, [r3, #0]
+ 80007ea:	695a      	ldr	r2, [r3, #20]
+ 80007ec:	4b23      	ldr	r3, [pc, #140]	@ (800087c <yellow_color_led+0x140>)
+ 80007ee:	681b      	ldr	r3, [r3, #0]
+ 80007f0:	f022 0202 	bic.w	r2, r2, #2
+ 80007f4:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 80007f6:	4b21      	ldr	r3, [pc, #132]	@ (800087c <yellow_color_led+0x140>)
+ 80007f8:	681b      	ldr	r3, [r3, #0]
+ 80007fa:	695a      	ldr	r2, [r3, #20]
+ 80007fc:	4b1f      	ldr	r3, [pc, #124]	@ (800087c <yellow_color_led+0x140>)
+ 80007fe:	681b      	ldr	r3, [r3, #0]
+ 8000800:	f022 0208 	bic.w	r2, r2, #8
+ 8000804:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 4);
+ 8000806:	4b1d      	ldr	r3, [pc, #116]	@ (800087c <yellow_color_led+0x140>)
+ 8000808:	681b      	ldr	r3, [r3, #0]
+ 800080a:	695a      	ldr	r2, [r3, #20]
+ 800080c:	4b1b      	ldr	r3, [pc, #108]	@ (800087c <yellow_color_led+0x140>)
+ 800080e:	681b      	ldr	r3, [r3, #0]
+ 8000810:	f022 0210 	bic.w	r2, r2, #16
+ 8000814:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 8000816:	4b19      	ldr	r3, [pc, #100]	@ (800087c <yellow_color_led+0x140>)
+ 8000818:	681b      	ldr	r3, [r3, #0]
+ 800081a:	695a      	ldr	r2, [r3, #20]
+ 800081c:	4b17      	ldr	r3, [pc, #92]	@ (800087c <yellow_color_led+0x140>)
+ 800081e:	681b      	ldr	r3, [r3, #0]
+ 8000820:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000824:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 7);
+ 8000826:	4b15      	ldr	r3, [pc, #84]	@ (800087c <yellow_color_led+0x140>)
+ 8000828:	681b      	ldr	r3, [r3, #0]
+ 800082a:	695a      	ldr	r2, [r3, #20]
+ 800082c:	4b13      	ldr	r3, [pc, #76]	@ (800087c <yellow_color_led+0x140>)
+ 800082e:	681b      	ldr	r3, [r3, #0]
+ 8000830:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000834:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 8000836:	4b12      	ldr	r3, [pc, #72]	@ (8000880 <yellow_color_led+0x144>)
+ 8000838:	681b      	ldr	r3, [r3, #0]
+ 800083a:	695a      	ldr	r2, [r3, #20]
+ 800083c:	4b10      	ldr	r3, [pc, #64]	@ (8000880 <yellow_color_led+0x144>)
+ 800083e:	681b      	ldr	r3, [r3, #0]
+ 8000840:	f022 0201 	bic.w	r2, r2, #1
+ 8000844:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 1);
+ 8000846:	4b0e      	ldr	r3, [pc, #56]	@ (8000880 <yellow_color_led+0x144>)
+ 8000848:	681b      	ldr	r3, [r3, #0]
+ 800084a:	695a      	ldr	r2, [r3, #20]
+ 800084c:	4b0c      	ldr	r3, [pc, #48]	@ (8000880 <yellow_color_led+0x144>)
+ 800084e:	681b      	ldr	r3, [r3, #0]
+ 8000850:	f022 0202 	bic.w	r2, r2, #2
+ 8000854:	615a      	str	r2, [r3, #20]
+		timer10_delay(t);
+ 8000856:	68b8      	ldr	r0, [r7, #8]
+ 8000858:	f7ff fd4e 	bl	80002f8 <timer10_delay>
+		t = t - 4;
+ 800085c:	68bb      	ldr	r3, [r7, #8]
+ 800085e:	3b04      	subs	r3, #4
+ 8000860:	60bb      	str	r3, [r7, #8]
+	for (b = 16; b <= 255; b = b + 4)
+ 8000862:	68fb      	ldr	r3, [r7, #12]
+ 8000864:	3304      	adds	r3, #4
+ 8000866:	60fb      	str	r3, [r7, #12]
+ 8000868:	68fb      	ldr	r3, [r7, #12]
+ 800086a:	2bff      	cmp	r3, #255	@ 0xff
+ 800086c:	f77f af70 	ble.w	8000750 <yellow_color_led+0x14>
+	}
+	b = 255;
+ 8000870:	23ff      	movs	r3, #255	@ 0xff
+ 8000872:	60fb      	str	r3, [r7, #12]
+	for (int y = 16; y <= 255; y = y + 4)
+ 8000874:	2310      	movs	r3, #16
+ 8000876:	607b      	str	r3, [r7, #4]
+ 8000878:	e090      	b.n	800099c <yellow_color_led+0x260>
+ 800087a:	bf00      	nop
+ 800087c:	20000004 	.word	0x20000004
+ 8000880:	20000008 	.word	0x20000008
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 8000884:	4b4a      	ldr	r3, [pc, #296]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000886:	681b      	ldr	r3, [r3, #0]
+ 8000888:	695a      	ldr	r2, [r3, #20]
+ 800088a:	4b49      	ldr	r3, [pc, #292]	@ (80009b0 <yellow_color_led+0x274>)
+ 800088c:	681b      	ldr	r3, [r3, #0]
+ 800088e:	f042 0201 	orr.w	r2, r2, #1
+ 8000892:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 8000894:	4b46      	ldr	r3, [pc, #280]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000896:	681b      	ldr	r3, [r3, #0]
+ 8000898:	695a      	ldr	r2, [r3, #20]
+ 800089a:	4b45      	ldr	r3, [pc, #276]	@ (80009b0 <yellow_color_led+0x274>)
+ 800089c:	681b      	ldr	r3, [r3, #0]
+ 800089e:	f042 0202 	orr.w	r2, r2, #2
+ 80008a2:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 80008a4:	4b42      	ldr	r3, [pc, #264]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008a6:	681b      	ldr	r3, [r3, #0]
+ 80008a8:	695a      	ldr	r2, [r3, #20]
+ 80008aa:	4b41      	ldr	r3, [pc, #260]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008ac:	681b      	ldr	r3, [r3, #0]
+ 80008ae:	f042 0208 	orr.w	r2, r2, #8
+ 80008b2:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);
+ 80008b4:	4b3e      	ldr	r3, [pc, #248]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008b6:	681b      	ldr	r3, [r3, #0]
+ 80008b8:	695a      	ldr	r2, [r3, #20]
+ 80008ba:	4b3d      	ldr	r3, [pc, #244]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008bc:	681b      	ldr	r3, [r3, #0]
+ 80008be:	f042 0210 	orr.w	r2, r2, #16
+ 80008c2:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 80008c4:	4b3a      	ldr	r3, [pc, #232]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008c6:	681b      	ldr	r3, [r3, #0]
+ 80008c8:	695a      	ldr	r2, [r3, #20]
+ 80008ca:	4b39      	ldr	r3, [pc, #228]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008cc:	681b      	ldr	r3, [r3, #0]
+ 80008ce:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 80008d2:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);
+ 80008d4:	4b36      	ldr	r3, [pc, #216]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008d6:	681b      	ldr	r3, [r3, #0]
+ 80008d8:	695a      	ldr	r2, [r3, #20]
+ 80008da:	4b35      	ldr	r3, [pc, #212]	@ (80009b0 <yellow_color_led+0x274>)
+ 80008dc:	681b      	ldr	r3, [r3, #0]
+ 80008de:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 80008e2:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 80008e4:	4b33      	ldr	r3, [pc, #204]	@ (80009b4 <yellow_color_led+0x278>)
+ 80008e6:	681b      	ldr	r3, [r3, #0]
+ 80008e8:	695a      	ldr	r2, [r3, #20]
+ 80008ea:	4b32      	ldr	r3, [pc, #200]	@ (80009b4 <yellow_color_led+0x278>)
+ 80008ec:	681b      	ldr	r3, [r3, #0]
+ 80008ee:	f042 0201 	orr.w	r2, r2, #1
+ 80008f2:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);
+ 80008f4:	4b2f      	ldr	r3, [pc, #188]	@ (80009b4 <yellow_color_led+0x278>)
+ 80008f6:	681b      	ldr	r3, [r3, #0]
+ 80008f8:	695a      	ldr	r2, [r3, #20]
+ 80008fa:	4b2e      	ldr	r3, [pc, #184]	@ (80009b4 <yellow_color_led+0x278>)
+ 80008fc:	681b      	ldr	r3, [r3, #0]
+ 80008fe:	f042 0202 	orr.w	r2, r2, #2
+ 8000902:	615a      	str	r2, [r3, #20]
+		timer10_delay(b);
+ 8000904:	68f8      	ldr	r0, [r7, #12]
+ 8000906:	f7ff fcf7 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);    // First RGB Led
+ 800090a:	4b29      	ldr	r3, [pc, #164]	@ (80009b0 <yellow_color_led+0x274>)
+ 800090c:	681b      	ldr	r3, [r3, #0]
+ 800090e:	695a      	ldr	r2, [r3, #20]
+ 8000910:	4b27      	ldr	r3, [pc, #156]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000912:	681b      	ldr	r3, [r3, #0]
+ 8000914:	f022 0201 	bic.w	r2, r2, #1
+ 8000918:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 800091a:	4b25      	ldr	r3, [pc, #148]	@ (80009b0 <yellow_color_led+0x274>)
+ 800091c:	681b      	ldr	r3, [r3, #0]
+ 800091e:	695a      	ldr	r2, [r3, #20]
+ 8000920:	4b23      	ldr	r3, [pc, #140]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000922:	681b      	ldr	r3, [r3, #0]
+ 8000924:	f022 0202 	bic.w	r2, r2, #2
+ 8000928:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 800092a:	4b21      	ldr	r3, [pc, #132]	@ (80009b0 <yellow_color_led+0x274>)
+ 800092c:	681b      	ldr	r3, [r3, #0]
+ 800092e:	695a      	ldr	r2, [r3, #20]
+ 8000930:	4b1f      	ldr	r3, [pc, #124]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000932:	681b      	ldr	r3, [r3, #0]
+ 8000934:	f022 0208 	bic.w	r2, r2, #8
+ 8000938:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 4);
+ 800093a:	4b1d      	ldr	r3, [pc, #116]	@ (80009b0 <yellow_color_led+0x274>)
+ 800093c:	681b      	ldr	r3, [r3, #0]
+ 800093e:	695a      	ldr	r2, [r3, #20]
+ 8000940:	4b1b      	ldr	r3, [pc, #108]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000942:	681b      	ldr	r3, [r3, #0]
+ 8000944:	f022 0210 	bic.w	r2, r2, #16
+ 8000948:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 800094a:	4b19      	ldr	r3, [pc, #100]	@ (80009b0 <yellow_color_led+0x274>)
+ 800094c:	681b      	ldr	r3, [r3, #0]
+ 800094e:	695a      	ldr	r2, [r3, #20]
+ 8000950:	4b17      	ldr	r3, [pc, #92]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000952:	681b      	ldr	r3, [r3, #0]
+ 8000954:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000958:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 7);
+ 800095a:	4b15      	ldr	r3, [pc, #84]	@ (80009b0 <yellow_color_led+0x274>)
+ 800095c:	681b      	ldr	r3, [r3, #0]
+ 800095e:	695a      	ldr	r2, [r3, #20]
+ 8000960:	4b13      	ldr	r3, [pc, #76]	@ (80009b0 <yellow_color_led+0x274>)
+ 8000962:	681b      	ldr	r3, [r3, #0]
+ 8000964:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000968:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 800096a:	4b12      	ldr	r3, [pc, #72]	@ (80009b4 <yellow_color_led+0x278>)
+ 800096c:	681b      	ldr	r3, [r3, #0]
+ 800096e:	695a      	ldr	r2, [r3, #20]
+ 8000970:	4b10      	ldr	r3, [pc, #64]	@ (80009b4 <yellow_color_led+0x278>)
+ 8000972:	681b      	ldr	r3, [r3, #0]
+ 8000974:	f022 0201 	bic.w	r2, r2, #1
+ 8000978:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 1);
+ 800097a:	4b0e      	ldr	r3, [pc, #56]	@ (80009b4 <yellow_color_led+0x278>)
+ 800097c:	681b      	ldr	r3, [r3, #0]
+ 800097e:	695a      	ldr	r2, [r3, #20]
+ 8000980:	4b0c      	ldr	r3, [pc, #48]	@ (80009b4 <yellow_color_led+0x278>)
+ 8000982:	681b      	ldr	r3, [r3, #0]
+ 8000984:	f022 0202 	bic.w	r2, r2, #2
+ 8000988:	615a      	str	r2, [r3, #20]
+		timer10_delay(y);
+ 800098a:	6878      	ldr	r0, [r7, #4]
+ 800098c:	f7ff fcb4 	bl	80002f8 <timer10_delay>
+		b = b - 4;
+ 8000990:	68fb      	ldr	r3, [r7, #12]
+ 8000992:	3b04      	subs	r3, #4
+ 8000994:	60fb      	str	r3, [r7, #12]
+	for (int y = 16; y <= 255; y = y + 4)
+ 8000996:	687b      	ldr	r3, [r7, #4]
+ 8000998:	3304      	adds	r3, #4
+ 800099a:	607b      	str	r3, [r7, #4]
+ 800099c:	687b      	ldr	r3, [r7, #4]
+ 800099e:	2bff      	cmp	r3, #255	@ 0xff
+ 80009a0:	f77f af70 	ble.w	8000884 <yellow_color_led+0x148>
+	}
+}
+ 80009a4:	bf00      	nop
+ 80009a6:	bf00      	nop
+ 80009a8:	3710      	adds	r7, #16
+ 80009aa:	46bd      	mov	sp, r7
+ 80009ac:	bd80      	pop	{r7, pc}
+ 80009ae:	bf00      	nop
+ 80009b0:	20000004 	.word	0x20000004
+ 80009b4:	20000008 	.word	0x20000008
+
+080009b8 <white_color_led>:
+
+void white_color_led()
+{
+ 80009b8:	b580      	push	{r7, lr}
+ 80009ba:	b084      	sub	sp, #16
+ 80009bc:	af00      	add	r7, sp, #0
+	// white color value : R = 255, G, B = 255
+	int h = 16, r = 255;
+ 80009be:	2310      	movs	r3, #16
+ 80009c0:	60fb      	str	r3, [r7, #12]
+ 80009c2:	23ff      	movs	r3, #255	@ 0xff
+ 80009c4:	60bb      	str	r3, [r7, #8]
+	for (h = 16; h <= 255; h = h + 4)
+ 80009c6:	2310      	movs	r3, #16
+ 80009c8:	60fb      	str	r3, [r7, #12]
+ 80009ca:	e0cb      	b.n	8000b64 <white_color_led+0x1ac>
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 80009cc:	4b6a      	ldr	r3, [pc, #424]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009ce:	681b      	ldr	r3, [r3, #0]
+ 80009d0:	695a      	ldr	r2, [r3, #20]
+ 80009d2:	4b69      	ldr	r3, [pc, #420]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009d4:	681b      	ldr	r3, [r3, #0]
+ 80009d6:	f042 0201 	orr.w	r2, r2, #1
+ 80009da:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 80009dc:	4b66      	ldr	r3, [pc, #408]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009de:	681b      	ldr	r3, [r3, #0]
+ 80009e0:	695a      	ldr	r2, [r3, #20]
+ 80009e2:	4b65      	ldr	r3, [pc, #404]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009e4:	681b      	ldr	r3, [r3, #0]
+ 80009e6:	f042 0202 	orr.w	r2, r2, #2
+ 80009ea:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 2);
+ 80009ec:	4b62      	ldr	r3, [pc, #392]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009ee:	681b      	ldr	r3, [r3, #0]
+ 80009f0:	695a      	ldr	r2, [r3, #20]
+ 80009f2:	4b61      	ldr	r3, [pc, #388]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009f4:	681b      	ldr	r3, [r3, #0]
+ 80009f6:	f042 0204 	orr.w	r2, r2, #4
+ 80009fa:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 80009fc:	4b5e      	ldr	r3, [pc, #376]	@ (8000b78 <white_color_led+0x1c0>)
+ 80009fe:	681b      	ldr	r3, [r3, #0]
+ 8000a00:	695a      	ldr	r2, [r3, #20]
+ 8000a02:	4b5d      	ldr	r3, [pc, #372]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a04:	681b      	ldr	r3, [r3, #0]
+ 8000a06:	f042 0208 	orr.w	r2, r2, #8
+ 8000a0a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);
+ 8000a0c:	4b5a      	ldr	r3, [pc, #360]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a0e:	681b      	ldr	r3, [r3, #0]
+ 8000a10:	695a      	ldr	r2, [r3, #20]
+ 8000a12:	4b59      	ldr	r3, [pc, #356]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a14:	681b      	ldr	r3, [r3, #0]
+ 8000a16:	f042 0210 	orr.w	r2, r2, #16
+ 8000a1a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 8000a1c:	4b56      	ldr	r3, [pc, #344]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a1e:	681b      	ldr	r3, [r3, #0]
+ 8000a20:	695a      	ldr	r2, [r3, #20]
+ 8000a22:	4b55      	ldr	r3, [pc, #340]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a24:	681b      	ldr	r3, [r3, #0]
+ 8000a26:	f042 0220 	orr.w	r2, r2, #32
+ 8000a2a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 8000a2c:	4b52      	ldr	r3, [pc, #328]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a2e:	681b      	ldr	r3, [r3, #0]
+ 8000a30:	695a      	ldr	r2, [r3, #20]
+ 8000a32:	4b51      	ldr	r3, [pc, #324]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a34:	681b      	ldr	r3, [r3, #0]
+ 8000a36:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 8000a3a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);
+ 8000a3c:	4b4e      	ldr	r3, [pc, #312]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a3e:	681b      	ldr	r3, [r3, #0]
+ 8000a40:	695a      	ldr	r2, [r3, #20]
+ 8000a42:	4b4d      	ldr	r3, [pc, #308]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a44:	681b      	ldr	r3, [r3, #0]
+ 8000a46:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 8000a4a:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 8000a4c:	4b4a      	ldr	r3, [pc, #296]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a4e:	681b      	ldr	r3, [r3, #0]
+ 8000a50:	695a      	ldr	r2, [r3, #20]
+ 8000a52:	4b49      	ldr	r3, [pc, #292]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a54:	681b      	ldr	r3, [r3, #0]
+ 8000a56:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 8000a5a:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 8000a5c:	4b47      	ldr	r3, [pc, #284]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a5e:	681b      	ldr	r3, [r3, #0]
+ 8000a60:	695a      	ldr	r2, [r3, #20]
+ 8000a62:	4b46      	ldr	r3, [pc, #280]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a64:	681b      	ldr	r3, [r3, #0]
+ 8000a66:	f042 0201 	orr.w	r2, r2, #1
+ 8000a6a:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);
+ 8000a6c:	4b43      	ldr	r3, [pc, #268]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a6e:	681b      	ldr	r3, [r3, #0]
+ 8000a70:	695a      	ldr	r2, [r3, #20]
+ 8000a72:	4b42      	ldr	r3, [pc, #264]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a74:	681b      	ldr	r3, [r3, #0]
+ 8000a76:	f042 0202 	orr.w	r2, r2, #2
+ 8000a7a:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 8000a7c:	4b3f      	ldr	r3, [pc, #252]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a7e:	681b      	ldr	r3, [r3, #0]
+ 8000a80:	695a      	ldr	r2, [r3, #20]
+ 8000a82:	4b3e      	ldr	r3, [pc, #248]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000a84:	681b      	ldr	r3, [r3, #0]
+ 8000a86:	f042 0204 	orr.w	r2, r2, #4
+ 8000a8a:	615a      	str	r2, [r3, #20]
+		timer10_delay(h);
+ 8000a8c:	68f8      	ldr	r0, [r7, #12]
+ 8000a8e:	f7ff fc33 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);    // First RGB Led
+ 8000a92:	4b39      	ldr	r3, [pc, #228]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a94:	681b      	ldr	r3, [r3, #0]
+ 8000a96:	695a      	ldr	r2, [r3, #20]
+ 8000a98:	4b37      	ldr	r3, [pc, #220]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000a9a:	681b      	ldr	r3, [r3, #0]
+ 8000a9c:	f022 0201 	bic.w	r2, r2, #1
+ 8000aa0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000aa2:	4b35      	ldr	r3, [pc, #212]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000aa4:	681b      	ldr	r3, [r3, #0]
+ 8000aa6:	695a      	ldr	r2, [r3, #20]
+ 8000aa8:	4b33      	ldr	r3, [pc, #204]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000aaa:	681b      	ldr	r3, [r3, #0]
+ 8000aac:	f022 0202 	bic.w	r2, r2, #2
+ 8000ab0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000ab2:	4b31      	ldr	r3, [pc, #196]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000ab4:	681b      	ldr	r3, [r3, #0]
+ 8000ab6:	695a      	ldr	r2, [r3, #20]
+ 8000ab8:	4b2f      	ldr	r3, [pc, #188]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000aba:	681b      	ldr	r3, [r3, #0]
+ 8000abc:	f022 0204 	bic.w	r2, r2, #4
+ 8000ac0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 8000ac2:	4b2d      	ldr	r3, [pc, #180]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000ac4:	681b      	ldr	r3, [r3, #0]
+ 8000ac6:	695a      	ldr	r2, [r3, #20]
+ 8000ac8:	4b2b      	ldr	r3, [pc, #172]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000aca:	681b      	ldr	r3, [r3, #0]
+ 8000acc:	f022 0208 	bic.w	r2, r2, #8
+ 8000ad0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 4);
+ 8000ad2:	4b29      	ldr	r3, [pc, #164]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000ad4:	681b      	ldr	r3, [r3, #0]
+ 8000ad6:	695a      	ldr	r2, [r3, #20]
+ 8000ad8:	4b27      	ldr	r3, [pc, #156]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000ada:	681b      	ldr	r3, [r3, #0]
+ 8000adc:	f022 0210 	bic.w	r2, r2, #16
+ 8000ae0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 5);
+ 8000ae2:	4b25      	ldr	r3, [pc, #148]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000ae4:	681b      	ldr	r3, [r3, #0]
+ 8000ae6:	695a      	ldr	r2, [r3, #20]
+ 8000ae8:	4b23      	ldr	r3, [pc, #140]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000aea:	681b      	ldr	r3, [r3, #0]
+ 8000aec:	f022 0220 	bic.w	r2, r2, #32
+ 8000af0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 8000af2:	4b21      	ldr	r3, [pc, #132]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000af4:	681b      	ldr	r3, [r3, #0]
+ 8000af6:	695a      	ldr	r2, [r3, #20]
+ 8000af8:	4b1f      	ldr	r3, [pc, #124]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000afa:	681b      	ldr	r3, [r3, #0]
+ 8000afc:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000b00:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 7);
+ 8000b02:	4b1d      	ldr	r3, [pc, #116]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000b04:	681b      	ldr	r3, [r3, #0]
+ 8000b06:	695a      	ldr	r2, [r3, #20]
+ 8000b08:	4b1b      	ldr	r3, [pc, #108]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000b0a:	681b      	ldr	r3, [r3, #0]
+ 8000b0c:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000b10:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 8);
+ 8000b12:	4b19      	ldr	r3, [pc, #100]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000b14:	681b      	ldr	r3, [r3, #0]
+ 8000b16:	695a      	ldr	r2, [r3, #20]
+ 8000b18:	4b17      	ldr	r3, [pc, #92]	@ (8000b78 <white_color_led+0x1c0>)
+ 8000b1a:	681b      	ldr	r3, [r3, #0]
+ 8000b1c:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8000b20:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 8000b22:	4b16      	ldr	r3, [pc, #88]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b24:	681b      	ldr	r3, [r3, #0]
+ 8000b26:	695a      	ldr	r2, [r3, #20]
+ 8000b28:	4b14      	ldr	r3, [pc, #80]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b2a:	681b      	ldr	r3, [r3, #0]
+ 8000b2c:	f022 0201 	bic.w	r2, r2, #1
+ 8000b30:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 1);
+ 8000b32:	4b12      	ldr	r3, [pc, #72]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b34:	681b      	ldr	r3, [r3, #0]
+ 8000b36:	695a      	ldr	r2, [r3, #20]
+ 8000b38:	4b10      	ldr	r3, [pc, #64]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b3a:	681b      	ldr	r3, [r3, #0]
+ 8000b3c:	f022 0202 	bic.w	r2, r2, #2
+ 8000b40:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 2);
+ 8000b42:	4b0e      	ldr	r3, [pc, #56]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b44:	681b      	ldr	r3, [r3, #0]
+ 8000b46:	695a      	ldr	r2, [r3, #20]
+ 8000b48:	4b0c      	ldr	r3, [pc, #48]	@ (8000b7c <white_color_led+0x1c4>)
+ 8000b4a:	681b      	ldr	r3, [r3, #0]
+ 8000b4c:	f022 0204 	bic.w	r2, r2, #4
+ 8000b50:	615a      	str	r2, [r3, #20]
+		timer10_delay(r);
+ 8000b52:	68b8      	ldr	r0, [r7, #8]
+ 8000b54:	f7ff fbd0 	bl	80002f8 <timer10_delay>
+		r = r - 4;
+ 8000b58:	68bb      	ldr	r3, [r7, #8]
+ 8000b5a:	3b04      	subs	r3, #4
+ 8000b5c:	60bb      	str	r3, [r7, #8]
+	for (h = 16; h <= 255; h = h + 4)
+ 8000b5e:	68fb      	ldr	r3, [r7, #12]
+ 8000b60:	3304      	adds	r3, #4
+ 8000b62:	60fb      	str	r3, [r7, #12]
+ 8000b64:	68fb      	ldr	r3, [r7, #12]
+ 8000b66:	2bff      	cmp	r3, #255	@ 0xff
+ 8000b68:	f77f af30 	ble.w	80009cc <white_color_led+0x14>
+	}
+	h = 255;
+ 8000b6c:	23ff      	movs	r3, #255	@ 0xff
+ 8000b6e:	60fb      	str	r3, [r7, #12]
+	for (int w = 16; w <= 255; w = w + 4)
+ 8000b70:	2310      	movs	r3, #16
+ 8000b72:	607b      	str	r3, [r7, #4]
+ 8000b74:	e0d0      	b.n	8000d18 <white_color_led+0x360>
+ 8000b76:	bf00      	nop
+ 8000b78:	20000004 	.word	0x20000004
+ 8000b7c:	20000008 	.word	0x20000008
+	{
+		GPIOA->ODR |= (1 << 0);    // First RGB Led
+ 8000b80:	4b6a      	ldr	r3, [pc, #424]	@ (8000d2c <white_color_led+0x374>)
+ 8000b82:	681b      	ldr	r3, [r3, #0]
+ 8000b84:	695a      	ldr	r2, [r3, #20]
+ 8000b86:	4b69      	ldr	r3, [pc, #420]	@ (8000d2c <white_color_led+0x374>)
+ 8000b88:	681b      	ldr	r3, [r3, #0]
+ 8000b8a:	f042 0201 	orr.w	r2, r2, #1
+ 8000b8e:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 1);
+ 8000b90:	4b66      	ldr	r3, [pc, #408]	@ (8000d2c <white_color_led+0x374>)
+ 8000b92:	681b      	ldr	r3, [r3, #0]
+ 8000b94:	695a      	ldr	r2, [r3, #20]
+ 8000b96:	4b65      	ldr	r3, [pc, #404]	@ (8000d2c <white_color_led+0x374>)
+ 8000b98:	681b      	ldr	r3, [r3, #0]
+ 8000b9a:	f042 0202 	orr.w	r2, r2, #2
+ 8000b9e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 2);
+ 8000ba0:	4b62      	ldr	r3, [pc, #392]	@ (8000d2c <white_color_led+0x374>)
+ 8000ba2:	681b      	ldr	r3, [r3, #0]
+ 8000ba4:	695a      	ldr	r2, [r3, #20]
+ 8000ba6:	4b61      	ldr	r3, [pc, #388]	@ (8000d2c <white_color_led+0x374>)
+ 8000ba8:	681b      	ldr	r3, [r3, #0]
+ 8000baa:	f042 0204 	orr.w	r2, r2, #4
+ 8000bae:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 8000bb0:	4b5e      	ldr	r3, [pc, #376]	@ (8000d2c <white_color_led+0x374>)
+ 8000bb2:	681b      	ldr	r3, [r3, #0]
+ 8000bb4:	695a      	ldr	r2, [r3, #20]
+ 8000bb6:	4b5d      	ldr	r3, [pc, #372]	@ (8000d2c <white_color_led+0x374>)
+ 8000bb8:	681b      	ldr	r3, [r3, #0]
+ 8000bba:	f042 0208 	orr.w	r2, r2, #8
+ 8000bbe:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);
+ 8000bc0:	4b5a      	ldr	r3, [pc, #360]	@ (8000d2c <white_color_led+0x374>)
+ 8000bc2:	681b      	ldr	r3, [r3, #0]
+ 8000bc4:	695a      	ldr	r2, [r3, #20]
+ 8000bc6:	4b59      	ldr	r3, [pc, #356]	@ (8000d2c <white_color_led+0x374>)
+ 8000bc8:	681b      	ldr	r3, [r3, #0]
+ 8000bca:	f042 0210 	orr.w	r2, r2, #16
+ 8000bce:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 8000bd0:	4b56      	ldr	r3, [pc, #344]	@ (8000d2c <white_color_led+0x374>)
+ 8000bd2:	681b      	ldr	r3, [r3, #0]
+ 8000bd4:	695a      	ldr	r2, [r3, #20]
+ 8000bd6:	4b55      	ldr	r3, [pc, #340]	@ (8000d2c <white_color_led+0x374>)
+ 8000bd8:	681b      	ldr	r3, [r3, #0]
+ 8000bda:	f042 0220 	orr.w	r2, r2, #32
+ 8000bde:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 8000be0:	4b52      	ldr	r3, [pc, #328]	@ (8000d2c <white_color_led+0x374>)
+ 8000be2:	681b      	ldr	r3, [r3, #0]
+ 8000be4:	695a      	ldr	r2, [r3, #20]
+ 8000be6:	4b51      	ldr	r3, [pc, #324]	@ (8000d2c <white_color_led+0x374>)
+ 8000be8:	681b      	ldr	r3, [r3, #0]
+ 8000bea:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 8000bee:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);
+ 8000bf0:	4b4e      	ldr	r3, [pc, #312]	@ (8000d2c <white_color_led+0x374>)
+ 8000bf2:	681b      	ldr	r3, [r3, #0]
+ 8000bf4:	695a      	ldr	r2, [r3, #20]
+ 8000bf6:	4b4d      	ldr	r3, [pc, #308]	@ (8000d2c <white_color_led+0x374>)
+ 8000bf8:	681b      	ldr	r3, [r3, #0]
+ 8000bfa:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 8000bfe:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 8000c00:	4b4a      	ldr	r3, [pc, #296]	@ (8000d2c <white_color_led+0x374>)
+ 8000c02:	681b      	ldr	r3, [r3, #0]
+ 8000c04:	695a      	ldr	r2, [r3, #20]
+ 8000c06:	4b49      	ldr	r3, [pc, #292]	@ (8000d2c <white_color_led+0x374>)
+ 8000c08:	681b      	ldr	r3, [r3, #0]
+ 8000c0a:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 8000c0e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 8000c10:	4b47      	ldr	r3, [pc, #284]	@ (8000d30 <white_color_led+0x378>)
+ 8000c12:	681b      	ldr	r3, [r3, #0]
+ 8000c14:	695a      	ldr	r2, [r3, #20]
+ 8000c16:	4b46      	ldr	r3, [pc, #280]	@ (8000d30 <white_color_led+0x378>)
+ 8000c18:	681b      	ldr	r3, [r3, #0]
+ 8000c1a:	f042 0201 	orr.w	r2, r2, #1
+ 8000c1e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);
+ 8000c20:	4b43      	ldr	r3, [pc, #268]	@ (8000d30 <white_color_led+0x378>)
+ 8000c22:	681b      	ldr	r3, [r3, #0]
+ 8000c24:	695a      	ldr	r2, [r3, #20]
+ 8000c26:	4b42      	ldr	r3, [pc, #264]	@ (8000d30 <white_color_led+0x378>)
+ 8000c28:	681b      	ldr	r3, [r3, #0]
+ 8000c2a:	f042 0202 	orr.w	r2, r2, #2
+ 8000c2e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 8000c30:	4b3f      	ldr	r3, [pc, #252]	@ (8000d30 <white_color_led+0x378>)
+ 8000c32:	681b      	ldr	r3, [r3, #0]
+ 8000c34:	695a      	ldr	r2, [r3, #20]
+ 8000c36:	4b3e      	ldr	r3, [pc, #248]	@ (8000d30 <white_color_led+0x378>)
+ 8000c38:	681b      	ldr	r3, [r3, #0]
+ 8000c3a:	f042 0204 	orr.w	r2, r2, #4
+ 8000c3e:	615a      	str	r2, [r3, #20]
+		timer10_delay(h);
+ 8000c40:	68f8      	ldr	r0, [r7, #12]
+ 8000c42:	f7ff fb59 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);    // First RGB Led
+ 8000c46:	4b39      	ldr	r3, [pc, #228]	@ (8000d2c <white_color_led+0x374>)
+ 8000c48:	681b      	ldr	r3, [r3, #0]
+ 8000c4a:	695a      	ldr	r2, [r3, #20]
+ 8000c4c:	4b37      	ldr	r3, [pc, #220]	@ (8000d2c <white_color_led+0x374>)
+ 8000c4e:	681b      	ldr	r3, [r3, #0]
+ 8000c50:	f022 0201 	bic.w	r2, r2, #1
+ 8000c54:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 1);
+ 8000c56:	4b35      	ldr	r3, [pc, #212]	@ (8000d2c <white_color_led+0x374>)
+ 8000c58:	681b      	ldr	r3, [r3, #0]
+ 8000c5a:	695a      	ldr	r2, [r3, #20]
+ 8000c5c:	4b33      	ldr	r3, [pc, #204]	@ (8000d2c <white_color_led+0x374>)
+ 8000c5e:	681b      	ldr	r3, [r3, #0]
+ 8000c60:	f022 0202 	bic.w	r2, r2, #2
+ 8000c64:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 8000c66:	4b31      	ldr	r3, [pc, #196]	@ (8000d2c <white_color_led+0x374>)
+ 8000c68:	681b      	ldr	r3, [r3, #0]
+ 8000c6a:	695a      	ldr	r2, [r3, #20]
+ 8000c6c:	4b2f      	ldr	r3, [pc, #188]	@ (8000d2c <white_color_led+0x374>)
+ 8000c6e:	681b      	ldr	r3, [r3, #0]
+ 8000c70:	f022 0204 	bic.w	r2, r2, #4
+ 8000c74:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);    // Second RGB Led
+ 8000c76:	4b2d      	ldr	r3, [pc, #180]	@ (8000d2c <white_color_led+0x374>)
+ 8000c78:	681b      	ldr	r3, [r3, #0]
+ 8000c7a:	695a      	ldr	r2, [r3, #20]
+ 8000c7c:	4b2b      	ldr	r3, [pc, #172]	@ (8000d2c <white_color_led+0x374>)
+ 8000c7e:	681b      	ldr	r3, [r3, #0]
+ 8000c80:	f022 0208 	bic.w	r2, r2, #8
+ 8000c84:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 4);
+ 8000c86:	4b29      	ldr	r3, [pc, #164]	@ (8000d2c <white_color_led+0x374>)
+ 8000c88:	681b      	ldr	r3, [r3, #0]
+ 8000c8a:	695a      	ldr	r2, [r3, #20]
+ 8000c8c:	4b27      	ldr	r3, [pc, #156]	@ (8000d2c <white_color_led+0x374>)
+ 8000c8e:	681b      	ldr	r3, [r3, #0]
+ 8000c90:	f022 0210 	bic.w	r2, r2, #16
+ 8000c94:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 5);
+ 8000c96:	4b25      	ldr	r3, [pc, #148]	@ (8000d2c <white_color_led+0x374>)
+ 8000c98:	681b      	ldr	r3, [r3, #0]
+ 8000c9a:	695a      	ldr	r2, [r3, #20]
+ 8000c9c:	4b23      	ldr	r3, [pc, #140]	@ (8000d2c <white_color_led+0x374>)
+ 8000c9e:	681b      	ldr	r3, [r3, #0]
+ 8000ca0:	f022 0220 	bic.w	r2, r2, #32
+ 8000ca4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 6);    // Third RGB Led
+ 8000ca6:	4b21      	ldr	r3, [pc, #132]	@ (8000d2c <white_color_led+0x374>)
+ 8000ca8:	681b      	ldr	r3, [r3, #0]
+ 8000caa:	695a      	ldr	r2, [r3, #20]
+ 8000cac:	4b1f      	ldr	r3, [pc, #124]	@ (8000d2c <white_color_led+0x374>)
+ 8000cae:	681b      	ldr	r3, [r3, #0]
+ 8000cb0:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000cb4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 7);
+ 8000cb6:	4b1d      	ldr	r3, [pc, #116]	@ (8000d2c <white_color_led+0x374>)
+ 8000cb8:	681b      	ldr	r3, [r3, #0]
+ 8000cba:	695a      	ldr	r2, [r3, #20]
+ 8000cbc:	4b1b      	ldr	r3, [pc, #108]	@ (8000d2c <white_color_led+0x374>)
+ 8000cbe:	681b      	ldr	r3, [r3, #0]
+ 8000cc0:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000cc4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 8);
+ 8000cc6:	4b19      	ldr	r3, [pc, #100]	@ (8000d2c <white_color_led+0x374>)
+ 8000cc8:	681b      	ldr	r3, [r3, #0]
+ 8000cca:	695a      	ldr	r2, [r3, #20]
+ 8000ccc:	4b17      	ldr	r3, [pc, #92]	@ (8000d2c <white_color_led+0x374>)
+ 8000cce:	681b      	ldr	r3, [r3, #0]
+ 8000cd0:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8000cd4:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 0);    // fourth RBG Led
+ 8000cd6:	4b16      	ldr	r3, [pc, #88]	@ (8000d30 <white_color_led+0x378>)
+ 8000cd8:	681b      	ldr	r3, [r3, #0]
+ 8000cda:	695a      	ldr	r2, [r3, #20]
+ 8000cdc:	4b14      	ldr	r3, [pc, #80]	@ (8000d30 <white_color_led+0x378>)
+ 8000cde:	681b      	ldr	r3, [r3, #0]
+ 8000ce0:	f022 0201 	bic.w	r2, r2, #1
+ 8000ce4:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 1);
+ 8000ce6:	4b12      	ldr	r3, [pc, #72]	@ (8000d30 <white_color_led+0x378>)
+ 8000ce8:	681b      	ldr	r3, [r3, #0]
+ 8000cea:	695a      	ldr	r2, [r3, #20]
+ 8000cec:	4b10      	ldr	r3, [pc, #64]	@ (8000d30 <white_color_led+0x378>)
+ 8000cee:	681b      	ldr	r3, [r3, #0]
+ 8000cf0:	f022 0202 	bic.w	r2, r2, #2
+ 8000cf4:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 2);
+ 8000cf6:	4b0e      	ldr	r3, [pc, #56]	@ (8000d30 <white_color_led+0x378>)
+ 8000cf8:	681b      	ldr	r3, [r3, #0]
+ 8000cfa:	695a      	ldr	r2, [r3, #20]
+ 8000cfc:	4b0c      	ldr	r3, [pc, #48]	@ (8000d30 <white_color_led+0x378>)
+ 8000cfe:	681b      	ldr	r3, [r3, #0]
+ 8000d00:	f022 0204 	bic.w	r2, r2, #4
+ 8000d04:	615a      	str	r2, [r3, #20]
+		timer10_delay(w);
+ 8000d06:	6878      	ldr	r0, [r7, #4]
+ 8000d08:	f7ff faf6 	bl	80002f8 <timer10_delay>
+		h = h - 4;
+ 8000d0c:	68fb      	ldr	r3, [r7, #12]
+ 8000d0e:	3b04      	subs	r3, #4
+ 8000d10:	60fb      	str	r3, [r7, #12]
+	for (int w = 16; w <= 255; w = w + 4)
+ 8000d12:	687b      	ldr	r3, [r7, #4]
+ 8000d14:	3304      	adds	r3, #4
+ 8000d16:	607b      	str	r3, [r7, #4]
+ 8000d18:	687b      	ldr	r3, [r7, #4]
+ 8000d1a:	2bff      	cmp	r3, #255	@ 0xff
+ 8000d1c:	f77f af30 	ble.w	8000b80 <white_color_led+0x1c8>
+	}
+}
+ 8000d20:	bf00      	nop
+ 8000d22:	bf00      	nop
+ 8000d24:	3710      	adds	r7, #16
+ 8000d26:	46bd      	mov	sp, r7
+ 8000d28:	bd80      	pop	{r7, pc}
+ 8000d2a:	bf00      	nop
+ 8000d2c:	20000004 	.word	0x20000004
+ 8000d30:	20000008 	.word	0x20000008
+
+08000d34 <red_color_led>:
+
+void red_color_led(void)
+{
+ 8000d34:	b580      	push	{r7, lr}
+ 8000d36:	b084      	sub	sp, #16
+ 8000d38:	af00      	add	r7, sp, #0
+	// red color value : R = 255, G = 0, B = 0
+	int d = 16, e = 255;
+ 8000d3a:	2310      	movs	r3, #16
+ 8000d3c:	60fb      	str	r3, [r7, #12]
+ 8000d3e:	23ff      	movs	r3, #255	@ 0xff
+ 8000d40:	60bb      	str	r3, [r7, #8]
+	for (d = 16; d <= 255; d = d + 4)
+ 8000d42:	2310      	movs	r3, #16
+ 8000d44:	60fb      	str	r3, [r7, #12]
+ 8000d46:	e04b      	b.n	8000de0 <red_color_led+0xac>
+	{
+		GPIOA->ODR |= (1 << 0);    // first RGB Led
+ 8000d48:	4b53      	ldr	r3, [pc, #332]	@ (8000e98 <red_color_led+0x164>)
+ 8000d4a:	681b      	ldr	r3, [r3, #0]
+ 8000d4c:	695a      	ldr	r2, [r3, #20]
+ 8000d4e:	4b52      	ldr	r3, [pc, #328]	@ (8000e98 <red_color_led+0x164>)
+ 8000d50:	681b      	ldr	r3, [r3, #0]
+ 8000d52:	f042 0201 	orr.w	r2, r2, #1
+ 8000d56:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 8000d58:	4b4f      	ldr	r3, [pc, #316]	@ (8000e98 <red_color_led+0x164>)
+ 8000d5a:	681b      	ldr	r3, [r3, #0]
+ 8000d5c:	695a      	ldr	r2, [r3, #20]
+ 8000d5e:	4b4e      	ldr	r3, [pc, #312]	@ (8000e98 <red_color_led+0x164>)
+ 8000d60:	681b      	ldr	r3, [r3, #0]
+ 8000d62:	f042 0208 	orr.w	r2, r2, #8
+ 8000d66:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 8000d68:	4b4b      	ldr	r3, [pc, #300]	@ (8000e98 <red_color_led+0x164>)
+ 8000d6a:	681b      	ldr	r3, [r3, #0]
+ 8000d6c:	695a      	ldr	r2, [r3, #20]
+ 8000d6e:	4b4a      	ldr	r3, [pc, #296]	@ (8000e98 <red_color_led+0x164>)
+ 8000d70:	681b      	ldr	r3, [r3, #0]
+ 8000d72:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 8000d76:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 8000d78:	4b48      	ldr	r3, [pc, #288]	@ (8000e9c <red_color_led+0x168>)
+ 8000d7a:	681b      	ldr	r3, [r3, #0]
+ 8000d7c:	695a      	ldr	r2, [r3, #20]
+ 8000d7e:	4b47      	ldr	r3, [pc, #284]	@ (8000e9c <red_color_led+0x168>)
+ 8000d80:	681b      	ldr	r3, [r3, #0]
+ 8000d82:	f042 0201 	orr.w	r2, r2, #1
+ 8000d86:	615a      	str	r2, [r3, #20]
+		timer10_delay(d);
+ 8000d88:	68f8      	ldr	r0, [r7, #12]
+ 8000d8a:	f7ff fab5 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);   // first RGB Led
+ 8000d8e:	4b42      	ldr	r3, [pc, #264]	@ (8000e98 <red_color_led+0x164>)
+ 8000d90:	681b      	ldr	r3, [r3, #0]
+ 8000d92:	695a      	ldr	r2, [r3, #20]
+ 8000d94:	4b40      	ldr	r3, [pc, #256]	@ (8000e98 <red_color_led+0x164>)
+ 8000d96:	681b      	ldr	r3, [r3, #0]
+ 8000d98:	f022 0201 	bic.w	r2, r2, #1
+ 8000d9c:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);   // Second RGB Led
+ 8000d9e:	4b3e      	ldr	r3, [pc, #248]	@ (8000e98 <red_color_led+0x164>)
+ 8000da0:	681b      	ldr	r3, [r3, #0]
+ 8000da2:	695a      	ldr	r2, [r3, #20]
+ 8000da4:	4b3c      	ldr	r3, [pc, #240]	@ (8000e98 <red_color_led+0x164>)
+ 8000da6:	681b      	ldr	r3, [r3, #0]
+ 8000da8:	f022 0208 	bic.w	r2, r2, #8
+ 8000dac:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 6);   // Third RGB Led
+ 8000dae:	4b3a      	ldr	r3, [pc, #232]	@ (8000e98 <red_color_led+0x164>)
+ 8000db0:	681b      	ldr	r3, [r3, #0]
+ 8000db2:	695a      	ldr	r2, [r3, #20]
+ 8000db4:	4b38      	ldr	r3, [pc, #224]	@ (8000e98 <red_color_led+0x164>)
+ 8000db6:	681b      	ldr	r3, [r3, #0]
+ 8000db8:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000dbc:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 0);   // fourth RBG Led
+ 8000dbe:	4b37      	ldr	r3, [pc, #220]	@ (8000e9c <red_color_led+0x168>)
+ 8000dc0:	681b      	ldr	r3, [r3, #0]
+ 8000dc2:	695a      	ldr	r2, [r3, #20]
+ 8000dc4:	4b35      	ldr	r3, [pc, #212]	@ (8000e9c <red_color_led+0x168>)
+ 8000dc6:	681b      	ldr	r3, [r3, #0]
+ 8000dc8:	f022 0201 	bic.w	r2, r2, #1
+ 8000dcc:	615a      	str	r2, [r3, #20]
+		timer10_delay(e);
+ 8000dce:	68b8      	ldr	r0, [r7, #8]
+ 8000dd0:	f7ff fa92 	bl	80002f8 <timer10_delay>
+		e = e - 4;
+ 8000dd4:	68bb      	ldr	r3, [r7, #8]
+ 8000dd6:	3b04      	subs	r3, #4
+ 8000dd8:	60bb      	str	r3, [r7, #8]
+	for (d = 16; d <= 255; d = d + 4)
+ 8000dda:	68fb      	ldr	r3, [r7, #12]
+ 8000ddc:	3304      	adds	r3, #4
+ 8000dde:	60fb      	str	r3, [r7, #12]
+ 8000de0:	68fb      	ldr	r3, [r7, #12]
+ 8000de2:	2bff      	cmp	r3, #255	@ 0xff
+ 8000de4:	ddb0      	ble.n	8000d48 <red_color_led+0x14>
+	}
+	d = 255;
+ 8000de6:	23ff      	movs	r3, #255	@ 0xff
+ 8000de8:	60fb      	str	r3, [r7, #12]
+	for (int rd = 16; rd <= 255; rd = rd + 4)
+ 8000dea:	2310      	movs	r3, #16
+ 8000dec:	607b      	str	r3, [r7, #4]
+ 8000dee:	e04b      	b.n	8000e88 <red_color_led+0x154>
+	{
+		GPIOA->ODR |= (1 << 0);    // first RGB Led
+ 8000df0:	4b29      	ldr	r3, [pc, #164]	@ (8000e98 <red_color_led+0x164>)
+ 8000df2:	681b      	ldr	r3, [r3, #0]
+ 8000df4:	695a      	ldr	r2, [r3, #20]
+ 8000df6:	4b28      	ldr	r3, [pc, #160]	@ (8000e98 <red_color_led+0x164>)
+ 8000df8:	681b      	ldr	r3, [r3, #0]
+ 8000dfa:	f042 0201 	orr.w	r2, r2, #1
+ 8000dfe:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 3);    // Second RGB Led
+ 8000e00:	4b25      	ldr	r3, [pc, #148]	@ (8000e98 <red_color_led+0x164>)
+ 8000e02:	681b      	ldr	r3, [r3, #0]
+ 8000e04:	695a      	ldr	r2, [r3, #20]
+ 8000e06:	4b24      	ldr	r3, [pc, #144]	@ (8000e98 <red_color_led+0x164>)
+ 8000e08:	681b      	ldr	r3, [r3, #0]
+ 8000e0a:	f042 0208 	orr.w	r2, r2, #8
+ 8000e0e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 6);    // Third RGB Led
+ 8000e10:	4b21      	ldr	r3, [pc, #132]	@ (8000e98 <red_color_led+0x164>)
+ 8000e12:	681b      	ldr	r3, [r3, #0]
+ 8000e14:	695a      	ldr	r2, [r3, #20]
+ 8000e16:	4b20      	ldr	r3, [pc, #128]	@ (8000e98 <red_color_led+0x164>)
+ 8000e18:	681b      	ldr	r3, [r3, #0]
+ 8000e1a:	f042 0240 	orr.w	r2, r2, #64	@ 0x40
+ 8000e1e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 0);    // fourth RBG Led
+ 8000e20:	4b1e      	ldr	r3, [pc, #120]	@ (8000e9c <red_color_led+0x168>)
+ 8000e22:	681b      	ldr	r3, [r3, #0]
+ 8000e24:	695a      	ldr	r2, [r3, #20]
+ 8000e26:	4b1d      	ldr	r3, [pc, #116]	@ (8000e9c <red_color_led+0x168>)
+ 8000e28:	681b      	ldr	r3, [r3, #0]
+ 8000e2a:	f042 0201 	orr.w	r2, r2, #1
+ 8000e2e:	615a      	str	r2, [r3, #20]
+		timer10_delay(d);
+ 8000e30:	68f8      	ldr	r0, [r7, #12]
+ 8000e32:	f7ff fa61 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 0);   // first RGB Led
+ 8000e36:	4b18      	ldr	r3, [pc, #96]	@ (8000e98 <red_color_led+0x164>)
+ 8000e38:	681b      	ldr	r3, [r3, #0]
+ 8000e3a:	695a      	ldr	r2, [r3, #20]
+ 8000e3c:	4b16      	ldr	r3, [pc, #88]	@ (8000e98 <red_color_led+0x164>)
+ 8000e3e:	681b      	ldr	r3, [r3, #0]
+ 8000e40:	f022 0201 	bic.w	r2, r2, #1
+ 8000e44:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 3);   // Second RGB Led
+ 8000e46:	4b14      	ldr	r3, [pc, #80]	@ (8000e98 <red_color_led+0x164>)
+ 8000e48:	681b      	ldr	r3, [r3, #0]
+ 8000e4a:	695a      	ldr	r2, [r3, #20]
+ 8000e4c:	4b12      	ldr	r3, [pc, #72]	@ (8000e98 <red_color_led+0x164>)
+ 8000e4e:	681b      	ldr	r3, [r3, #0]
+ 8000e50:	f022 0208 	bic.w	r2, r2, #8
+ 8000e54:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 6);   // Third RGB Led
+ 8000e56:	4b10      	ldr	r3, [pc, #64]	@ (8000e98 <red_color_led+0x164>)
+ 8000e58:	681b      	ldr	r3, [r3, #0]
+ 8000e5a:	695a      	ldr	r2, [r3, #20]
+ 8000e5c:	4b0e      	ldr	r3, [pc, #56]	@ (8000e98 <red_color_led+0x164>)
+ 8000e5e:	681b      	ldr	r3, [r3, #0]
+ 8000e60:	f022 0240 	bic.w	r2, r2, #64	@ 0x40
+ 8000e64:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 0);   // fourth RBG Led
+ 8000e66:	4b0d      	ldr	r3, [pc, #52]	@ (8000e9c <red_color_led+0x168>)
+ 8000e68:	681b      	ldr	r3, [r3, #0]
+ 8000e6a:	695a      	ldr	r2, [r3, #20]
+ 8000e6c:	4b0b      	ldr	r3, [pc, #44]	@ (8000e9c <red_color_led+0x168>)
+ 8000e6e:	681b      	ldr	r3, [r3, #0]
+ 8000e70:	f022 0201 	bic.w	r2, r2, #1
+ 8000e74:	615a      	str	r2, [r3, #20]
+		timer10_delay(rd);
+ 8000e76:	6878      	ldr	r0, [r7, #4]
+ 8000e78:	f7ff fa3e 	bl	80002f8 <timer10_delay>
+		d = d - 4;
+ 8000e7c:	68fb      	ldr	r3, [r7, #12]
+ 8000e7e:	3b04      	subs	r3, #4
+ 8000e80:	60fb      	str	r3, [r7, #12]
+	for (int rd = 16; rd <= 255; rd = rd + 4)
+ 8000e82:	687b      	ldr	r3, [r7, #4]
+ 8000e84:	3304      	adds	r3, #4
+ 8000e86:	607b      	str	r3, [r7, #4]
+ 8000e88:	687b      	ldr	r3, [r7, #4]
+ 8000e8a:	2bff      	cmp	r3, #255	@ 0xff
+ 8000e8c:	ddb0      	ble.n	8000df0 <red_color_led+0xbc>
+	}
+}
+ 8000e8e:	bf00      	nop
+ 8000e90:	bf00      	nop
+ 8000e92:	3710      	adds	r7, #16
+ 8000e94:	46bd      	mov	sp, r7
+ 8000e96:	bd80      	pop	{r7, pc}
+ 8000e98:	20000004 	.word	0x20000004
+ 8000e9c:	20000008 	.word	0x20000008
+
+08000ea0 <green_color_led>:
+
+void green_color_led(void)
+{
+ 8000ea0:	b580      	push	{r7, lr}
+ 8000ea2:	b084      	sub	sp, #16
+ 8000ea4:	af00      	add	r7, sp, #0
+	// green color value : R = 0, G = 255, B = 0
+	int gr = 16, en = 255;
+ 8000ea6:	2310      	movs	r3, #16
+ 8000ea8:	60fb      	str	r3, [r7, #12]
+ 8000eaa:	23ff      	movs	r3, #255	@ 0xff
+ 8000eac:	60bb      	str	r3, [r7, #8]
+	for (gr = 16; gr <= 255; gr = gr + 4)
+ 8000eae:	2310      	movs	r3, #16
+ 8000eb0:	60fb      	str	r3, [r7, #12]
+ 8000eb2:	e04b      	b.n	8000f4c <green_color_led+0xac>
+	{
+		GPIOA->ODR |= (1 << 1);   // first RGB Led
+ 8000eb4:	4b53      	ldr	r3, [pc, #332]	@ (8001004 <green_color_led+0x164>)
+ 8000eb6:	681b      	ldr	r3, [r3, #0]
+ 8000eb8:	695a      	ldr	r2, [r3, #20]
+ 8000eba:	4b52      	ldr	r3, [pc, #328]	@ (8001004 <green_color_led+0x164>)
+ 8000ebc:	681b      	ldr	r3, [r3, #0]
+ 8000ebe:	f042 0202 	orr.w	r2, r2, #2
+ 8000ec2:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 4);   // Second RGB Led
+ 8000ec4:	4b4f      	ldr	r3, [pc, #316]	@ (8001004 <green_color_led+0x164>)
+ 8000ec6:	681b      	ldr	r3, [r3, #0]
+ 8000ec8:	695a      	ldr	r2, [r3, #20]
+ 8000eca:	4b4e      	ldr	r3, [pc, #312]	@ (8001004 <green_color_led+0x164>)
+ 8000ecc:	681b      	ldr	r3, [r3, #0]
+ 8000ece:	f042 0210 	orr.w	r2, r2, #16
+ 8000ed2:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 7);   // Third RGB Led
+ 8000ed4:	4b4b      	ldr	r3, [pc, #300]	@ (8001004 <green_color_led+0x164>)
+ 8000ed6:	681b      	ldr	r3, [r3, #0]
+ 8000ed8:	695a      	ldr	r2, [r3, #20]
+ 8000eda:	4b4a      	ldr	r3, [pc, #296]	@ (8001004 <green_color_led+0x164>)
+ 8000edc:	681b      	ldr	r3, [r3, #0]
+ 8000ede:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 8000ee2:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR |= (1 << 1);   // fourth RBG Led
+ 8000ee4:	4b48      	ldr	r3, [pc, #288]	@ (8001008 <green_color_led+0x168>)
+ 8000ee6:	681b      	ldr	r3, [r3, #0]
+ 8000ee8:	695a      	ldr	r2, [r3, #20]
+ 8000eea:	4b47      	ldr	r3, [pc, #284]	@ (8001008 <green_color_led+0x168>)
+ 8000eec:	681b      	ldr	r3, [r3, #0]
+ 8000eee:	f042 0202 	orr.w	r2, r2, #2
+ 8000ef2:	615a      	str	r2, [r3, #20]
+		timer10_delay(gr);
+ 8000ef4:	68f8      	ldr	r0, [r7, #12]
+ 8000ef6:	f7ff f9ff 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 1);   // first RGB Led
+ 8000efa:	4b42      	ldr	r3, [pc, #264]	@ (8001004 <green_color_led+0x164>)
+ 8000efc:	681b      	ldr	r3, [r3, #0]
+ 8000efe:	695a      	ldr	r2, [r3, #20]
+ 8000f00:	4b40      	ldr	r3, [pc, #256]	@ (8001004 <green_color_led+0x164>)
+ 8000f02:	681b      	ldr	r3, [r3, #0]
+ 8000f04:	f022 0202 	bic.w	r2, r2, #2
+ 8000f08:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 4);   // Second RGB Led
+ 8000f0a:	4b3e      	ldr	r3, [pc, #248]	@ (8001004 <green_color_led+0x164>)
+ 8000f0c:	681b      	ldr	r3, [r3, #0]
+ 8000f0e:	695a      	ldr	r2, [r3, #20]
+ 8000f10:	4b3c      	ldr	r3, [pc, #240]	@ (8001004 <green_color_led+0x164>)
+ 8000f12:	681b      	ldr	r3, [r3, #0]
+ 8000f14:	f022 0210 	bic.w	r2, r2, #16
+ 8000f18:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 7);   // Third RGB Led
+ 8000f1a:	4b3a      	ldr	r3, [pc, #232]	@ (8001004 <green_color_led+0x164>)
+ 8000f1c:	681b      	ldr	r3, [r3, #0]
+ 8000f1e:	695a      	ldr	r2, [r3, #20]
+ 8000f20:	4b38      	ldr	r3, [pc, #224]	@ (8001004 <green_color_led+0x164>)
+ 8000f22:	681b      	ldr	r3, [r3, #0]
+ 8000f24:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000f28:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 1);   // fourth RBG Led
+ 8000f2a:	4b37      	ldr	r3, [pc, #220]	@ (8001008 <green_color_led+0x168>)
+ 8000f2c:	681b      	ldr	r3, [r3, #0]
+ 8000f2e:	695a      	ldr	r2, [r3, #20]
+ 8000f30:	4b35      	ldr	r3, [pc, #212]	@ (8001008 <green_color_led+0x168>)
+ 8000f32:	681b      	ldr	r3, [r3, #0]
+ 8000f34:	f022 0202 	bic.w	r2, r2, #2
+ 8000f38:	615a      	str	r2, [r3, #20]
+		timer10_delay(en);
+ 8000f3a:	68b8      	ldr	r0, [r7, #8]
+ 8000f3c:	f7ff f9dc 	bl	80002f8 <timer10_delay>
+		en = en - 4;
+ 8000f40:	68bb      	ldr	r3, [r7, #8]
+ 8000f42:	3b04      	subs	r3, #4
+ 8000f44:	60bb      	str	r3, [r7, #8]
+	for (gr = 16; gr <= 255; gr = gr + 4)
+ 8000f46:	68fb      	ldr	r3, [r7, #12]
+ 8000f48:	3304      	adds	r3, #4
+ 8000f4a:	60fb      	str	r3, [r7, #12]
+ 8000f4c:	68fb      	ldr	r3, [r7, #12]
+ 8000f4e:	2bff      	cmp	r3, #255	@ 0xff
+ 8000f50:	ddb0      	ble.n	8000eb4 <green_color_led+0x14>
+	}
+	gr = 255;
+ 8000f52:	23ff      	movs	r3, #255	@ 0xff
+ 8000f54:	60fb      	str	r3, [r7, #12]
+	for (int gn = 16; gn <= 255; gn = gn + 4)
+ 8000f56:	2310      	movs	r3, #16
+ 8000f58:	607b      	str	r3, [r7, #4]
+ 8000f5a:	e04b      	b.n	8000ff4 <green_color_led+0x154>
+	{
+
+		GPIOA->ODR |= (1 << 1);   // first RGB Led
+ 8000f5c:	4b29      	ldr	r3, [pc, #164]	@ (8001004 <green_color_led+0x164>)
+ 8000f5e:	681b      	ldr	r3, [r3, #0]
+ 8000f60:	695a      	ldr	r2, [r3, #20]
+ 8000f62:	4b28      	ldr	r3, [pc, #160]	@ (8001004 <green_color_led+0x164>)
+ 8000f64:	681b      	ldr	r3, [r3, #0]
+ 8000f66:	f042 0202 	orr.w	r2, r2, #2
+ 8000f6a:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 4);   // Second RGB Led
+ 8000f6c:	4b25      	ldr	r3, [pc, #148]	@ (8001004 <green_color_led+0x164>)
+ 8000f6e:	681b      	ldr	r3, [r3, #0]
+ 8000f70:	695a      	ldr	r2, [r3, #20]
+ 8000f72:	4b24      	ldr	r3, [pc, #144]	@ (8001004 <green_color_led+0x164>)
+ 8000f74:	681b      	ldr	r3, [r3, #0]
+ 8000f76:	f042 0210 	orr.w	r2, r2, #16
+ 8000f7a:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 7);   // Third RGB Led
+ 8000f7c:	4b21      	ldr	r3, [pc, #132]	@ (8001004 <green_color_led+0x164>)
+ 8000f7e:	681b      	ldr	r3, [r3, #0]
+ 8000f80:	695a      	ldr	r2, [r3, #20]
+ 8000f82:	4b20      	ldr	r3, [pc, #128]	@ (8001004 <green_color_led+0x164>)
+ 8000f84:	681b      	ldr	r3, [r3, #0]
+ 8000f86:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 8000f8a:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR |= (1 << 1);   // fourth RBG Led
+ 8000f8c:	4b1e      	ldr	r3, [pc, #120]	@ (8001008 <green_color_led+0x168>)
+ 8000f8e:	681b      	ldr	r3, [r3, #0]
+ 8000f90:	695a      	ldr	r2, [r3, #20]
+ 8000f92:	4b1d      	ldr	r3, [pc, #116]	@ (8001008 <green_color_led+0x168>)
+ 8000f94:	681b      	ldr	r3, [r3, #0]
+ 8000f96:	f042 0202 	orr.w	r2, r2, #2
+ 8000f9a:	615a      	str	r2, [r3, #20]
+		timer10_delay(gr);
+ 8000f9c:	68f8      	ldr	r0, [r7, #12]
+ 8000f9e:	f7ff f9ab 	bl	80002f8 <timer10_delay>
+
+
+		GPIOA->ODR &= ~(1 << 1);   // first RGB Led
+ 8000fa2:	4b18      	ldr	r3, [pc, #96]	@ (8001004 <green_color_led+0x164>)
+ 8000fa4:	681b      	ldr	r3, [r3, #0]
+ 8000fa6:	695a      	ldr	r2, [r3, #20]
+ 8000fa8:	4b16      	ldr	r3, [pc, #88]	@ (8001004 <green_color_led+0x164>)
+ 8000faa:	681b      	ldr	r3, [r3, #0]
+ 8000fac:	f022 0202 	bic.w	r2, r2, #2
+ 8000fb0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 4);   // Second RGB Led
+ 8000fb2:	4b14      	ldr	r3, [pc, #80]	@ (8001004 <green_color_led+0x164>)
+ 8000fb4:	681b      	ldr	r3, [r3, #0]
+ 8000fb6:	695a      	ldr	r2, [r3, #20]
+ 8000fb8:	4b12      	ldr	r3, [pc, #72]	@ (8001004 <green_color_led+0x164>)
+ 8000fba:	681b      	ldr	r3, [r3, #0]
+ 8000fbc:	f022 0210 	bic.w	r2, r2, #16
+ 8000fc0:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 7);   // Third RGB Led
+ 8000fc2:	4b10      	ldr	r3, [pc, #64]	@ (8001004 <green_color_led+0x164>)
+ 8000fc4:	681b      	ldr	r3, [r3, #0]
+ 8000fc6:	695a      	ldr	r2, [r3, #20]
+ 8000fc8:	4b0e      	ldr	r3, [pc, #56]	@ (8001004 <green_color_led+0x164>)
+ 8000fca:	681b      	ldr	r3, [r3, #0]
+ 8000fcc:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8000fd0:	615a      	str	r2, [r3, #20]
+		GPIOB->ODR &= ~(1 << 1);   // fourth RBG Led
+ 8000fd2:	4b0d      	ldr	r3, [pc, #52]	@ (8001008 <green_color_led+0x168>)
+ 8000fd4:	681b      	ldr	r3, [r3, #0]
+ 8000fd6:	695a      	ldr	r2, [r3, #20]
+ 8000fd8:	4b0b      	ldr	r3, [pc, #44]	@ (8001008 <green_color_led+0x168>)
+ 8000fda:	681b      	ldr	r3, [r3, #0]
+ 8000fdc:	f022 0202 	bic.w	r2, r2, #2
+ 8000fe0:	615a      	str	r2, [r3, #20]
+		timer10_delay(gn);
+ 8000fe2:	6878      	ldr	r0, [r7, #4]
+ 8000fe4:	f7ff f988 	bl	80002f8 <timer10_delay>
+		gr = gr - 4;
+ 8000fe8:	68fb      	ldr	r3, [r7, #12]
+ 8000fea:	3b04      	subs	r3, #4
+ 8000fec:	60fb      	str	r3, [r7, #12]
+	for (int gn = 16; gn <= 255; gn = gn + 4)
+ 8000fee:	687b      	ldr	r3, [r7, #4]
+ 8000ff0:	3304      	adds	r3, #4
+ 8000ff2:	607b      	str	r3, [r7, #4]
+ 8000ff4:	687b      	ldr	r3, [r7, #4]
+ 8000ff6:	2bff      	cmp	r3, #255	@ 0xff
+ 8000ff8:	ddb0      	ble.n	8000f5c <green_color_led+0xbc>
+	}
+}
+ 8000ffa:	bf00      	nop
+ 8000ffc:	bf00      	nop
+ 8000ffe:	3710      	adds	r7, #16
+ 8001000:	46bd      	mov	sp, r7
+ 8001002:	bd80      	pop	{r7, pc}
+ 8001004:	20000004 	.word	0x20000004
+ 8001008:	20000008 	.word	0x20000008
+
+0800100c <cyan_color_led>:
+
+void cyan_color_led(void)
+{
+ 800100c:	b580      	push	{r7, lr}
+ 800100e:	b084      	sub	sp, #16
+ 8001010:	af00      	add	r7, sp, #0
+	// cyan color value : R = 0, G = 255, B = 255
+	int cy = 16, an = 255;
+ 8001012:	2310      	movs	r3, #16
+ 8001014:	60fb      	str	r3, [r7, #12]
+ 8001016:	23ff      	movs	r3, #255	@ 0xff
+ 8001018:	60bb      	str	r3, [r7, #8]
+	for (cy = 16; cy <= 255; cy = cy + 4)
+ 800101a:	2310      	movs	r3, #16
+ 800101c:	60fb      	str	r3, [r7, #12]
+ 800101e:	e08b      	b.n	8001138 <cyan_color_led+0x12c>
+	{
+		GPIOA->ODR |= (1 << 1);    // First RGB Led
+ 8001020:	4b4a      	ldr	r3, [pc, #296]	@ (800114c <cyan_color_led+0x140>)
+ 8001022:	681b      	ldr	r3, [r3, #0]
+ 8001024:	695a      	ldr	r2, [r3, #20]
+ 8001026:	4b49      	ldr	r3, [pc, #292]	@ (800114c <cyan_color_led+0x140>)
+ 8001028:	681b      	ldr	r3, [r3, #0]
+ 800102a:	f042 0202 	orr.w	r2, r2, #2
+ 800102e:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 8001030:	4b46      	ldr	r3, [pc, #280]	@ (800114c <cyan_color_led+0x140>)
+ 8001032:	681b      	ldr	r3, [r3, #0]
+ 8001034:	695a      	ldr	r2, [r3, #20]
+ 8001036:	4b45      	ldr	r3, [pc, #276]	@ (800114c <cyan_color_led+0x140>)
+ 8001038:	681b      	ldr	r3, [r3, #0]
+ 800103a:	f042 0204 	orr.w	r2, r2, #4
+ 800103e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);    // Second RGB Led
+ 8001040:	4b42      	ldr	r3, [pc, #264]	@ (800114c <cyan_color_led+0x140>)
+ 8001042:	681b      	ldr	r3, [r3, #0]
+ 8001044:	695a      	ldr	r2, [r3, #20]
+ 8001046:	4b41      	ldr	r3, [pc, #260]	@ (800114c <cyan_color_led+0x140>)
+ 8001048:	681b      	ldr	r3, [r3, #0]
+ 800104a:	f042 0210 	orr.w	r2, r2, #16
+ 800104e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 8001050:	4b3e      	ldr	r3, [pc, #248]	@ (800114c <cyan_color_led+0x140>)
+ 8001052:	681b      	ldr	r3, [r3, #0]
+ 8001054:	695a      	ldr	r2, [r3, #20]
+ 8001056:	4b3d      	ldr	r3, [pc, #244]	@ (800114c <cyan_color_led+0x140>)
+ 8001058:	681b      	ldr	r3, [r3, #0]
+ 800105a:	f042 0220 	orr.w	r2, r2, #32
+ 800105e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);    // Third RGB Led
+ 8001060:	4b3a      	ldr	r3, [pc, #232]	@ (800114c <cyan_color_led+0x140>)
+ 8001062:	681b      	ldr	r3, [r3, #0]
+ 8001064:	695a      	ldr	r2, [r3, #20]
+ 8001066:	4b39      	ldr	r3, [pc, #228]	@ (800114c <cyan_color_led+0x140>)
+ 8001068:	681b      	ldr	r3, [r3, #0]
+ 800106a:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 800106e:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 8001070:	4b36      	ldr	r3, [pc, #216]	@ (800114c <cyan_color_led+0x140>)
+ 8001072:	681b      	ldr	r3, [r3, #0]
+ 8001074:	695a      	ldr	r2, [r3, #20]
+ 8001076:	4b35      	ldr	r3, [pc, #212]	@ (800114c <cyan_color_led+0x140>)
+ 8001078:	681b      	ldr	r3, [r3, #0]
+ 800107a:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 800107e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);    // fourth RBG Led
+ 8001080:	4b33      	ldr	r3, [pc, #204]	@ (8001150 <cyan_color_led+0x144>)
+ 8001082:	681b      	ldr	r3, [r3, #0]
+ 8001084:	695a      	ldr	r2, [r3, #20]
+ 8001086:	4b32      	ldr	r3, [pc, #200]	@ (8001150 <cyan_color_led+0x144>)
+ 8001088:	681b      	ldr	r3, [r3, #0]
+ 800108a:	f042 0202 	orr.w	r2, r2, #2
+ 800108e:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 8001090:	4b2f      	ldr	r3, [pc, #188]	@ (8001150 <cyan_color_led+0x144>)
+ 8001092:	681b      	ldr	r3, [r3, #0]
+ 8001094:	695a      	ldr	r2, [r3, #20]
+ 8001096:	4b2e      	ldr	r3, [pc, #184]	@ (8001150 <cyan_color_led+0x144>)
+ 8001098:	681b      	ldr	r3, [r3, #0]
+ 800109a:	f042 0204 	orr.w	r2, r2, #4
+ 800109e:	615a      	str	r2, [r3, #20]
+		timer10_delay(cy);
+ 80010a0:	68f8      	ldr	r0, [r7, #12]
+ 80010a2:	f7ff f929 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 1);    // First RGB Led
+ 80010a6:	4b29      	ldr	r3, [pc, #164]	@ (800114c <cyan_color_led+0x140>)
+ 80010a8:	681b      	ldr	r3, [r3, #0]
+ 80010aa:	695a      	ldr	r2, [r3, #20]
+ 80010ac:	4b27      	ldr	r3, [pc, #156]	@ (800114c <cyan_color_led+0x140>)
+ 80010ae:	681b      	ldr	r3, [r3, #0]
+ 80010b0:	f022 0202 	bic.w	r2, r2, #2
+ 80010b4:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80010b6:	4b25      	ldr	r3, [pc, #148]	@ (800114c <cyan_color_led+0x140>)
+ 80010b8:	681b      	ldr	r3, [r3, #0]
+ 80010ba:	695a      	ldr	r2, [r3, #20]
+ 80010bc:	4b23      	ldr	r3, [pc, #140]	@ (800114c <cyan_color_led+0x140>)
+ 80010be:	681b      	ldr	r3, [r3, #0]
+ 80010c0:	f022 0204 	bic.w	r2, r2, #4
+ 80010c4:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 4);    // Second RGB Led
+ 80010c6:	4b21      	ldr	r3, [pc, #132]	@ (800114c <cyan_color_led+0x140>)
+ 80010c8:	681b      	ldr	r3, [r3, #0]
+ 80010ca:	695a      	ldr	r2, [r3, #20]
+ 80010cc:	4b1f      	ldr	r3, [pc, #124]	@ (800114c <cyan_color_led+0x140>)
+ 80010ce:	681b      	ldr	r3, [r3, #0]
+ 80010d0:	f022 0210 	bic.w	r2, r2, #16
+ 80010d4:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 5);
+ 80010d6:	4b1d      	ldr	r3, [pc, #116]	@ (800114c <cyan_color_led+0x140>)
+ 80010d8:	681b      	ldr	r3, [r3, #0]
+ 80010da:	695a      	ldr	r2, [r3, #20]
+ 80010dc:	4b1b      	ldr	r3, [pc, #108]	@ (800114c <cyan_color_led+0x140>)
+ 80010de:	681b      	ldr	r3, [r3, #0]
+ 80010e0:	f022 0220 	bic.w	r2, r2, #32
+ 80010e4:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 7);    // Third RGB Led
+ 80010e6:	4b19      	ldr	r3, [pc, #100]	@ (800114c <cyan_color_led+0x140>)
+ 80010e8:	681b      	ldr	r3, [r3, #0]
+ 80010ea:	695a      	ldr	r2, [r3, #20]
+ 80010ec:	4b17      	ldr	r3, [pc, #92]	@ (800114c <cyan_color_led+0x140>)
+ 80010ee:	681b      	ldr	r3, [r3, #0]
+ 80010f0:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 80010f4:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 8);
+ 80010f6:	4b15      	ldr	r3, [pc, #84]	@ (800114c <cyan_color_led+0x140>)
+ 80010f8:	681b      	ldr	r3, [r3, #0]
+ 80010fa:	695a      	ldr	r2, [r3, #20]
+ 80010fc:	4b13      	ldr	r3, [pc, #76]	@ (800114c <cyan_color_led+0x140>)
+ 80010fe:	681b      	ldr	r3, [r3, #0]
+ 8001100:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8001104:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 1);    // fourth RBG Led
+ 8001106:	4b12      	ldr	r3, [pc, #72]	@ (8001150 <cyan_color_led+0x144>)
+ 8001108:	681b      	ldr	r3, [r3, #0]
+ 800110a:	695a      	ldr	r2, [r3, #20]
+ 800110c:	4b10      	ldr	r3, [pc, #64]	@ (8001150 <cyan_color_led+0x144>)
+ 800110e:	681b      	ldr	r3, [r3, #0]
+ 8001110:	f022 0202 	bic.w	r2, r2, #2
+ 8001114:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 2);
+ 8001116:	4b0e      	ldr	r3, [pc, #56]	@ (8001150 <cyan_color_led+0x144>)
+ 8001118:	681b      	ldr	r3, [r3, #0]
+ 800111a:	695a      	ldr	r2, [r3, #20]
+ 800111c:	4b0c      	ldr	r3, [pc, #48]	@ (8001150 <cyan_color_led+0x144>)
+ 800111e:	681b      	ldr	r3, [r3, #0]
+ 8001120:	f022 0204 	bic.w	r2, r2, #4
+ 8001124:	615a      	str	r2, [r3, #20]
+		timer10_delay(an);
+ 8001126:	68b8      	ldr	r0, [r7, #8]
+ 8001128:	f7ff f8e6 	bl	80002f8 <timer10_delay>
+		an = an - 4;
+ 800112c:	68bb      	ldr	r3, [r7, #8]
+ 800112e:	3b04      	subs	r3, #4
+ 8001130:	60bb      	str	r3, [r7, #8]
+	for (cy = 16; cy <= 255; cy = cy + 4)
+ 8001132:	68fb      	ldr	r3, [r7, #12]
+ 8001134:	3304      	adds	r3, #4
+ 8001136:	60fb      	str	r3, [r7, #12]
+ 8001138:	68fb      	ldr	r3, [r7, #12]
+ 800113a:	2bff      	cmp	r3, #255	@ 0xff
+ 800113c:	f77f af70 	ble.w	8001020 <cyan_color_led+0x14>
+	}
+	cy = 255;
+ 8001140:	23ff      	movs	r3, #255	@ 0xff
+ 8001142:	60fb      	str	r3, [r7, #12]
+	for (int nc = 16; nc <= 255; nc = nc + 4)
+ 8001144:	2310      	movs	r3, #16
+ 8001146:	607b      	str	r3, [r7, #4]
+ 8001148:	e090      	b.n	800126c <cyan_color_led+0x260>
+ 800114a:	bf00      	nop
+ 800114c:	20000004 	.word	0x20000004
+ 8001150:	20000008 	.word	0x20000008
+	{
+		GPIOA->ODR |= (1 << 1);    // First RGB Led
+ 8001154:	4b4a      	ldr	r3, [pc, #296]	@ (8001280 <cyan_color_led+0x274>)
+ 8001156:	681b      	ldr	r3, [r3, #0]
+ 8001158:	695a      	ldr	r2, [r3, #20]
+ 800115a:	4b49      	ldr	r3, [pc, #292]	@ (8001280 <cyan_color_led+0x274>)
+ 800115c:	681b      	ldr	r3, [r3, #0]
+ 800115e:	f042 0202 	orr.w	r2, r2, #2
+ 8001162:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR |= (1 << 2);
+ 8001164:	4b46      	ldr	r3, [pc, #280]	@ (8001280 <cyan_color_led+0x274>)
+ 8001166:	681b      	ldr	r3, [r3, #0]
+ 8001168:	695a      	ldr	r2, [r3, #20]
+ 800116a:	4b45      	ldr	r3, [pc, #276]	@ (8001280 <cyan_color_led+0x274>)
+ 800116c:	681b      	ldr	r3, [r3, #0]
+ 800116e:	f042 0204 	orr.w	r2, r2, #4
+ 8001172:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 4);    // Second RGB Led
+ 8001174:	4b42      	ldr	r3, [pc, #264]	@ (8001280 <cyan_color_led+0x274>)
+ 8001176:	681b      	ldr	r3, [r3, #0]
+ 8001178:	695a      	ldr	r2, [r3, #20]
+ 800117a:	4b41      	ldr	r3, [pc, #260]	@ (8001280 <cyan_color_led+0x274>)
+ 800117c:	681b      	ldr	r3, [r3, #0]
+ 800117e:	f042 0210 	orr.w	r2, r2, #16
+ 8001182:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 5);
+ 8001184:	4b3e      	ldr	r3, [pc, #248]	@ (8001280 <cyan_color_led+0x274>)
+ 8001186:	681b      	ldr	r3, [r3, #0]
+ 8001188:	695a      	ldr	r2, [r3, #20]
+ 800118a:	4b3d      	ldr	r3, [pc, #244]	@ (8001280 <cyan_color_led+0x274>)
+ 800118c:	681b      	ldr	r3, [r3, #0]
+ 800118e:	f042 0220 	orr.w	r2, r2, #32
+ 8001192:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 7);    // Third RGB Led
+ 8001194:	4b3a      	ldr	r3, [pc, #232]	@ (8001280 <cyan_color_led+0x274>)
+ 8001196:	681b      	ldr	r3, [r3, #0]
+ 8001198:	695a      	ldr	r2, [r3, #20]
+ 800119a:	4b39      	ldr	r3, [pc, #228]	@ (8001280 <cyan_color_led+0x274>)
+ 800119c:	681b      	ldr	r3, [r3, #0]
+ 800119e:	f042 0280 	orr.w	r2, r2, #128	@ 0x80
+ 80011a2:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR |= (1 << 8);
+ 80011a4:	4b36      	ldr	r3, [pc, #216]	@ (8001280 <cyan_color_led+0x274>)
+ 80011a6:	681b      	ldr	r3, [r3, #0]
+ 80011a8:	695a      	ldr	r2, [r3, #20]
+ 80011aa:	4b35      	ldr	r3, [pc, #212]	@ (8001280 <cyan_color_led+0x274>)
+ 80011ac:	681b      	ldr	r3, [r3, #0]
+ 80011ae:	f442 7280 	orr.w	r2, r2, #256	@ 0x100
+ 80011b2:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 1);    // fourth RBG Led
+ 80011b4:	4b33      	ldr	r3, [pc, #204]	@ (8001284 <cyan_color_led+0x278>)
+ 80011b6:	681b      	ldr	r3, [r3, #0]
+ 80011b8:	695a      	ldr	r2, [r3, #20]
+ 80011ba:	4b32      	ldr	r3, [pc, #200]	@ (8001284 <cyan_color_led+0x278>)
+ 80011bc:	681b      	ldr	r3, [r3, #0]
+ 80011be:	f042 0202 	orr.w	r2, r2, #2
+ 80011c2:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR |= (1 << 2);
+ 80011c4:	4b2f      	ldr	r3, [pc, #188]	@ (8001284 <cyan_color_led+0x278>)
+ 80011c6:	681b      	ldr	r3, [r3, #0]
+ 80011c8:	695a      	ldr	r2, [r3, #20]
+ 80011ca:	4b2e      	ldr	r3, [pc, #184]	@ (8001284 <cyan_color_led+0x278>)
+ 80011cc:	681b      	ldr	r3, [r3, #0]
+ 80011ce:	f042 0204 	orr.w	r2, r2, #4
+ 80011d2:	615a      	str	r2, [r3, #20]
+		timer10_delay(cy);
+ 80011d4:	68f8      	ldr	r0, [r7, #12]
+ 80011d6:	f7ff f88f 	bl	80002f8 <timer10_delay>
+
+		GPIOA->ODR &= ~(1 << 1);    // First RGB Led
+ 80011da:	4b29      	ldr	r3, [pc, #164]	@ (8001280 <cyan_color_led+0x274>)
+ 80011dc:	681b      	ldr	r3, [r3, #0]
+ 80011de:	695a      	ldr	r2, [r3, #20]
+ 80011e0:	4b27      	ldr	r3, [pc, #156]	@ (8001280 <cyan_color_led+0x274>)
+ 80011e2:	681b      	ldr	r3, [r3, #0]
+ 80011e4:	f022 0202 	bic.w	r2, r2, #2
+ 80011e8:	615a      	str	r2, [r3, #20]
+		GPIOA->ODR &= ~(1 << 2);
+ 80011ea:	4b25      	ldr	r3, [pc, #148]	@ (8001280 <cyan_color_led+0x274>)
+ 80011ec:	681b      	ldr	r3, [r3, #0]
+ 80011ee:	695a      	ldr	r2, [r3, #20]
+ 80011f0:	4b23      	ldr	r3, [pc, #140]	@ (8001280 <cyan_color_led+0x274>)
+ 80011f2:	681b      	ldr	r3, [r3, #0]
+ 80011f4:	f022 0204 	bic.w	r2, r2, #4
+ 80011f8:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 4);    // Second RGB Led
+ 80011fa:	4b21      	ldr	r3, [pc, #132]	@ (8001280 <cyan_color_led+0x274>)
+ 80011fc:	681b      	ldr	r3, [r3, #0]
+ 80011fe:	695a      	ldr	r2, [r3, #20]
+ 8001200:	4b1f      	ldr	r3, [pc, #124]	@ (8001280 <cyan_color_led+0x274>)
+ 8001202:	681b      	ldr	r3, [r3, #0]
+ 8001204:	f022 0210 	bic.w	r2, r2, #16
+ 8001208:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 5);
+ 800120a:	4b1d      	ldr	r3, [pc, #116]	@ (8001280 <cyan_color_led+0x274>)
+ 800120c:	681b      	ldr	r3, [r3, #0]
+ 800120e:	695a      	ldr	r2, [r3, #20]
+ 8001210:	4b1b      	ldr	r3, [pc, #108]	@ (8001280 <cyan_color_led+0x274>)
+ 8001212:	681b      	ldr	r3, [r3, #0]
+ 8001214:	f022 0220 	bic.w	r2, r2, #32
+ 8001218:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 7);    // Third RGB Led
+ 800121a:	4b19      	ldr	r3, [pc, #100]	@ (8001280 <cyan_color_led+0x274>)
+ 800121c:	681b      	ldr	r3, [r3, #0]
+ 800121e:	695a      	ldr	r2, [r3, #20]
+ 8001220:	4b17      	ldr	r3, [pc, #92]	@ (8001280 <cyan_color_led+0x274>)
+ 8001222:	681b      	ldr	r3, [r3, #0]
+ 8001224:	f022 0280 	bic.w	r2, r2, #128	@ 0x80
+ 8001228:	615a      	str	r2, [r3, #20]
+	    GPIOA->ODR &= ~(1 << 8);
+ 800122a:	4b15      	ldr	r3, [pc, #84]	@ (8001280 <cyan_color_led+0x274>)
+ 800122c:	681b      	ldr	r3, [r3, #0]
+ 800122e:	695a      	ldr	r2, [r3, #20]
+ 8001230:	4b13      	ldr	r3, [pc, #76]	@ (8001280 <cyan_color_led+0x274>)
+ 8001232:	681b      	ldr	r3, [r3, #0]
+ 8001234:	f422 7280 	bic.w	r2, r2, #256	@ 0x100
+ 8001238:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 1);    // fourth RBG Led
+ 800123a:	4b12      	ldr	r3, [pc, #72]	@ (8001284 <cyan_color_led+0x278>)
+ 800123c:	681b      	ldr	r3, [r3, #0]
+ 800123e:	695a      	ldr	r2, [r3, #20]
+ 8001240:	4b10      	ldr	r3, [pc, #64]	@ (8001284 <cyan_color_led+0x278>)
+ 8001242:	681b      	ldr	r3, [r3, #0]
+ 8001244:	f022 0202 	bic.w	r2, r2, #2
+ 8001248:	615a      	str	r2, [r3, #20]
+	    GPIOB->ODR &= ~(1 << 2);
+ 800124a:	4b0e      	ldr	r3, [pc, #56]	@ (8001284 <cyan_color_led+0x278>)
+ 800124c:	681b      	ldr	r3, [r3, #0]
+ 800124e:	695a      	ldr	r2, [r3, #20]
+ 8001250:	4b0c      	ldr	r3, [pc, #48]	@ (8001284 <cyan_color_led+0x278>)
+ 8001252:	681b      	ldr	r3, [r3, #0]
+ 8001254:	f022 0204 	bic.w	r2, r2, #4
+ 8001258:	615a      	str	r2, [r3, #20]
+		timer10_delay(nc);
+ 800125a:	6878      	ldr	r0, [r7, #4]
+ 800125c:	f7ff f84c 	bl	80002f8 <timer10_delay>
+		cy = cy - 4;
+ 8001260:	68fb      	ldr	r3, [r7, #12]
+ 8001262:	3b04      	subs	r3, #4
+ 8001264:	60fb      	str	r3, [r7, #12]
+	for (int nc = 16; nc <= 255; nc = nc + 4)
+ 8001266:	687b      	ldr	r3, [r7, #4]
+ 8001268:	3304      	adds	r3, #4
+ 800126a:	607b      	str	r3, [r7, #4]
+ 800126c:	687b      	ldr	r3, [r7, #4]
+ 800126e:	2bff      	cmp	r3, #255	@ 0xff
+ 8001270:	f77f af70 	ble.w	8001154 <cyan_color_led+0x148>
+	}
+}
+ 8001274:	bf00      	nop
+ 8001276:	bf00      	nop
+ 8001278:	3710      	adds	r7, #16
+ 800127a:	46bd      	mov	sp, r7
+ 800127c:	bd80      	pop	{r7, pc}
+ 800127e:	bf00      	nop
+ 8001280:	20000004 	.word	0x20000004
+ 8001284:	20000008 	.word	0x20000008
+
+08001288 <Reset_Handler>:
+
+  .section .text.Reset_Handler
+  .weak Reset_Handler
+  .type Reset_Handler, %function
+Reset_Handler:
+  ldr   r0, =_estack
+ 8001288:	480d      	ldr	r0, [pc, #52]	@ (80012c0 <LoopForever+0x2>)
+  mov   sp, r0          /* set stack pointer */
+ 800128a:	4685      	mov	sp, r0
+/* Call the clock system initialization function.*/
+  bl  SystemInit
+ 800128c:	f3af 8000 	nop.w
+
+/* Copy the data segment initializers from flash to SRAM */
+  ldr r0, =_sdata
+ 8001290:	480c      	ldr	r0, [pc, #48]	@ (80012c4 <LoopForever+0x6>)
+  ldr r1, =_edata
+ 8001292:	490d      	ldr	r1, [pc, #52]	@ (80012c8 <LoopForever+0xa>)
+  ldr r2, =_sidata
+ 8001294:	4a0d      	ldr	r2, [pc, #52]	@ (80012cc <LoopForever+0xe>)
+  movs r3, #0
+ 8001296:	2300      	movs	r3, #0
+  b LoopCopyDataInit
+ 8001298:	e002      	b.n	80012a0 <LoopCopyDataInit>
+
+0800129a <CopyDataInit>:
+
+CopyDataInit:
+  ldr r4, [r2, r3]
+ 800129a:	58d4      	ldr	r4, [r2, r3]
+  str r4, [r0, r3]
+ 800129c:	50c4      	str	r4, [r0, r3]
+  adds r3, r3, #4
+ 800129e:	3304      	adds	r3, #4
+
+080012a0 <LoopCopyDataInit>:
+
+LoopCopyDataInit:
+  adds r4, r0, r3
+ 80012a0:	18c4      	adds	r4, r0, r3
+  cmp r4, r1
+ 80012a2:	428c      	cmp	r4, r1
+  bcc CopyDataInit
+ 80012a4:	d3f9      	bcc.n	800129a <CopyDataInit>
+
+/* Zero fill the bss segment. */
+  ldr r2, =_sbss
+ 80012a6:	4a0a      	ldr	r2, [pc, #40]	@ (80012d0 <LoopForever+0x12>)
+  ldr r4, =_ebss
+ 80012a8:	4c0a      	ldr	r4, [pc, #40]	@ (80012d4 <LoopForever+0x16>)
+  movs r3, #0
+ 80012aa:	2300      	movs	r3, #0
+  b LoopFillZerobss
+ 80012ac:	e001      	b.n	80012b2 <LoopFillZerobss>
+
+080012ae <FillZerobss>:
+
+FillZerobss:
+  str  r3, [r2]
+ 80012ae:	6013      	str	r3, [r2, #0]
+  adds r2, r2, #4
+ 80012b0:	3204      	adds	r2, #4
+
+080012b2 <LoopFillZerobss>:
+
+LoopFillZerobss:
+  cmp r2, r4
+ 80012b2:	42a2      	cmp	r2, r4
+  bcc FillZerobss
+ 80012b4:	d3fb      	bcc.n	80012ae <FillZerobss>
+
+/* Call static constructors */
+  bl __libc_init_array
+ 80012b6:	f000 f811 	bl	80012dc <__libc_init_array>
+/* Call the application's entry point.*/
+  bl main
+ 80012ba:	f7fe ff8b 	bl	80001d4 <main>
+
+080012be <LoopForever>:
+
+LoopForever:
+  b LoopForever
+ 80012be:	e7fe      	b.n	80012be <LoopForever>
+  ldr   r0, =_estack
+ 80012c0:	20010000 	.word	0x20010000
+  ldr r0, =_sdata
+ 80012c4:	20000000 	.word	0x20000000
+  ldr r1, =_edata
+ 80012c8:	20000010 	.word	0x20000010
+  ldr r2, =_sidata
+ 80012cc:	08001344 	.word	0x08001344
+  ldr r2, =_sbss
+ 80012d0:	20000010 	.word	0x20000010
+  ldr r4, =_ebss
+ 80012d4:	2000002c 	.word	0x2000002c
+
+080012d8 <ADC_IRQHandler>:
+ * @retval : None
+*/
+  .section .text.Default_Handler,"ax",%progbits
+Default_Handler:
+Infinite_Loop:
+  b Infinite_Loop
+ 80012d8:	e7fe      	b.n	80012d8 <ADC_IRQHandler>
+	...
+
+080012dc <__libc_init_array>:
+ 80012dc:	b570      	push	{r4, r5, r6, lr}
+ 80012de:	4d0d      	ldr	r5, [pc, #52]	@ (8001314 <__libc_init_array+0x38>)
+ 80012e0:	4c0d      	ldr	r4, [pc, #52]	@ (8001318 <__libc_init_array+0x3c>)
+ 80012e2:	1b64      	subs	r4, r4, r5
+ 80012e4:	10a4      	asrs	r4, r4, #2
+ 80012e6:	2600      	movs	r6, #0
+ 80012e8:	42a6      	cmp	r6, r4
+ 80012ea:	d109      	bne.n	8001300 <__libc_init_array+0x24>
+ 80012ec:	4d0b      	ldr	r5, [pc, #44]	@ (800131c <__libc_init_array+0x40>)
+ 80012ee:	4c0c      	ldr	r4, [pc, #48]	@ (8001320 <__libc_init_array+0x44>)
+ 80012f0:	f000 f818 	bl	8001324 <_init>
+ 80012f4:	1b64      	subs	r4, r4, r5
+ 80012f6:	10a4      	asrs	r4, r4, #2
+ 80012f8:	2600      	movs	r6, #0
+ 80012fa:	42a6      	cmp	r6, r4
+ 80012fc:	d105      	bne.n	800130a <__libc_init_array+0x2e>
+ 80012fe:	bd70      	pop	{r4, r5, r6, pc}
+ 8001300:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8001304:	4798      	blx	r3
+ 8001306:	3601      	adds	r6, #1
+ 8001308:	e7ee      	b.n	80012e8 <__libc_init_array+0xc>
+ 800130a:	f855 3b04 	ldr.w	r3, [r5], #4
+ 800130e:	4798      	blx	r3
+ 8001310:	3601      	adds	r6, #1
+ 8001312:	e7f2      	b.n	80012fa <__libc_init_array+0x1e>
+ 8001314:	0800133c 	.word	0x0800133c
+ 8001318:	0800133c 	.word	0x0800133c
+ 800131c:	0800133c 	.word	0x0800133c
+ 8001320:	08001340 	.word	0x08001340
+
+08001324 <_init>:
+ 8001324:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8001326:	bf00      	nop
+ 8001328:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800132a:	bc08      	pop	{r3}
+ 800132c:	469e      	mov	lr, r3
+ 800132e:	4770      	bx	lr
+
+08001330 <_fini>:
+ 8001330:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 8001332:	bf00      	nop
+ 8001334:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8001336:	bc08      	pop	{r3}
+ 8001338:	469e      	mov	lr, r3
+ 800133a:	4770      	bx	lr
