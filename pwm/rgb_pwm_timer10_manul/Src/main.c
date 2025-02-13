@@ -5,8 +5,8 @@
  *  File        : pwm_timer10_manual                                          *
  *  Description : Led blink for PORTA 0th pin.                                *
  *                using for two pheripheral bus AHB1ENR and APB2ENR           *
- *		  RGB led. R - Red, G - Green, B - Blue                       *
- *                							      *
+ *		            RGB led. R - Red, G - Green, B - Blue                       *
+ *                							                                              *
  *****************************************************************************/
 
 #include "arm.h"    /* this header file for all register inside there. using for structure is user-defined data type */
@@ -104,7 +104,7 @@ void purple_color_led(void)
 {
   /* purple color value : R = 128, G = 0, B = 128 */
 
-  int j = 10, m = 255;
+  int j = 10, m = 255;   /* 255 is common value. purple color calculate means this value come : 50.2% 10 milliseconds on. 5ms off */
   for (j = 10; j <= 255; j = j + 5)
   {
     GPIOA->ODR |= (1 << 0);    // red color led on
@@ -137,7 +137,7 @@ void navy_color_led(void)
 {
   /* navy color value : R = 0, G = 0, B = 128 */
 
-  int p = 10, q = 255;
+  int p = 10, q = 255;   /* 255 is common value. navy color calculate means this value come : 50.2% 10 milliseconds on. 5ms off */
   for (p = 10 ; p <= 255; p = p + 5)
   {
     GPIOA->ODR |= (1 << 2);  // Blue color led on
@@ -165,7 +165,7 @@ void yellow_color_led(void)
 {
   /* yellow color value : R = 255, G = 255, B = 0. */
 
-  int b = 16, t = 255;
+  int b = 16, t = 255;    /* 255 is common value. yellow color value take 200%. 200 calculate means 16ms milliseconds on. 4ms off */
   for (b = 16; b <= 255; b = b + 4)
   {
     GPIOA->ODR |= (1 << 0);    // red color led on
@@ -196,7 +196,7 @@ void white_color_led()
 {
   /* white color value : R = 255, G = 255, B = 255 */
 
-  int h = 16, r = 255;
+  int h = 16, r = 255;     /* 255 is common value. white color value take 200%. 200 calculate means 16ms milliseconds on. 4ms off */
   for (h = 16; h <= 255; h = h + 4)
   {
     GPIOA->ODR |= (1 << 0);  // red color led on
@@ -231,7 +231,7 @@ void red_color_led(void)
 {
   /* red color value : R = 255, G = 0, B = 0 */
 
-  int d = 16, e = 255;
+  int d = 16, e = 255;    /* 255 is common value. red color value take 200%. 200 calculate means 16ms milliseconds on. 4ms off */
   for (d = 16; d <= 255; d = d + 4)
   {
     GPIOA->ODR |= (1 << 0);  // red color led on
@@ -258,7 +258,7 @@ void green_color_led(void)
 {
   /* green color value : R = 0, G = 255, B = 0 */
 
-  int gr = 16, en = 255;
+  int gr = 16, en = 255;  /* 255 is common value. green color value take 200%. 200 calculate means 16ms milliseconds on. 4ms off */
   for (gr = 16; gr <= 255; gr = gr + 4)
   {
     GPIOA->ODR |= (1 << 1);   // green color led on
@@ -285,7 +285,7 @@ void cyan_color_led(void)
 {
   /* cyan color value : R = 0, G = 255, B = 255  */
 
-  int cy = 16, an = 255;
+  int cy = 16, an = 255;   /* 255 is common value. green color value take 200%. 200 calculate means 16ms milliseconds on. 4ms off */
   for (cy = 16; cy <= 255; cy = cy + 4)
   {
     GPIOA->ODR |= (1 << 1);  // green color led on
