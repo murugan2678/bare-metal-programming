@@ -1,0 +1,8 @@
+../Src/main.c:21:5:main	8	static
+../Src/main.c:35:6:rcc_config	4	static
+../Src/main.c:45:6:peripheral_bus_config	4	static
+../Src/main.c:53:6:gpioa_gpiob_moder_config	4	static
+../Src/main.c:64:6:timer10_pwm_config	4	static
+../Src/main.c:108:6:servo_motor_pwm_0_degree	16	static
+../Src/main.c:128:6:servo_motor_pwm_90_degree	16	static
+../Src/main.c:148:6:servo_motor_pwm_180_degree	16	static
