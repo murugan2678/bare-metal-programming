@@ -5,7 +5,7 @@
  *  File        : servo_motor_pwm_timer10                                         *
  *  Description : Led blink for PORTB 8th pin.                                    *
  *                using for two pheripheral bus AHB1ENR and APB2ENR in TIMER 10   *
- *		            i give 180 degree                                               *
+ *		            i give 180 degree and the using pwm register using tiner10      *
  *                using for HSI : internal clock for 16 MHz                       *
  *********************************************************************************/
 
@@ -160,9 +160,9 @@ void timer10_pwm_config(void)
 
 void servo_motor_pwm(void)
 {
-
-  int i, j;
-  for (i = 0; i <= 3000; i = i + 10)  // servo_motor 180 degree, 3000
+  /* servo motor forward side rotate increase */
+  int i, j; 
+  for (i = 0; i <= 3000; i = i + 10)  // servo_motor 180 degree, 3000 microseconds (or) 2500 microseconds. 2ms milliseconds pulse width 
   {
     /* status register (TIM10_SR) */
     while(!(TIM10->SR & (1 << 0)));  
@@ -171,6 +171,7 @@ void servo_motor_pwm(void)
     delay_ms(2);              // 2ms milliseconds 
   }
 
+  /* servo motor reverse side rotate decrease */
   for (j = 3000; j >= 0; j = j - 10)
   {
     while(!(TIM10->SR & (1 << 0)));
