@@ -6,7 +6,7 @@
  *  Description : Led blink for PORTA 0th pin.                                *
  *                using for two pheripheral bus AHB1ENR and APB2ENR           *
  *		            RGB led. R - Red, G - Green, B - Blue                       *
- *                							                                              *
+ *                pwm manual calculate using timer10 register							    *
  *****************************************************************************/
 
 #include "arm.h"    /* this header file for all register inside there. using for structure is user-defined data type */
