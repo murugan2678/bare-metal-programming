@@ -1,7 +1,0 @@
-../Src/main.c:24:5:main	8	static
-../Src/main.c:39:6:rcc_config	4	static
-../Src/main.c:64:6:peripheral_bus_config	4	static
-../Src/main.c:73:6:gpioc_moder_config	4	static
-../Src/main.c:80:6:led_blinking	8	static
-../Src/main.c:94:6:timer10_config	4	static
-../Src/main.c:107:6:timer10_delay	16	static
